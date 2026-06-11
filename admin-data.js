@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-06-11T23:46:49.440Z",
+  "lastUpdated": "2026-06-11T23:47:49.710Z",
   "matchResults": {
     "amistoso": {
       "gf": 6,
@@ -17,12 +17,12 @@ const ADMIN_DATA = {
       "Mandinga x1"
     ],
     "f1": [
-      "Sena x1"
+      "Seba T x1"
     ],
     "f2": [
       "Elias x1",
-      "Nando x1",
-      "Facu M x1"
+      "Seba T x1",
+      "Sena x1"
     ],
     "f3": [
       "Seba T x1"
