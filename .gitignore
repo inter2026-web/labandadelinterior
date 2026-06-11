@@ -1,0 +1,37 @@
+node_modules/
+debug-*.html
+debug-*.png
+debug-*.txt
+player-stats-v3.json
+player-photos-v3.json
+*.log
+
+# Scripts de desarrollo (no necesarios en producción)
+scrape-api.js
+scrape-api2.js
+scrape-complejos.js
+scrape-equipo.js
+scrape-fixture.js
+scrape-instagram.js
+scrape-inter-completo.js
+scrape-jugadores-directo.js
+scrape-jugadores-v3.js
+scrape-liga.js
+scrape-mejoras.js
+scrape-players-fix.js
+check-fixture.js
+
+# Archivos de exploración
+*.txt
+inter-equipo.html
+inter-fc-team.html
+inter-fc-team.txt
+liga-serie.html
+liga-serie-text.txt
+team-page-debug.html
+team-page.html
+gallery-page.html
+*.json
+!package.json
+!package-lock.json
+!liga-data.js

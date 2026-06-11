@@ -1,0 +1,63 @@
+name: Actualización diaria Liga MVD
+
+on:
+  schedule:
+    # 12:00 UTC = 09:00 Uruguay (horario estándar)
+    # Corre todos los días para capturar resultados del fin de semana
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    # Permite ejecutar manualmente desde GitHub Actions
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Ejecutar scraper Liga MVD
+        run: node auto-scraper.js
+        timeout-minutes: 5
+
+      - name: Actualizar HTML con nuevos datos
+        run: node update-html.js
+
+      - name: Verificar cambios
+        id: changes
+        run: |
+          git diff --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit y push si hay cambios
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "bot@inter-fc.uy"
+          git config --local user.name "Inter FC Bot"
+          git add liga-data.js web-inter_fc_2023.html
+          git commit -m "🤖 Auto-update Liga MVD $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Deploy a Netlify
+        if: steps.changes.outputs.changed == 'true'
+        run: npx netlify-cli deploy --dir . --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Sin cambios
+        if: steps.changes.outputs.changed == 'false'
+        run: echo "No hay datos nuevos de Liga MVD. Sin deploy."

@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Inter FC | Liga MVD — División B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060608;
+  --bg2: #0d0d12;
+  --card: #111118;
+  --card2: #16161e;
+  --border: #1e1e2a;
+  --blue: #0057B7;
+  --blue-light: #3d8ef0;
+  --blue-glow: rgba(0,87,183,0.3);
+  --white: #ffffff;
+  --gray: #7a7a8e;
+  --gray-light: #b0b0c0;
+  --gold: #f0b429;
+  --win: #22c55e;
+  --draw: #f59e0b;
+  --loss: #ef4444;
+  --stripe: #0a0a0f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Roboto',sans-serif;overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,8,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .3s}
+.nav-logo{display:flex;align-items:center;gap:.75rem}
+.nav-logo img{width:36px;height:36px;border-radius:50%;border:none}
+.nav-logo span{font-family:'Anton',sans-serif;font-size:1.3rem;letter-spacing:.05em;color:var(--white)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--gray-light);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--blue-light)}
+.nav-cta{background:var(--blue);color:#fff;border:none;padding:.5rem 1.25rem;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--blue-light)}
+.nav-mobile{display:none;background:none;border:none;cursor:pointer;padding:.5rem}
+.nav-mobile span{display:block;width:24px;height:2px;background:var(--white);margin:5px 0;transition:all .3s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#000010 0%,#001030 50%,#060608 100%);z-index:0}
+.hero-stripes{position:absolute;inset:0;z-index:0;overflow:hidden;opacity:.04}
+.hero-stripes::before{content:'';position:absolute;top:-50%;left:-20%;width:80px;height:200%;background:var(--blue);transform:rotate(-8deg);box-shadow:150px 0 0 var(--blue),300px 0 0 var(--blue),450px 0 0 var(--blue),600px 0 0 var(--blue),750px 0 0 var(--blue),900px 0 0 var(--blue),1050px 0 0 var(--blue),1200px 0 0 var(--blue),1350px 0 0 var(--blue),1500px 0 0 var(--blue)}
+.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:1100px;width:100%;align-items:center}
+.ig-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2rem;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(0,87,183,.15)}
+.ig-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light),var(--blue))}
+.ig-card-header{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem}
+.ig-avatar{position:relative;flex-shrink:0}
+.ig-avatar img{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block}
+.ig-avatar-ring{position:absolute;inset:-3px;border-radius:50%;border:3px solid transparent;background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(135deg,var(--blue),#a855f7,#ec4899) border-box;animation:ring-spin 3s linear infinite}
+@keyframes ring-spin{to{background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(315deg,var(--blue),#a855f7,#ec4899) border-box}}
+.ig-info{flex:1}
+.ig-name-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.2rem;flex-wrap:wrap}
+.ig-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.03em}
+.ig-badge{width:20px;height:20px;background:linear-gradient(135deg,#1d9bf0,#0057B7);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ig-badge svg{width:11px;height:11px}
+.ig-handle{color:var(--blue-light);font-size:.85rem;margin-bottom:.3rem}
+.ig-handle a{color:inherit;text-decoration:none}
+.ig-handle a:hover{text-decoration:underline}
+.ig-category{color:var(--gray);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em}
+.ig-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1.2rem;padding:.75rem;background:var(--bg2);border-radius:12px;border:1px solid var(--border)}
+.ig-stat{text-align:center}
+.ig-stat-num{font-family:'Anton',sans-serif;font-size:1.2rem;color:var(--white)}
+.ig-stat-label{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em}
+.ig-bio{font-size:.82rem;color:var(--gray-light);line-height:1.6;margin-bottom:1.2rem;padding:.75rem;background:rgba(0,87,183,.06);border-radius:8px;border-left:3px solid var(--blue)}
+.ig-actions{display:flex;gap:.5rem;margin-bottom:1.2rem}
+.ig-btn{flex:1;padding:.5rem;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;transition:all .2s;display:block}
+.ig-btn-primary{background:var(--blue);color:#fff;border:none}
+.ig-btn-primary:hover{background:var(--blue-light)}
+.ig-btn-secondary{background:transparent;color:var(--white);border:1.5px solid var(--border)}
+.ig-btn-secondary:hover{border-color:var(--blue-light);color:var(--blue-light)}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:8px;overflow:hidden}
+.ig-grid img{width:100%;aspect-ratio:1;object-fit:cover;transition:opacity .2s}
+.ig-grid img:hover{opacity:.8}
+
+.hero-text{display:flex;flex-direction:column;gap:1.5rem}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .9rem;background:rgba(0,87,183,.15);border:1px solid rgba(0,87,183,.3);border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-light);width:fit-content}
+.hero-title{font-family:'Anton',sans-serif;font-size:clamp(2.8rem,6vw,4.5rem);line-height:.95;text-transform:uppercase;letter-spacing:.02em}
+.hero-title span{color:var(--blue-light)}
+.hero-sub{font-size:1rem;color:var(--gray-light);line-height:1.7;max-width:420px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:1rem}
+.hero-meta-item{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--gray)}
+.hero-meta-item svg{color:var(--blue-light)}
+.hero-stat-row{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-stat-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.75rem 1.2rem;text-align:center;flex:1;min-width:80px}
+.hero-stat-box .num{font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)}
+.hero-stat-box .lbl{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em}
+.hero-next{background:linear-gradient(135deg,rgba(0,87,183,.15),rgba(0,87,183,.05));border:1px solid rgba(0,87,183,.25);border-radius:12px;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.3rem}
+.hero-next-label{font-size:.7rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.12em;font-weight:700}
+.hero-next-match{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.05em}
+.hero-next-date{font-size:.75rem;color:var(--gray)}
+
+/* SECTION HEADER */
+.section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-header{margin-bottom:3rem;display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+.section-label{font-size:.7rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:.4rem}
+.section-title{font-family:'Anton',sans-serif;font-size:clamp(2rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:.03em;line-height:1}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);min-width:30px}
+.section-count{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(0,87,183,.15);line-height:1;margin-left:auto}
+
+/* STATS BAR */
+.stats-bar{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2rem}
+.stats-bar-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border)}
+.stat-item{background:var(--card);padding:1.5rem 1rem;text-align:center;position:relative;overflow:hidden;transition:background .2s}
+.stat-item:hover{background:var(--card2)}
+.stat-item::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--blue-light);transition:width .3s}
+.stat-item:hover::after{width:60%}
+.stat-item .val{font-family:'Anton',sans-serif;font-size:2rem;color:var(--blue-light);display:block;counter-reset:none}
+.stat-item .lbl{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-top:.3rem;display:block}
+.stat-item.highlight .val{color:var(--gold)}
+
+/* TABLA DE POSICIONES */
+.tabla{width:100%;border-collapse:collapse;font-size:.88rem}
+.tabla thead tr{background:var(--bg2)}
+.tabla th{padding:.75rem 1rem;text-align:left;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);border-bottom:1px solid var(--border)}
+.tabla td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.tabla tr.my-team{background:rgba(0,87,183,.12);border-left:3px solid var(--blue)}
+.tabla tr.my-team td{color:var(--white);font-weight:600}
+.tabla tr:hover:not(thead tr){background:rgba(255,255,255,.03)}
+.tabla .pos{font-family:'Anton',sans-serif;font-size:1rem;width:40px}
+.tabla .team-name{display:flex;align-items:center;gap:.75rem;font-weight:500}
+.tabla .team-badge{width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+.tabla .pts{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--blue-light)}
+.tabla tr.my-team .pts{color:var(--gold)}
+.pos-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.75rem;font-weight:700}
+.pos-1{background:rgba(240,180,41,.2);color:var(--gold)}
+.pos-2{background:rgba(200,200,200,.15);color:#ccc}
+.pos-3{background:rgba(180,120,60,.15);color:#cd7f32}
+.pos-4{background:rgba(0,87,183,.25);color:var(--blue-light)}
+.team-badge img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+.team-badge{overflow:hidden}
+.player-photo-wrap{width:100%;height:130px;overflow:hidden;position:relative;background:linear-gradient(160deg,#0a0a12,#12122a)}
+.player-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .3s}
+.player-card:hover .player-photo-wrap img{transform:scale(1.06)}
+.player-photo-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
+.next-team-logo{width:80px;height:80px;margin:0 auto .5rem;display:flex;align-items:center;justify-content:center}
+.next-team-logo img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+
+/* RESULTADOS */
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.match-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;transition:all .3s;position:relative;overflow:hidden}
+.match-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,87,183,.15)}
+.match-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:2px 0 0 2px}
+.match-card.win::before{background:var(--win)}
+.match-card.draw::before{background:var(--draw)}
+.match-card.loss::before{background:var(--loss)}
+.match-card.friendly::before{background:var(--gray)}
+.match-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.match-fecha{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.match-badge{font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:20px}
+.badge-win{background:rgba(34,197,94,.15);color:var(--win)}
+.badge-draw{background:rgba(245,158,11,.15);color:var(--draw)}
+.badge-loss{background:rgba(239,68,68,.15);color:var(--loss)}
+.badge-friendly{background:rgba(120,120,150,.15);color:var(--gray)}
+.match-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.match-team-block{display:flex;flex-direction:column;align-items:center;gap:.3rem;flex:1}
+.match-team-logo{width:36px;height:36px;object-fit:contain;border-radius:50%}
+.match-team{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.03em;text-align:center}
+.match-team.us{color:var(--blue-light)}
+.match-score{font-family:'Anton',sans-serif;font-size:1.8rem;letter-spacing:.05em;text-align:center;line-height:1}
+.match-scorers{font-size:.75rem;color:var(--gray);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.scorer-tag{display:inline-flex;align-items:center;gap:.3rem;padding:.15rem .5rem;background:rgba(0,87,183,.12);border-radius:20px;color:var(--blue-light)}
+
+/* PROXIMO PARTIDO */
+.next-match-banner{background:linear-gradient(135deg,#000520,#001540,#000520);border:1px solid rgba(0,87,183,.4);border-radius:24px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;position:relative;overflow:hidden}
+.next-match-banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(0,87,183,.03) 30px,rgba(0,87,183,.03) 32px)}
+.next-label{position:absolute;top:1.25rem;left:50%;transform:translateX(-50%);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-light);background:rgba(0,87,183,.15);padding:.3rem .8rem;border-radius:20px;border:1px solid rgba(0,87,183,.3);white-space:nowrap}
+.next-team{text-align:center;flex:1}
+.next-team-name{font-family:'Anton',sans-serif;font-size:clamp(1.5rem,3vw,2rem);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.3rem}
+.next-team-sub{font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em}
+.next-vs{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--border);padding:0 1rem;flex-shrink:0}
+.next-date-box{text-align:center;padding:1rem 1.5rem;background:rgba(0,87,183,.15);border:1px solid rgba(0,87,183,.3);border-radius:16px;min-width:140px}
+.next-date-day{font-family:'Anton',sans-serif;font-size:2.5rem;color:var(--white);line-height:1}
+.next-date-month{font-size:.8rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.15em;font-weight:700}
+
+/* GOLEADORES */
+.scorers-list{display:flex;flex-direction:column;gap:.75rem}
+.scorer-row{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:12px;transition:all .2s;cursor:default}
+.scorer-row:hover{border-color:var(--blue);background:var(--card2)}
+.scorer-rank{font-family:'Anton',sans-serif;font-size:1.4rem;color:var(--border);width:30px;text-align:center;flex-shrink:0}
+.scorer-rank-1{color:var(--gold)!important}
+.scorer-rank-2{color:#ccc!important}
+.scorer-rank-3{color:#cd7f32!important}
+.scorer-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue-dark, #003880),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1rem;flex-shrink:0;border:2px solid var(--border)}
+.scorer-info{flex:1}
+.scorer-name{font-weight:600;font-size:.95rem;margin-bottom:.15rem}
+.scorer-pos{font-size:.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em}
+.scorer-bar-wrap{flex:1;max-width:200px}
+.scorer-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.scorer-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-light));border-radius:3px;transition:width 1.5s ease}
+.scorer-goals{font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light);min-width:35px;text-align:right}
+.scorer-goals .goal-label{font-family:'Roboto',sans-serif;font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;font-weight:400;display:block}
+
+/* PLANTEL */
+.players-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem}
+.player-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .3s;position:relative}
+.player-card:hover{border-color:var(--blue-light);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,87,183,.2)}
+.player-card:hover .player-jersey{background:linear-gradient(160deg,#001a4a,#0057B7)}
+.player-jersey{background:linear-gradient(160deg,#0a0a12,#12122a);padding:1.5rem 1rem 1rem;text-align:center;position:relative;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:background .3s}
+.jersey-svg{width:70px;height:70px;display:block;margin:0 auto .5rem}
+.player-number-badge{position:absolute;top:.6rem;right:.6rem;font-family:'Anton',sans-serif;font-size:1rem;color:rgba(255,255,255,.4);line-height:1}
+.player-card-info{padding:.75rem}
+.player-card-name{font-weight:700;font-size:.88rem;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-card-pos{font-size:.7rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.player-card-goals{position:absolute;top:.6rem;left:.6rem;display:flex;align-items:center;gap:.2rem;font-size:.7rem;font-weight:700;color:var(--gold);background:rgba(240,180,41,.1);padding:.15rem .4rem;border-radius:8px}
+.player-card-mins{font-size:.7rem;color:var(--gray);margin-top:.2rem}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:24px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-header{padding:2rem 2rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1.5rem;position:sticky;top:0;background:var(--card);z-index:1;border-radius:24px 24px 0 0}
+.modal-avatar{width:64px;height:64px;flex-shrink:0}
+.modal-player-name{font-family:'Anton',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.03em}
+.modal-player-number{font-size:.9rem;color:var(--blue-light);font-weight:700;margin-bottom:.2rem}
+.modal-player-pos{font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em}
+.modal-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:var(--gray);transition:all .2s}
+.modal-close:hover{background:var(--border);color:var(--white)}
+.modal-body{padding:1.5rem 2rem 2rem}
+.modal-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
+.modal-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.75rem;text-align:center}
+.modal-stat .val{font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)}
+.modal-stat .lbl{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em}
+.modal-table-title{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:.75rem}
+.modal-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.modal-table th{padding:.5rem .6rem;text-align:left;font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);white-space:nowrap}
+.modal-table td{padding:.5rem .6rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.modal-table tr:last-child td{border-bottom:none}
+.modal-table .mins-cell{font-family:'Roboto Condensed',sans-serif;font-weight:700}
+.mins-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:3px;width:100%;max-width:80px}
+.mins-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-light));border-radius:2px}
+.mins-played{color:var(--white)}
+.mins-not-played{color:var(--border)!important;font-style:italic;font-size:.75em}
+.result-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:.3rem;vertical-align:middle}
+.dot-win{background:var(--win)}
+.dot-draw{background:var(--draw)}
+.dot-loss{background:var(--loss)}
+.dot-friendly{background:var(--gray)}
+
+/* GALERIA */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.gallery-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;aspect-ratio:1}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 60%);opacity:0;transition:opacity .3s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+
+/* CONTACTO */
+.contact-section{background:linear-gradient(135deg,#000520,#001030)}
+.contact-inner{max-width:1100px;margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.contact-text h2{font-family:'Anton',sans-serif;font-size:clamp(2rem,4vw,3rem);text-transform:uppercase;letter-spacing:.03em;margin-bottom:1rem}
+.contact-text p{color:var(--gray-light);line-height:1.7;margin-bottom:2rem}
+.contact-links{display:flex;flex-direction:column;gap:.75rem}
+.contact-link{display:flex;align-items:center;gap:.75rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--white);transition:all .2s}
+.contact-link:hover{border-color:var(--blue-light);background:var(--card2)}
+.contact-link-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-link-icon.ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}
+.contact-link-icon.wa{background:#25D366}
+.contact-link-text .label{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem}
+.contact-link-text .value{font-weight:600;font-size:.9rem}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text-align:center}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-brand{font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:.05em}
+.footer-copy{font-size:.75rem;color:var(--gray)}
+.footer-liga{font-size:.75rem;color:var(--blue-light);text-decoration:none}
+.footer-liga:hover{text-decoration:underline}
+
+/* FADE-IN ANIMATIONS */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-in-left{opacity:0;transform:translateX(-30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in-left.visible{opacity:1;transform:translateX(0)}
+.fade-in-right{opacity:0;transform:translateX(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in-right.visible{opacity:1;transform:translateX(0)}
+.stagger-1{transition-delay:.1s}
+.stagger-2{transition-delay:.2s}
+.stagger-3{transition-delay:.3s}
+.stagger-4{transition-delay:.4s}
+.stagger-5{transition-delay:.5s}
+.stagger-6{transition-delay:.6s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:2rem}
+  .hero-text{order:-1;text-align:center;align-items:center}
+  .hero-sub{text-align:left}
+  .stats-bar-inner{grid-template-columns:repeat(4,1fr)}
+  .contact-inner{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+  .nav-mobile{display:block}
+  .next-match-banner{flex-direction:column;text-align:center}
+  .next-label{position:static;transform:none;margin-bottom:.5rem}
+}
+@media(max-width:600px){
+  .stats-bar-inner{grid-template-columns:repeat(3,1fr)}
+  .players-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="assets/logos/el-inter.png" alt="El Inter FC" style="border-radius:50%;object-fit:contain;position:relative;z-index:2" onerror="this.style.display='none'">
+    <span>El Inter FC</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#posiciones">Tabla</a></li>
+    <li><a href="#resultados">Resultados</a></li>
+    <li><a href="#plantel">Plantel</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://www.instagram.com/inter_fc_2023/" target="_blank" class="nav-cta">@inter_fc_2023</a>
+  <button class="nav-mobile" id="menuToggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-stripes"></div>
+  <div class="hero-content">
+    <!-- Instagram Card -->
+    <div class="ig-card fade-in-left">
+      <div class="ig-card-header">
+        <div class="ig-avatar">
+          <img src="assets/logos/el-inter.png" alt="El Inter FC" style="position:relative;z-index:2;border-radius:50%;object-fit:contain;display:block;width:72px;height:72px">
+          <div class="ig-avatar-ring"></div>
+        </div>
+        <div class="ig-info">
+          <div class="ig-name-row">
+            <span class="ig-name">El Inter FC</span>
+            <div class="ig-badge">
+              <svg viewBox="0 0 22 22" fill="none"><path fill="#fff" d="M11 2L13.09 7.26L18.66 7.27L14.23 10.57L15.9 15.9L11 12.9L6.1 15.9L7.77 10.57L3.34 7.27L8.91 7.26L11 2Z"/></svg>
+            </div>
+          </div>
+          <div class="ig-handle"><a href="https://www.instagram.com/inter_fc_2023/" target="_blank">@inter_fc_2023</a></div>
+          <div class="ig-category">Club de Fútbol Amateur · Montevideo</div>
+        </div>
+      </div>
+      <div class="ig-stats">
+        <div class="ig-stat"><div class="ig-stat-num" data-count="84">84</div><div class="ig-stat-label">Posts</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" data-count="234">234</div><div class="ig-stat-label">Seguidores</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" data-count="36">36</div><div class="ig-stat-label">Siguiendo</div></div>
+      </div>
+      <div class="ig-bio">
+        💙🖤 Vamo el Inter<br>
+        ⚽️ Desde el interior para la capital<br>
+        🏟️ Fundado el 19 de diciembre del 2023<br>
+        🏆 Compitiendo en <a href="https://www.ligamvd.com" target="_blank" style="color:var(--blue-light)">@ligamvd</a>
+      </div>
+      <div class="ig-actions">
+        <a href="https://www.instagram.com/inter_fc_2023/" target="_blank" class="ig-btn ig-btn-primary">Ver Instagram</a>
+        <a href="#contacto" class="ig-btn ig-btn-secondary">Contactar</a>
+        <a href="https://www.ligamvd.com/home/1/1/" target="_blank" class="ig-btn ig-btn-secondary">Liga MVD</a>
+      </div>
+      <div class="ig-grid">
+        <img src="assets/instagram/post-9.jpg" alt="Inter FC" loading="lazy">
+        <img src="assets/instagram/post-8.jpg" alt="Inter FC" loading="lazy">
+        <img src="assets/instagram/post-7.jpg" alt="Inter FC" loading="lazy">
+        <img src="assets/instagram/post-6.jpg" alt="Inter FC" loading="lazy">
+        <img src="assets/instagram/post-5.jpg" alt="Inter FC" loading="lazy">
+        <img src="assets/instagram/post-4.jpg" alt="Inter FC" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Hero text -->
+    <div class="hero-text fade-in-right">
+      <div class="hero-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        Liga MVD · Serie 1 · Div. B
+      </div>
+      <h1 class="hero-title">Desde el<br><span>interior</span><br>para la capital</h1>
+      <p class="hero-sub">Un club nacido el 19 de diciembre de 2023 con la pasión de hacer historia en la mejor liga amateur de Montevideo. 💙🖤</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          Montevideo, Uruguay
+        </div>
+        <div class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Fundado en 2023
+        </div>
+        <div class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
+          25 jugadores en el plantel
+        </div>
+      </div>
+      <div class="hero-stat-row">
+        <div class="hero-stat-box stagger-1">
+          <div class="num" data-count="19">19</div>
+          <div class="lbl">Puntos</div>
+        </div>
+        <div class="hero-stat-box stagger-2">
+          <div class="num" data-count="4">4°</div>
+          <div class="lbl">Posición</div>
+        </div>
+        <div class="hero-stat-box stagger-3">
+          <div class="num" data-count="6">6</div>
+          <div class="lbl">Victorias</div>
+        </div>
+        <div class="hero-stat-box stagger-4">
+          <div class="num" data-count="25">25</div>
+          <div class="lbl">Goles</div>
+        </div>
+      </div>
+      <div class="hero-next">
+        <div class="hero-next-label">Próximo partido · Fecha 10 · Liga MVD</div>
+        <div class="hero-next-match" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+          <img src="assets/logos/capitol-fc.png" style="width:24px;height:24px;object-fit:contain;border-radius:50%" alt="Capitol F.C.">
+          <span>Capitol F.C.</span>
+          <span style="color:var(--gray);font-size:.85rem">vs</span>
+          <img src="assets/logos/el-inter.png" style="width:24px;height:24px;object-fit:contain;position:relative;z-index:2" alt="El Inter">
+          <span>El Inter</span>
+        </div>
+        <div class="hero-next-date">Sáb 13 jun · 09:00 · Cancha 13 · El Inter de visitante</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item fade-in stagger-1"><span class="val" data-count="9">9</span><span class="lbl">Partidos</span></div>
+    <div class="stat-item fade-in stagger-2"><span class="val" data-count="6">6</span><span class="lbl">Victorias</span></div>
+    <div class="stat-item fade-in stagger-3"><span class="val" data-count="1">1</span><span class="lbl">Empates</span></div>
+    <div class="stat-item fade-in stagger-4"><span class="val" data-count="2">2</span><span class="lbl">Derrotas</span></div>
+    <div class="stat-item fade-in stagger-5 highlight"><span class="val" data-count="25">25</span><span class="lbl">Goles a Favor</span></div>
+    <div class="stat-item fade-in stagger-6"><span class="val" data-count="16">16</span><span class="lbl">Goles en Contra</span></div>
+    <div class="stat-item fade-in highlight" style="transition-delay:.7s"><span class="val" data-count="19">19</span><span class="lbl">Puntos</span></div>
+  </div>
+</div>
+
+<!-- TABLA DE POSICIONES -->
+<section class="section" id="posiciones">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Liga MVD · Serie 1</div>
+        <div class="section-title">Tabla de Posiciones</div>
+      </div>
+      <div class="section-line"></div>
+      <div class="section-count">B</div>
+    </div>
+    <div style="overflow-x:auto" class="fade-in">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Equipo</th>
+            <th>PJ</th>
+            <th>G</th>
+            <th>E</th>
+            <th>P</th>
+            <th>PTS</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section class="section" id="resultados" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Temporada 2026</div>
+        <div class="section-title">Resultados</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="results-grid" id="results-grid"></div>
+
+    <!-- Próximo partido -->
+    <div style="margin-top:2rem">
+      <div class="section-label" style="margin-bottom:1rem">Próxima fecha</div>
+      <!-- NEXT-MATCH-START -->
+      <div class="next-match-banner fade-in">
+        <div class="next-label">FECHA 10 · Liga MVD Div. B · Cancha 13</div>
+        <div class="next-team">
+          <div class="next-team-logo">
+            <img src="assets/logos/capitol-fc.png" alt="Capitol F.C." style="border-radius:50%">
+          </div>
+          <div class="next-team-name" >Capitol F.C.</div>
+          <div class="next-team-sub">Local · 2° en tabla · 21 pts</div>
+        </div>
+        <div class="next-vs">VS</div>
+        <div class="next-team">
+          <div class="next-team-logo">
+            <img src="assets/logos/el-inter.png" alt="El Inter" style="position:relative;z-index:2">
+          </div>
+          <div class="next-team-name" style="color:var(--blue-light)">El Inter</div>
+          <div class="next-team-sub">Visitante · 4° en tabla · 19 pts</div>
+        </div>
+        <div class="next-date-box">
+          <div class="next-date-day">13</div>
+          <div class="next-date-month">Jun 2026</div>
+          <div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">09:00</div>
+        </div>
+      </div>
+      <!-- NEXT-MATCH-END -->
+    </div>
+  </div>
+</section>
+
+<!-- GOLEADORES -->
+<section class="section" id="goleadores">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Temporada 2026</div>
+        <div class="section-title">Goleadores</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="scorers-list" id="scorers-list"></div>
+  </div>
+</section>
+
+<!-- PLANTEL -->
+<section class="section" id="plantel" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Temporada 2026</div>
+        <div class="section-title">El Plantel</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="players-grid" id="players-grid"></div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section class="section" id="galeria">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Liga MVD · Divisional B Apertura</div>
+        <div class="section-title">Galería</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item"><img src="assets/galeria/foto-22.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-23.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-24.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-25.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-26.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-27.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-28.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-29.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-30.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-31.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-32.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-33.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-34.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-35.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-36.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-37.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-38.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-39.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-40.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-41.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-43.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-44.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-45.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-46.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-47.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-48.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-49.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+      <div class="gallery-item"><img src="assets/galeria/foto-50.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-text fade-in-left">
+      <div class="section-label" style="margin-bottom:.5rem">¿Querés saber más?</div>
+      <h2>Sumáte al Inter</h2>
+      <p>Si querés seguir al club, colaborar, o simplemente estar al tanto de los partidos, seguinos en Instagram o escribinos directamente al capitán.</p>
+      <div class="contact-links">
+        <a href="https://www.instagram.com/inter_fc_2023/" target="_blank" class="contact-link">
+          <div class="contact-link-icon ig">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </div>
+          <div class="contact-link-text">
+            <div class="label">Instagram</div>
+            <div class="value">@inter_fc_2023</div>
+          </div>
+        </a>
+        <a href="https://wa.me/59898266955" target="_blank" class="contact-link">
+          <div class="contact-link-icon wa">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="contact-link-text">
+            <div class="label">WhatsApp Capitán</div>
+            <div class="value">098 266 955</div>
+          </div>
+        </a>
+        <a href="https://www.ligamvd.com/home/1/1/" target="_blank" class="contact-link">
+          <div class="contact-link-icon" style="background:var(--blue)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <div class="contact-link-text">
+            <div class="label">Liga MVD</div>
+            <div class="value">www.ligamvd.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="fade-in-right" style="text-align:center">
+      <div style="width:100%;max-width:400px;margin:0 auto">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;text-align:center">
+          <div style="font-family:'Anton',sans-serif;font-size:4rem;margin-bottom:.5rem">💙🖤</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;margin-bottom:.5rem">Vamo el Inter</div>
+          <div style="font-size:.85rem;color:var(--gray-light);line-height:1.7">Desde el interior para la capital.<br>Fundados el 19/12/2023.<br>Liga MVD Serie 1 — División B.</div>
+          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:center;gap:2rem">
+            <div style="text-align:center">
+              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)">234</div>
+              <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Seguidores IG</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--gold)">19</div>
+              <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Puntos</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--win)">4°</div>
+              <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Posición</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">EL INTER FC</div>
+    <div class="footer-copy">© 2026 El Inter FC · Todos los derechos reservados</div>
+    <a href="https://www.ligamvd.com" target="_blank" class="footer-liga">Liga MVD — ligamvd.com</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="playerModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-avatar" id="modal-avatar"></div>
+      <div>
+        <div class="modal-player-number" id="modal-number"></div>
+        <div class="modal-player-name" id="modal-name"></div>
+        <div class="modal-player-pos" id="modal-pos"></div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-stats-row" id="modal-stats"></div>
+      <div class="modal-table-title">Minutos jugados por partido</div>
+      <table class="modal-table">
+        <thead>
+          <tr>
+            <th>Partido</th>
+            <th>Resultado</th>
+            <th>Minutos</th>
+          </tr>
+        </thead>
+        <tbody id="modal-minutes-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// =====================
+// ASSETS MAPS
+// =====================
+const TEAM_LOGOS = {
+  'Dep. Comandiyú': 'assets/logos/dep-comandiyu.png',
+  'Capitol F.C.': 'assets/logos/capitol-fc.png',
+  'La Rotonda': 'assets/logos/la-rotonda.png',
+  'El Inter': 'assets/logos/el-inter.png',
+  'Blue Label FC': 'assets/logos/blue-label.png',
+  'C.A Tigre Uruguay': 'assets/logos/ca-tigre.png',
+  'Club Montero': 'assets/logos/club-montero.png',
+  'Revolución Futbolística': 'assets/logos/revolucion.png',
+  'La Favela FC': 'assets/logos/la-favela.png',
+  'Malasia F.C.': 'assets/logos/malasia.png',
+  'Palestino': 'assets/logos/palestino.png',
+  'Defensor United': 'assets/logos/defensor-united.png',
+};
+
+const RIVAL_LOGOS = {
+  'Cristal F.C.': 'assets/logos/cristal-fc.png',
+  'La Rotonda': 'assets/logos/la-rotonda.png',
+  'C.A. Tigre Uruguay': 'assets/logos/ca-tigre.png',
+  'Palestino': 'assets/logos/palestino.png',
+  'Dep. Comandiyú': 'assets/logos/dep-comandiyu.png',
+  'Defensor United': 'assets/logos/defensor-united.png',
+  'Blue Label FC': 'assets/logos/blue-label.png',
+  'Revolución Futbolística': 'assets/logos/revolucion.png',
+  'Malasia F.C.': 'assets/logos/malasia.png',
+  'Club Montero': 'assets/logos/club-montero.png',
+};
+
+const PLAYER_PHOTOS = {
+  'Jubin': 'assets/players/tomas_jubin.jpg',
+  'Vicente': 'assets/players/vicente_gaitano.jpg',
+  'Brandon': 'assets/players/brandon_almenarez.jpg',
+  'Renzo': 'assets/players/diego_rodriguez.jpg',
+  'Juli Rios': 'assets/players/julian_rios_cazard.jpg',
+  'Vidal': 'assets/players/lucas_vidal.jpg',
+  'Franco F': 'assets/players/franco_friedrich.jpg',
+  'Diego': 'assets/players/diego_friedrich.jpg',
+  'Elias': 'assets/players/elias_pastorino.jpg',
+  'Negrin': 'assets/players/martin_negrin.jpg',
+  'Nando': 'assets/players/fernando_garcia.jpg',
+  'Lolo': 'assets/players/lorenzo_camara.jpg',
+  'Pata': 'assets/players/ignacio_zapata.jpg',
+  'Franco Irri': 'assets/players/franco_irisarri_correa.jpg',
+  'Facu Munchs': 'assets/players/facundo_munch.jpg',
+  'Seba B': 'assets/players/sebastian_barisone.jpg',
+  'Enzo Gaione': 'assets/players/enzo_matias_gaione.jpg',
+  'Pato': 'assets/players/mauro_cabrera.jpg',
+  'Seba T': 'assets/players/sebastian_torena.jpg',
+  'Mati': 'assets/players/matias_gonzalez_hernandez.jpg',
+  'Mandinga': 'assets/players/ezequiel_munoz.jpg',
+  'Mariano': 'assets/players/mariano_perdomo.jpg',
+  'Fabian Couto': 'assets/players/fabian_couto.jpg',
+  'Sena': 'assets/players/martin_sena.jpg',
+  'Ignacio Luy': 'assets/players/ignacio_matias_luy_suarez.jpg',
+  'Andres Guerra': 'assets/players/andres_eduardo_guerra.jpg',
+  'Lucas Godoy': 'assets/players/lucas_godoy.jpg',
+};
+
+// =====================
+// DATA
+// =====================
+const MATCHES = [
+  { id: 'amistoso', label: 'Amistoso vs Cristal', result: '6-2', gf: 6, gc: 2, type: 'friendly', rival: 'Cristal F.C.' },
+  { id: 'f1', label: 'F1 vs La Rotonda', result: '1-3', gf: 1, gc: 3, type: 'L', rival: 'La Rotonda' },
+  { id: 'f2', label: 'F2 vs Tigre', result: '3-1', gf: 3, gc: 1, type: 'W', rival: 'C.A. Tigre Uruguay' },
+  { id: 'f3', label: 'F3 vs Palestino', result: '1-0', gf: 1, gc: 0, type: 'W', rival: 'Palestino' },
+  { id: 'f4', label: 'F4 vs Dep. Comandiyú', result: '1-4', gf: 1, gc: 4, type: 'L', rival: 'Dep. Comandiyú' },
+  { id: 'f5', label: 'F5 vs Defensor United', result: '2-2', gf: 2, gc: 2, type: 'D', rival: 'Defensor United' },
+  { id: 'f6', label: 'F6 vs Blue Label', result: '7-2', gf: 7, gc: 2, type: 'W', rival: 'Blue Label FC' },
+  { id: 'f7', label: 'F7 vs Revolución', result: '6-2', gf: 6, gc: 2, type: 'W', rival: 'Revolución Futbolística' },
+  { id: 'f8', label: 'F8 vs Malasia', result: '2-1', gf: 2, gc: 1, type: 'W', rival: 'Malasia F.C.' },
+  { id: 'f9', label: 'F9 vs Club Montero', result: '2-1', gf: 2, gc: 1, type: 'W', rival: 'Club Montero' },
+];
+
+const SCORERS_BY_MATCH = {
+  amistoso: ['Elias x4', 'Pata x1', 'Sena x1'],
+  f1: ['Sena x1'],
+  f2: ['Elias x1', 'Nando x1', 'Facu M x1'],
+  f3: ['Seba T x1'],
+  f4: ['Seba T x1'],
+  f5: ['Andres G x2', 'Facu M x1'],
+  f6: ['Elias x3', 'Mandinga x1', 'Andres G x1', 'Facu M x1', 'Pato x1'],
+  f7: ['Elias x1', 'Mandinga x1', 'Pata x1', 'Sena x1', 'Franco F x1', 'Andres G x1'],
+  f8: ['Elias x1', 'Mandinga x1'],
+  f9: ['Sena x1', 'Diego x1'],
+};
+
+const TABLA = [
+  {
+      "pos": 1,
+      "name": "Dep. Comandiyú",
+      "pj": 9,
+      "g": 7,
+      "e": 2,
+      "p": 0,
+      "pts": 23
+    },
+    {
+      "pos": 2,
+      "name": "Capitol F.C.",
+      "pj": 9,
+      "g": 6,
+      "e": 3,
+      "p": 0,
+      "pts": 21
+    },
+    {
+      "pos": 3,
+      "name": "La Rotonda",
+      "pj": 9,
+      "g": 6,
+      "e": 3,
+      "p": 0,
+      "pts": 21
+    },
+    {
+      "pos": 4,
+      "name": "El Inter",
+      "pj": 9,
+      "g": 6,
+      "e": 1,
+      "p": 2,
+      "pts": 19,
+      "isUs": true
+    },
+    {
+      "pos": 5,
+      "name": "Blue Label FC",
+      "pj": 9,
+      "g": 4,
+      "e": 1,
+      "p": 4,
+      "pts": 13
+    },
+    {
+      "pos": 6,
+      "name": "C.A Tigre Uruguay",
+      "pj": 9,
+      "g": 3,
+      "e": 2,
+      "p": 4,
+      "pts": 11
+    },
+    {
+      "pos": 7,
+      "name": "Club Montero",
+      "pj": 9,
+      "g": 3,
+      "e": 2,
+      "p": 4,
+      "pts": 11
+    },
+    {
+      "pos": 8,
+      "name": "Revolución Futbolística",
+      "pj": 9,
+      "g": 3,
+      "e": 1,
+      "p": 5,
+      "pts": 10
+    },
+    {
+      "pos": 9,
+      "name": "La Favela FC",
+      "pj": 9,
+      "g": 3,
+      "e": 0,
+      "p": 6,
+      "pts": 9
+    },
+    {
+      "pos": 10,
+      "name": "Malasia F.C.",
+      "pj": 9,
+      "g": 1,
+      "e": 2,
+      "p": 6,
+      "pts": 5
+    },
+    {
+      "pos": 11,
+      "name": "Palestino",
+      "pj": 9,
+      "g": 1,
+      "e": 1,
+      "p": 7,
+      "pts": 4
+    },
+    {
+      "pos": 12,
+      "name": "Defensor United",
+      "pj": 9,
+      "g": 1,
+      "e": 0,
+      "p": 8,
+      "pts": 3
+    }
+];
+
+const PLAYERS = [
+  { number: 1, name: 'Jubin', positions: ['Golero'], minutes: { amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90 }, avgMins: 90, goals: 0 },
+  { number: 2, name: 'Vicente', positions: ['Zaguero'], minutes: { f1:20,f3:45,f5:45,f6:90,f7:45,f8:30,f9:70 }, avgMins: 49, goals: 0 },
+  { number: 3, name: 'Brandon', positions: ['Lateral Izq','Volante Izq'], minutes: { amistoso:55,f1:60,f2:35,f4:20,f5:45,f6:90,f7:80,f8:45,f9:90 }, avgMins: 58, goals: 0 },
+  { number: 4, name: 'Renzo', positions: ['Volante Der','Lateral Der','Medio'], minutes: {}, avgMins: 0, goals: 0 },
+  { number: 6, name: 'Juli Rios', positions: ['Medio','Zaguero'], minutes: { f1:45,f3:90,f4:60,f7:90,f8:90 }, avgMins: 75, goals: 0 },
+  { number: 7, name: 'Vidal', positions: ['Volante Der','Delantero'], minutes: { amistoso:70,f2:45,f3:45,f4:45,f7:50,f8:60 }, avgMins: 53, goals: 0 },
+  { number: 8, name: 'Franco F', positions: ['Medio','Lateral Izq'], minutes: { amistoso:70,f1:90,f2:90,f3:90,f4:90,f5:60,f8:75,f9:90 }, avgMins: 82, goals: 1 },
+  { number: 9, name: 'Diego', positions: ['Delantero'], minutes: { f1:30,f3:15,f4:0,f5:15,f7:25,f9:20 }, avgMins: 18, goals: 1 },
+  { number: 10, name: 'Elias', positions: ['Delantero','Enganche'], minutes: { amistoso:80,f2:90,f3:40,f4:90,f5:75,f6:55,f7:90,f8:60,f9:90 }, avgMins: 74, goals: 11 },
+  { number: 12, name: 'Negrin', positions: ['Delantero','Enganche'], minutes: { amistoso:45,f1:20,f3:10,f5:0,f6:15,f8:15,f9:25 }, avgMins: 19, goals: 0 },
+  { number: 15, name: 'Nando', positions: ['Zaguero','Medio'], minutes: { amistoso:90,f1:90,f2:90,f4:25,f8:15,f9:75 }, avgMins: 64, goals: 1 },
+  { number: 16, name: 'Lolo', positions: ['Lateral Der','Volante Der'], minutes: { f1:55,f3:15,f4:0,f5:45,f6:20,f7:30 }, avgMins: 28, goals: 0 },
+  { number: 17, name: 'Pata', positions: ['Volante Der','Delantero'], minutes: { amistoso:60,f2:50,f3:75,f4:45,f7:60,f8:45,f9:90 }, avgMins: 61, goals: 1 },
+  { number: 18, name: 'Franco Irri', positions: ['Enganche','Volante Izq'], minutes: { amistoso:65,f1:60,f2:45,f3:45,f4:60,f5:45,f6:75,f7:40 }, avgMins: 54, goals: 0 },
+  { number: 19, name: 'Facu Munchs', positions: ['Delantero'], minutes: { f1:90,f2:25,f5:45,f6:45,f7:15 }, avgMins: 44, goals: 3 },
+  { number: 20, name: 'Seba B', positions: ['Volante Der','Golero'], minutes: { amistoso:50,f2:40,f3:45,f4:90,f5:45,f8:45 }, avgMins: 53, goals: 0 },
+  { number: 21, name: 'Enzo Gaione', positions: ['Zaguero'], minutes: { f2:60,f4:30,f5:90,f6:90,f7:90,f8:45 }, avgMins: 68, goals: 0 },
+  { number: 22, name: 'Pato', positions: ['Medio'], minutes: { amistoso:90,f1:70,f2:90,f3:90,f4:90,f5:90,f6:80,f7:90,f8:45 }, avgMins: 82, goals: 1 },
+  { number: 23, name: 'Seba T', positions: ['Volante Der','Delantero'], minutes: { f1:90,f2:65,f3:35 }, avgMins: 63, goals: 2 },
+  { number: 24, name: 'Mati', positions: ['Zaguero','Medio'], minutes: { f1:70,f2:90,f3:90,f4:65,f5:90,f6:70,f8:60,f9:90 }, avgMins: 78, goals: 0 },
+  { number: 27, name: 'Mandinga', positions: ['Delantero','Volante Der'], minutes: { amistoso:45,f2:30,f3:50,f4:25,f5:65,f6:60,f7:65,f8:75,f9:90 }, avgMins: 56, goals: 4 },
+  { number: 28, name: 'Mariano', positions: ['Zaguero','Lateral Izq'], minutes: { f3:10,f5:0 }, avgMins: 5, goals: 0 },
+  { number: 29, name: 'Fabian Couto', positions: ['Lateral Der','Lateral Izq'], minutes: { amistoso:90,f1:35,f5:25,f8:30 }, avgMins: 45, goals: 0 },
+  { number: 72, name: 'Sena', positions: ['Zaguero','Lateral Izq'], minutes: { amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90 }, avgMins: 74, goals: 4 },
+  { number: 99, name: 'Ignacio Luy', positions: ['Volante Der','Volante Izq'], minutes: { f3:30,f4:30,f5:45,f6:60,f8:30 }, avgMins: 39, goals: 0 },
+  { number: null, name: 'Andres Guerra', positions: ['Delantero'], minutes: { f6:30,f7:30 }, avgMins: 30, goals: 3 },
+  { number: null, name: 'Lucas Godoy', positions: ['Delantero'], minutes: { f6:30,f7:45,f8:45,f9:65 }, avgMins: 46, goals: 0 },
+];
+
+const SCORERS_DATA = [
+  { name: 'Elias', position: 'Delantero', goals: 11, number: 10 },
+  { name: 'Sena', position: 'Zaguero / Lat. Izq', goals: 4, number: 72 },
+  { name: 'Mandinga', position: 'Delantero', goals: 4, number: 27 },
+  { name: 'Andres Guerra', position: 'Delantero', goals: 3, number: null },
+  { name: 'Facu Munchs', position: 'Delantero', goals: 3, number: 19 },
+  { name: 'Seba T', position: 'Volante Der', goals: 2, number: 23 },
+  { name: 'Franco F', position: 'Medio', goals: 1, number: 8 },
+  { name: 'Pata', position: 'Volante / Delantero', goals: 1, number: 17 },
+  { name: 'Pato', position: 'Medio', goals: 1, number: 22 },
+  { name: 'Nando', position: 'Zaguero / Medio', goals: 1, number: 15 },
+  { name: 'Diego', position: 'Delantero', goals: 1, number: 9 },
+];
+
+// =====================
+// RENDER TABLA
+// =====================
+const tablaBody = document.getElementById('tabla-body');
+TABLA.forEach(t => {
+  const posClass = t.pos <= 3 ? `pos-${t.pos}` : (t.isUs ? 'pos-4' : '');
+  const logoSrc = TEAM_LOGOS[t.name];
+  const badgeHtml = logoSrc
+    ? `<div class="team-badge" style="background:var(--bg2)"><img src="${logoSrc}" alt="${t.name}" loading="lazy"></div>`
+    : `<div class="team-badge" style="${t.isUs?'background:var(--blue);color:#fff':''}">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>`;
+  const row = `<tr class="${t.isUs ? 'my-team' : ''}">
+    <td class="pos"><span class="pos-badge ${posClass}">${t.pos}</span></td>
+    <td><div class="team-name">${badgeHtml}${t.isUs?'<strong>'+t.name+' ⚽</strong>':t.name}</div></td>
+    <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+    <td class="pts">${t.pts}</td>
+  </tr>`;
+  tablaBody.innerHTML += row;
+});
+
+// =====================
+// RENDER RESULTS
+// =====================
+const resultsGrid = document.getElementById('results-grid');
+MATCHES.forEach((m, i) => {
+  const typeLabel = { W: 'Victoria', D: 'Empate', L: 'Derrota', friendly: 'Amistoso' }[m.type];
+  const typeBadge = { W: 'badge-win', D: 'badge-draw', L: 'badge-loss', friendly: 'badge-friendly' }[m.type];
+  const scorers = (SCORERS_BY_MATCH[m.id] || []).map(s => `<span class="scorer-tag">⚽ ${s}</span>`).join('');
+  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${i} · Liga MVD`;
+  const card = `<div class="match-card ${m.type === 'friendly' ? 'friendly' : m.type.toLowerCase()} fade-in stagger-${(i%3)+1}">
+    <div class="match-header">
+      <span class="match-fecha">${fechaLabel}</span>
+      <span class="match-badge ${typeBadge}">${typeLabel}</span>
+    </div>
+    <div class="match-teams">
+      <div class="match-team-block">
+        <img src="assets/logos/el-inter.png" class="match-team-logo" alt="El Inter" style="position:relative;z-index:2">
+        <span class="match-team us">El Inter</span>
+      </div>
+      <span class="match-score">${m.result}</span>
+      <div class="match-team-block">
+        ${RIVAL_LOGOS[m.rival] ? `<img src="${RIVAL_LOGOS[m.rival]}" class="match-team-logo" alt="${m.rival}">` : '<div style="width:36px;height:36px"></div>'}
+        <span class="match-team">${m.rival}</span>
+      </div>
+    </div>
+    ${scorers ? `<div class="match-scorers">${scorers}</div>` : ''}
+  </div>`;
+  resultsGrid.innerHTML += card;
+});
+
+// =====================
+// RENDER SCORERS
+// =====================
+const scorersList = document.getElementById('scorers-list');
+const maxGoals = SCORERS_DATA[0].goals;
+SCORERS_DATA.forEach((s, i) => {
+  const rankClass = i < 3 ? `scorer-rank-${i+1}` : '';
+  const initials = s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const row = `<div class="scorer-row fade-in stagger-${(i%3)+1}">
+    <div class="scorer-rank ${rankClass}">${i+1}</div>
+    <div class="scorer-avatar">${initials}</div>
+    <div class="scorer-info">
+      <div class="scorer-name">${s.name}${s.number ? ' <span style="color:var(--gray);font-size:.75rem;font-weight:400">#'+s.number+'</span>' : ''}</div>
+      <div class="scorer-pos">${s.position}</div>
+    </div>
+    <div class="scorer-bar-wrap">
+      <div class="scorer-bar"><div class="scorer-bar-fill" style="width:0%" data-width="${(s.goals/maxGoals*100).toFixed(0)}%"></div></div>
+    </div>
+    <div class="scorer-goals">${s.goals}<span class="goal-label">goles</span></div>
+  </div>`;
+  scorersList.innerHTML += row;
+});
+
+// =====================
+// JERSEY SVG
+// =====================
+function jerseysvg(number, color1='#0057B7', color2='#000') {
+  return `<svg class="jersey-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs><clipPath id="jc${number}"><path d="M20,15 L5,35 L20,42 L20,90 L80,90 L80,42 L95,35 L80,15 C75,22 65,28 50,28 C35,28 25,22 20,15Z"/></clipPath></defs>
+    <path d="M20,15 L5,35 L20,42 L20,90 L80,90 L80,42 L95,35 L80,15 C75,22 65,28 50,28 C35,28 25,22 20,15Z" fill="${color1}"/>
+    <path d="M20,15 L20,90 L50,90 L50,28 C35,28 25,22 20,15Z" fill="${color2}" opacity=".4"/>
+    <text x="50" y="68" text-anchor="middle" dominant-baseline="middle" font-family="Anton,sans-serif" font-size="22" fill="white">${number !== null ? number : '?'}</text>
+  </svg>`;
+}
+
+// =====================
+// RENDER PLAYERS
+// =====================
+const playersGrid = document.getElementById('players-grid');
+PLAYERS.forEach((p, i) => {
+  const partsPlayed = Object.values(p.minutes).filter(m => m > 0).length;
+  const totalMins = Object.values(p.minutes).reduce((a,b) => a+b, 0);
+  const photoSrc = PLAYER_PHOTOS[p.name];
+  const card = document.createElement('div');
+  card.className = 'player-card fade-in';
+  card.style.transitionDelay = `${(i%6)*0.07}s`;
+  const photoHtml = photoSrc
+    ? `<div class="player-photo-wrap">
+        <img src="${photoSrc}" alt="${p.name}" loading="lazy"
+          onerror="this.parentElement.innerHTML='<div class=player-photo-fallback>${jerseysvg(p.number).replace(/`/g,'').replace(/"/g,"'")}</div>'">
+      </div>`
+    : `<div class="player-jersey">${jerseysvg(p.number)}</div>`;
+  card.innerHTML = `
+    ${p.goals > 0 ? `<div class="player-card-goals">⚽ ${p.goals}</div>` : ''}
+    <div class="player-number-badge" style="position:absolute;top:.6rem;right:.6rem;font-family:'Anton',sans-serif;font-size:1rem;color:rgba(255,255,255,.7);line-height:1;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.8)">#${p.number !== null ? p.number : '—'}</div>
+    ${photoHtml}
+    <div class="player-card-info">
+      <div class="player-card-name">${p.name}</div>
+      <div class="player-card-pos">${p.positions[0]}</div>
+      <div class="player-card-mins">⏱ ${totalMins} min · ${partsPlayed} partidos</div>
+    </div>`;
+  card.addEventListener('click', () => openModal(p));
+  playersGrid.appendChild(card);
+});
+
+// =====================
+// MODAL
+// =====================
+function openModal(player) {
+  const modal = document.getElementById('playerModal');
+  const photoSrc = PLAYER_PHOTOS[player.name];
+  const avatarEl = document.getElementById('modal-avatar');
+  if (photoSrc) {
+    avatarEl.innerHTML = `<img src="${photoSrc}" alt="${player.name}" style="width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:top center;border:2px solid var(--blue)" onerror="this.outerHTML='${jerseysvg(player.number,'#0057B7','#000')}'">`;
+  } else {
+    avatarEl.innerHTML = jerseysvg(player.number, '#0057B7', '#000');
+  }
+  document.getElementById('modal-number').textContent = player.number !== null ? `#${player.number}` : 'Sin número';
+  document.getElementById('modal-name').textContent = player.name;
+  document.getElementById('modal-pos').textContent = player.positions.join(' · ');
+
+  const totalMins = Object.values(player.minutes).reduce((a,b) => a+b, 0);
+  const partsPlayed = Object.values(player.minutes).filter(m => m > 0).length;
+  document.getElementById('modal-stats').innerHTML = `
+    <div class="modal-stat"><div class="val">${partsPlayed}</div><div class="lbl">Partidos</div></div>
+    <div class="modal-stat"><div class="val">${totalMins}</div><div class="lbl">Minutos</div></div>
+    <div class="modal-stat"><div class="val" style="color:var(--gold)">${player.goals}</div><div class="lbl">Goles</div></div>`;
+
+  const tbody = document.getElementById('modal-minutes-body');
+  tbody.innerHTML = '';
+  MATCHES.forEach(m => {
+    const mins = player.minutes[m.id];
+    const dotClass = { W:'dot-win', D:'dot-draw', L:'dot-loss', friendly:'dot-friendly' }[m.type];
+    const typeLabel = { W:'V', D:'E', L:'D', friendly:'A' }[m.type];
+    const minsDisplay = mins === undefined
+      ? `<span class="mins-not-played">No jugó</span>`
+      : `<div class="mins-played">${mins}'</div><div class="mins-bar"><div class="mins-bar-fill" style="width:${Math.round(mins/90*100)}%"></div></div>`;
+    tbody.innerHTML += `<tr>
+      <td>${m.label.replace(/^F\d+ vs /,'F').replace('Amistoso vs ','Amistoso / ')}</td>
+      <td><span class="result-dot ${dotClass}"></span>${typeLabel} ${m.result}</td>
+      <td class="mins-cell">${minsDisplay}</td>
+    </tr>`;
+  });
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('playerModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+function closeModal() {
+  document.getElementById('playerModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// =====================
+// INTERSECTION OBSERVER
+// =====================
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Counter animation
+      e.target.querySelectorAll('[data-count]').forEach(el => {
+        const target = parseInt(el.dataset.count);
+        if (isNaN(target)) return;
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current === target ? el.dataset.count : current;
+          if (current >= target) clearInterval(timer);
+        }, 25);
+      });
+      // Scorer bars
+      e.target.querySelectorAll('.scorer-bar-fill').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.width; }, 300);
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in,.fade-in-left,.fade-in-right').forEach(el => io.observe(el));
+
+// Re-observe scorers after render
+document.querySelectorAll('.scorer-row').forEach(el => io.observe(el));
+
+// =====================
+// NAVBAR SCROLL
+// =====================
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.background = window.scrollY > 50
+    ? 'rgba(6,6,8,0.98)'
+    : 'rgba(6,6,8,0.85)';
+});
+</script>
+</body>
+</html>

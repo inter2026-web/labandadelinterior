@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Outer blue ring -->
+  <circle cx="150" cy="150" r="149" fill="#0066CC"/>
+  <!-- Black separator ring -->
+  <circle cx="150" cy="150" r="127" fill="#0D0D0D"/>
+  <!-- Gold main fill -->
+  <circle cx="150" cy="150" r="117" fill="#C8A850"/>
+
+  <!-- Text paths -->
+  <defs>
+    <path id="top" d="M 24,150 A 126,126 0 0,1 276,150"/>
+    <path id="bot" d="M 30,150 A 120,120 0 0,0 270,150"/>
+  </defs>
+
+  <!-- EL INTER -->
+  <text font-family="Arial Black,Arial" font-size="19" fill="white" font-weight="900" letter-spacing="7">
+    <textPath href="#top" startOffset="50%" text-anchor="middle">EL INTER</textPath>
+  </text>
+
+  <!-- 2023 -->
+  <text font-family="Arial Black,Arial" font-size="17" fill="white" font-weight="900" letter-spacing="10">
+    <textPath href="#bot" startOffset="50%" text-anchor="middle">2023</textPath>
+  </text>
+
+  <!-- Small diamond decorators on sides -->
+  <polygon points="24,150 30,144 36,150 30,156" fill="white"/>
+  <polygon points="276,150 270,144 264,150 270,156" fill="white"/>
+
+  <!-- Inner black ring border -->
+  <circle cx="150" cy="150" r="100" fill="none" stroke="#0D0D0D" stroke-width="4"/>
+
+  <!-- Uruguay silhouette (approximate, centered slightly above center) -->
+  <path d="
+    M 150,80
+    C 155,78 163,79 170,83
+    C 177,87 183,93 187,100
+    C 192,108 193,117 192,126
+    C 196,130 199,136 198,143
+    C 197,150 193,156 189,162
+    C 185,168 179,173 173,178
+    C 167,183 160,186 153,187
+    C 146,188 139,186 133,182
+    C 127,178 122,172 119,165
+    C 116,158 115,150 117,142
+    C 119,134 123,127 120,120
+    C 117,113 116,105 120,98
+    C 124,91 132,83 140,80
+    C 144,79 148,80 150,80 Z
+  " fill="#1a1a1a"/>
+
+  <!-- IM logo circle -->
+  <circle cx="150" cy="148" r="30" fill="#C8A850" stroke="#0D0D0D" stroke-width="3.5"/>
+
+  <!-- IM interlocked letters (Inter Milan style) -->
+  <!-- I letter left -->
+  <rect x="130" y="136" width="8" height="24" rx="2" fill="#0D0D0D"/>
+  <rect x="126" y="136" width="16" height="5" rx="1.5" fill="#0D0D0D"/>
+  <rect x="126" y="155" width="16" height="5" rx="1.5" fill="#0D0D0D"/>
+  <!-- M letter right -->
+  <rect x="152" y="136" width="7" height="24" rx="2" fill="#0D0D0D"/>
+  <rect x="165" y="136" width="7" height="24" rx="2" fill="#0D0D0D"/>
+  <polygon points="152,136 158.5,148 165,136" fill="#0D0D0D"/>
+  <!-- Connect top and bottom bars of M -->
+  <rect x="152" y="136" width="20" height="5" rx="1.5" fill="#0D0D0D"/>
+  <rect x="152" y="155" width="20" height="5" rx="1.5" fill="#0D0D0D"/>
+</svg>

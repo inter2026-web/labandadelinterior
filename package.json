@@ -1,0 +1,17 @@
+{
+  "name": "inter-fc-web",
+  "version": "1.0.0",
+  "description": "Sitio web El Inter FC — Liga MVD",
+  "scripts": {
+    "scrape": "node auto-scraper.js",
+    "update": "node update-html.js",
+    "auto": "node auto-scraper.js && node update-html.js",
+    "deploy": "netlify deploy --dir . --prod"
+  },
+  "dependencies": {
+    "playwright": "^1.60.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
