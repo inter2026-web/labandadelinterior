@@ -696,6 +696,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   </div>
 </div>
 
+<script src="admin-data.js"></script>
 <script>
 // =====================
 // ASSETS MAPS
@@ -774,18 +775,20 @@ const MATCHES = [
   { id: 'f9', label: 'F9 vs Club Montero', result: '2-1', gf: 2, gc: 1, type: 'W', rival: 'Club Montero' },
 ];
 
-const SCORERS_BY_MATCH = {
-  amistoso: ['Elias x4', 'Pata x1', 'Sena x1'],
-  f1: ['Sena x1'],
-  f2: ['Elias x1', 'Nando x1', 'Facu M x1'],
-  f3: ['Seba T x1'],
-  f4: ['Seba T x1'],
-  f5: ['Andres G x2', 'Facu M x1'],
-  f6: ['Elias x3', 'Mandinga x1', 'Andres G x1', 'Facu M x1', 'Pato x1'],
-  f7: ['Elias x1', 'Mandinga x1', 'Pata x1', 'Sena x1', 'Franco F x1', 'Andres G x1'],
-  f8: ['Elias x1', 'Mandinga x1'],
-  f9: ['Sena x1', 'Diego x1'],
-};
+const SCORERS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.scorersByMatch)
+  ? ADMIN_DATA.scorersByMatch
+  : {
+    amistoso: ['Elias x4', 'Pata x1', 'Sena x1'],
+    f1: ['Sena x1'],
+    f2: ['Elias x1', 'Nando x1', 'Facu M x1'],
+    f3: ['Seba T x1'],
+    f4: ['Seba T x1'],
+    f5: ['Andres G x2', 'Facu M x1'],
+    f6: ['Elias x3', 'Mandinga x1', 'Andres G x1', 'Facu M x1', 'Pato x1'],
+    f7: ['Elias x1', 'Mandinga x1', 'Pata x1', 'Sena x1', 'Franco F x1', 'Andres G x1'],
+    f8: ['Elias x1', 'Mandinga x1'],
+    f9: ['Sena x1', 'Diego x1'],
+  };
 
 const TABLA = [
   {
@@ -929,19 +932,52 @@ const PLAYERS = [
   { number: null, name: 'Lucas Godoy', positions: ['Delantero'], minutes: { f6:30,f7:45,f8:45,f9:65 }, avgMins: 46, goals: 0 },
 ];
 
-const SCORERS_DATA = [
-  { name: 'Elias', position: 'Delantero', goals: 11, number: 10 },
-  { name: 'Sena', position: 'Zaguero / Lat. Izq', goals: 4, number: 72 },
-  { name: 'Mandinga', position: 'Delantero', goals: 4, number: 27 },
-  { name: 'Andres Guerra', position: 'Delantero', goals: 3, number: null },
-  { name: 'Facu Munchs', position: 'Delantero', goals: 3, number: 19 },
-  { name: 'Seba T', position: 'Volante Der', goals: 2, number: 23 },
-  { name: 'Franco F', position: 'Medio', goals: 1, number: 8 },
-  { name: 'Pata', position: 'Volante / Delantero', goals: 1, number: 17 },
-  { name: 'Pato', position: 'Medio', goals: 1, number: 22 },
-  { name: 'Nando', position: 'Zaguero / Medio', goals: 1, number: 15 },
-  { name: 'Diego', position: 'Delantero', goals: 1, number: 9 },
-];
+// Apply admin data overrides if available
+if (typeof ADMIN_DATA !== 'undefined') {
+  if (ADMIN_DATA.playerMinutes) {
+    PLAYERS.forEach(p => {
+      const mins = {};
+      Object.entries(ADMIN_DATA.playerMinutes).forEach(([matchId, matchData]) => {
+        if (matchData[p.name] !== undefined && matchData[p.name] > 0) {
+          mins[matchId] = matchData[p.name];
+        }
+      });
+      if (Object.keys(mins).length > 0) p.minutes = mins;
+    });
+  }
+  if (ADMIN_DATA.scorersByMatch) {
+    PLAYERS.forEach(p => {
+      let goals = 0;
+      Object.values(ADMIN_DATA.scorersByMatch).forEach(scorers => {
+        scorers.forEach(s => {
+          const m = s.match(/^(.+?)\s+x(\d+)$/);
+          if (m && m[1] === p.name) goals += parseInt(m[2]);
+          else if (s === p.name) goals += 1;
+        });
+      });
+      p.goals = goals;
+    });
+  }
+  // Merge new match results from admin
+  if (ADMIN_DATA.matchResults) {
+    Object.entries(ADMIN_DATA.matchResults).forEach(([id, r]) => {
+      const existing = MATCHES.find(m => m.id === id);
+      if (existing) {
+        if (r.gf !== undefined) existing.gf = r.gf;
+        if (r.gc !== undefined) existing.gc = r.gc;
+        if (r.gf !== undefined && r.gc !== undefined) existing.result = `${r.gf}-${r.gc}`;
+        if (r.type) existing.type = r.type;
+      } else {
+        MATCHES.push({ id, label: `${id.toUpperCase()} · ${r.rival || 'Partido'}`, result: `${r.gf}-${r.gc}`, gf: r.gf, gc: r.gc, type: r.type || 'W', rival: r.rival || '' });
+      }
+    });
+  }
+}
+
+const SCORERS_DATA = PLAYERS
+  .filter(p => p.goals > 0)
+  .sort((a, b) => b.goals - a.goals || a.name.localeCompare(b.name))
+  .map(p => ({ name: p.name, position: p.positions.join(' / '), goals: p.goals, number: p.number }));
 
 // =====================
 // RENDER TABLA
