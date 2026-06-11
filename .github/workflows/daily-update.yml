@@ -1,12 +1,9 @@
-name: Actualización diaria Liga MVD
+name: Daily Liga MVD Update
 
 on:
   schedule:
-    # 12:00 UTC = 09:00 Uruguay (horario estándar)
-    # Corre todos los días para capturar resultados del fin de semana
     - cron: '0 12 * * *'
   workflow_dispatch:
-    # Permite ejecutar manualmente desde GitHub Actions
 
 jobs:
   update:
