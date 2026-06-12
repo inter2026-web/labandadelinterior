@@ -273,6 +273,39 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .dot-loss{background:var(--loss)}
 .dot-friendly{background:var(--gray)}
 
+/* LINEUP MODAL */
+.lineup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:3000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
+.lineup-overlay.open{display:flex}
+.lineup-modal{background:var(--card);border:1px solid var(--border);border-radius:20px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.lineup-header{padding:1.4rem 1.5rem 1.1rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:1;border-radius:20px 20px 0 0}
+.lineup-match-label{font-size:.65rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.5rem}
+.lineup-score-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.lineup-rival{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.04em;flex:1}
+.lineup-score{font-family:'Anton',sans-serif;font-size:1.15rem;padding:.15rem .55rem;border-radius:7px;line-height:1.2}
+.lineup-score.w{color:var(--win);background:rgba(39,174,96,.12)}
+.lineup-score.d{color:var(--draw);background:rgba(241,196,15,.12)}
+.lineup-score.l{color:var(--loss);background:rgba(231,76,60,.12)}
+.lineup-score.f{color:var(--gray-light);background:rgba(255,255,255,.08)}
+.lineup-result-badge{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
+.lineup-close{position:absolute;top:1rem;right:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--gray);transition:all .2s}
+.lineup-close:hover{background:var(--border);color:var(--white)}
+.lineup-section{padding:1.1rem 1.5rem}
+.lineup-section-title{font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.65rem;display:flex;align-items:center;gap:.5rem}
+.lineup-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.lineup-player{display:flex;align-items:center;gap:.65rem;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.lineup-player:last-child{border-bottom:none}
+.lineup-player.no-enter{opacity:.42}
+.pos-badge{font-size:.58rem;font-weight:700;letter-spacing:.04em;padding:.18rem .38rem;border-radius:4px;min-width:34px;text-align:center;flex-shrink:0}
+.pos-por{background:rgba(245,166,35,.18);color:#f5a623;border:1px solid rgba(245,166,35,.28)}
+.pos-def{background:rgba(0,87,183,.22);color:#5ba3ff;border:1px solid rgba(0,87,183,.32)}
+.pos-mid{background:rgba(39,174,96,.18);color:#2ecc71;border:1px solid rgba(39,174,96,.28)}
+.pos-fwd{background:rgba(231,76,60,.18);color:#e74c3c;border:1px solid rgba(231,76,60,.28)}
+.lineup-player-name{flex:1;font-size:.87rem;font-weight:500}
+.goal-chip{font-size:.63rem;background:rgba(39,174,96,.2);color:#2ecc71;padding:.08rem .32rem;border-radius:999px;margin-left:.3rem;font-weight:700;vertical-align:middle}
+.lineup-mins{font-size:.73rem;color:var(--gray);font-family:'Roboto Condensed',sans-serif;white-space:nowrap;flex-shrink:0}
+.no-enter-tag{font-size:.62rem;color:var(--gray);background:rgba(255,255,255,.06);padding:.12rem .4rem;border-radius:4px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
+.match-card-hint{font-size:.62rem;color:var(--gray);margin-top:.65rem;opacity:.65}
+
 /* GALERIA */
 .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .gallery-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;aspect-ratio:1}
@@ -692,6 +725,29 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" onclick="event.stopPropagation()">
 </div>
 
+<!-- LINEUP MODAL -->
+<div class="lineup-overlay" id="lineupModal">
+  <div class="lineup-modal" onclick="event.stopPropagation()">
+    <button class="lineup-close" onclick="closeLineup()">✕</button>
+    <div class="lineup-header">
+      <div class="lineup-match-label" id="lineup-match-label"></div>
+      <div class="lineup-score-row">
+        <span class="lineup-rival" id="lineup-rival"></span>
+        <span class="lineup-score" id="lineup-score"></span>
+        <span class="lineup-result-badge" id="lineup-result-badge"></span>
+      </div>
+    </div>
+    <div class="lineup-section">
+      <div class="lineup-section-title">Titulares</div>
+      <div id="lineup-titulares"></div>
+    </div>
+    <div class="lineup-section" style="padding-top:0">
+      <div class="lineup-section-title">Suplentes</div>
+      <div id="lineup-suplentes"></div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="playerModal" role="dialog" aria-modal="true">
   <div class="modal">
@@ -799,6 +855,28 @@ const MATCHES = [
   { id: 'f8', label: 'F8 vs Malasia', result: '2-1', gf: 2, gc: 1, type: 'W', rival: 'Malasia F.C.' },
   { id: 'f9', label: 'F9 vs Club Montero', result: '2-1', gf: 2, gc: 1, type: 'W', rival: 'Club Montero' },
 ];
+
+const LINEUPS = {
+  amistoso:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Couto'},{pos:'DFC',name:'Nando'},{pos:'DFC',name:'Sena'},{pos:'DFI',name:'Brandon'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Franco F'},{pos:'MD',name:'Pata'},{pos:'MCO',name:'Franco Irri'},{pos:'MI',name:'Vidal'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Seba B'},{name:'Negrin'},{name:'Mandinga'}]},
+  f1:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Couto'},{pos:'DFC',name:'Mati'},{pos:'DFC',name:'Sena'},{pos:'DFI',name:'Brandon'},{pos:'MCD',name:'Pato'},{pos:'MCD',name:'Nando'},{pos:'MD',name:'Seba T'},{pos:'MC',name:'Franco F'},{pos:'MI',name:'Franco Irri'},{pos:'DC',name:'Facu M'}],suplentes:[{name:'Lolo'},{name:'Negrin'},{name:'Diego'},{name:'Juli'},{name:'Vicente'}]},
+  f2:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Pata'},{pos:'DFC',name:'Mati'},{pos:'DFC',name:'Enzo'},{pos:'DFI',name:'Brandon'},{pos:'MCD',name:'Nando'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Franco F'},{pos:'MCO',name:'Franco Irri'},{pos:'DC',name:'Elias'},{pos:'DC',name:'Facu M'}],suplentes:[{name:'Seba T'},{name:'Sena'},{name:'Vidal'},{name:'Seba B'},{name:'Mandinga'}]},
+  f3:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Seba B'},{pos:'DFC',name:'Mati'},{pos:'DFC',name:'Vicente'},{pos:'DFI',name:'Sena'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Juli'},{pos:'MD',name:'Franco F'},{pos:'MCO',name:'Franco Irri'},{pos:'MI',name:'Pata'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Mandinga'},{name:'Seba T'},{name:'Vidal'},{name:'Luy'},{name:'Lolo'},{name:'Diego'},{name:'Mariano'},{name:'Negrin'}]},
+  f4:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Seba B'},{pos:'DFC',name:'Juli'},{pos:'DFC',name:'Nando'},{pos:'DFI',name:'Sena'},{pos:'MD',name:'Pata'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Franco F'},{pos:'MI',name:'Franco Irri'},{pos:'DC',name:'Elias'},{pos:'DC',name:'Mandinga'}],suplentes:[{name:'Brandon'},{name:'Enzo'},{name:'Lolo',noEnter:true},{name:'Mati'},{name:'Diego',noEnter:true},{name:'Luy'},{name:'Vidal'}]},
+  f5:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFC',name:'Vicente'},{pos:'DFC',name:'Enzo'},{pos:'DFC',name:'Mati'},{pos:'MD',name:'Lolo'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Franco F'},{pos:'MI',name:'Brandon'},{pos:'MCO',name:'Franco Irri'},{pos:'DC',name:'Mandinga'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Facu M'},{name:'Sena'},{name:'Luy'},{name:'Seba B'},{name:'Diego'},{name:'Mariano'},{name:'Negrin',noEnter:true},{name:'Couto'}]},
+  f6:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Enzo'},{pos:'DFC',name:'Vicente'},{pos:'DFC',name:'Mati'},{pos:'DFI',name:'Brandon'},{pos:'MD',name:'Luy'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Sena'},{pos:'MD',name:'Franco Irri'},{pos:'DC',name:'Mandinga'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Facu M'},{name:'Lolo'},{name:'Negrin'},{name:'Andres G'},{name:'Godoy'}]},
+  f7:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Enzo'},{pos:'DFC',name:'Vicente'},{pos:'DFC',name:'Juli'},{pos:'DFI',name:'Brandon'},{pos:'MD',name:'Pata'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Sena'},{pos:'MI',name:'Franco Irri'},{pos:'DC',name:'Mandinga'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Facu M'},{name:'Lolo'},{name:'Andres G'},{name:'Godoy'},{name:'Vidal'},{name:'Diego'}]},
+  f8:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Enzo'},{pos:'DFC',name:'Juli'},{pos:'DFC',name:'Mati'},{pos:'DFI',name:'Brandon'},{pos:'MD',name:'Franco F'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Sena'},{pos:'MI',name:'Vidal'},{pos:'DC',name:'Mandinga'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Negrin'},{name:'Nando'},{name:'Pata'},{name:'Seba B'},{name:'Couto'},{name:'Godoy'},{name:'Luy'},{name:'Vicente'}]},
+  f9:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Pata'},{pos:'DFC',name:'Vicente'},{pos:'DFC',name:'Mati'},{pos:'DFI',name:'Brandon'},{pos:'MD',name:'Franco F'},{pos:'MC',name:'Nando'},{pos:'MC',name:'Sena'},{pos:'MI',name:'Godoy'},{pos:'DC',name:'Mandinga'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Negrin'},{name:'Diego'}]}
+};
+
+const LINEUP_NAME_MAP = {
+  'Jubin':'Jubin','Couto':'Fabian Couto','Nando':'Nando','Sena':'Sena','Brandon':'Brandon',
+  'Pato':'Pato','Franco F':'Franco F','Pata':'Pata','Franco Irri':'Franco Irri','Vidal':'Vidal',
+  'Elias':'Elias','Mati':'Mati','Seba T':'Seba T','Facu M':'Facu Munchs','Lolo':'Lolo',
+  'Negrin':'Negrin','Diego':'Diego','Juli':'Juli Rios','Vicente':'Vicente','Seba B':'Seba B',
+  'Enzo':'Enzo','Mandinga':'Mandinga','Luy':'Ignacio Luy','Andres G':'Andres Guerra',
+  'Godoy':'Lucas Godoy','Mariano':'Mariano'
+};
 
 const SCORERS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.scorersByMatch)
   ? ADMIN_DATA.scorersByMatch
@@ -1045,7 +1123,7 @@ MATCHES.forEach((m, i) => {
   const typeBadge = { W: 'badge-win', D: 'badge-draw', L: 'badge-loss', friendly: 'badge-friendly' }[m.type];
   const scorers = (SCORERS_BY_MATCH[m.id] || []).map(s => `<span class="scorer-tag">âš½ ${s}</span>`).join('');
   const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${i} Â· Liga MVD`;
-  const card = `<div class="match-card ${m.type === 'friendly' ? 'friendly' : m.type.toLowerCase()} fade-in stagger-${(i%3)+1}">
+  const card = `<div class="match-card ${m.type === 'friendly' ? 'friendly' : m.type.toLowerCase()} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
     <div class="match-header">
       <span class="match-fecha">${fechaLabel}</span>
       <span class="match-badge ${typeBadge}">${typeLabel}</span>
@@ -1062,6 +1140,7 @@ MATCHES.forEach((m, i) => {
       </div>
     </div>
     ${scorers ? `<div class="match-scorers">${scorers}</div>` : ''}
+    <div class="match-card-hint">👆 Ver alineación</div>
   </div>`;
   resultsGrid.innerHTML += card;
 });
@@ -1177,7 +1256,7 @@ function openModal(player) {
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('playerModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeTeamPhoto(); }
+  if (e.key === 'Escape') { closeModal(); closeTeamPhoto(); closeLineup(); }
 });
 function openTeamPhoto() {
   document.getElementById('team-photo-lightbox').classList.add('open');
@@ -1191,6 +1270,63 @@ function closeModal() {
   document.getElementById('playerModal').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// =====================
+// LINEUP MODAL
+// =====================
+function openLineup(matchId) {
+  const m = MATCHES.find(x => x.id === matchId);
+  const lu = LINEUPS[matchId];
+  if (!m || !lu) return;
+  const scorerMap = {};
+  (SCORERS_BY_MATCH[matchId] || []).forEach(s => {
+    const parts = s.split(' x');
+    scorerMap[parts[0].trim()] = parseInt(parts[1]) || 1;
+  });
+  const pm = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerMinutes && ADMIN_DATA.playerMinutes[matchId]) || {};
+  const resultClass = {W:'w',D:'d',L:'l',friendly:'f'}[m.type] || 'f';
+  const resultLabel = {W:'Victoria',D:'Empate',L:'Derrota',friendly:'Amistoso'}[m.type];
+  const fechaLabel = matchId === 'amistoso' ? 'Amistoso · Pretemporada' : `Fecha ${matchId.replace('f','')} · Liga MVD`;
+  function posCls(pos) {
+    if (!pos) return '';
+    if (pos === 'POR') return 'pos-por';
+    if (pos.startsWith('DF')) return 'pos-def';
+    if (pos === 'DC') return 'pos-fwd';
+    return 'pos-mid';
+  }
+  function renderP(p) {
+    const adminName = LINEUP_NAME_MAP[p.name] || p.name;
+    const mins = pm[adminName];
+    const goals = scorerMap[adminName] || 0;
+    const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : '<span style="min-width:34px;display:inline-block"></span>';
+    const goalBadge = goals > 0 ? `<span class="goal-chip">${goals > 1 ? '⚽×'+goals : '⚽'}</span>` : '';
+    const minsEl = p.noEnter
+      ? '<span class="no-enter-tag">No ingresó</span>'
+      : mins !== undefined ? `<span class="lineup-mins">${mins} min</span>` : '';
+    return `<div class="lineup-player${p.noEnter ? ' no-enter' : ''}">
+      ${posBadge}
+      <span class="lineup-player-name">${p.name}${goalBadge}</span>
+      ${minsEl}
+    </div>`;
+  }
+  document.getElementById('lineup-match-label').textContent = fechaLabel;
+  document.getElementById('lineup-rival').textContent = 'El Inter vs ' + m.rival;
+  const scoreEl = document.getElementById('lineup-score');
+  scoreEl.textContent = m.result;
+  scoreEl.className = 'lineup-score ' + resultClass;
+  document.getElementById('lineup-result-badge').textContent = resultLabel;
+  document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
+  document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
+  document.getElementById('lineupModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLineup() {
+  document.getElementById('lineupModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lineupModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLineup();
+});
 
 // =====================
 // INTERSECTION OBSERVER
