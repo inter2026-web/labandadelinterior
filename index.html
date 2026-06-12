@@ -112,13 +112,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 /* ÚLTIMOS RESULTADOS */
 .forma{display:flex;flex-direction:column;gap:.5rem}
 .forma-label{font-size:.65rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.15em;font-weight:700}
-.forma-items{display:flex;gap:.4rem;flex-wrap:wrap}
-.forma-item{display:flex;flex-direction:column;align-items:center;gap:.25rem;cursor:default}
-.forma-badge{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:.85rem;letter-spacing:.02em;border:2px solid rgba(255,255,255,.1)}
+.forma-items{display:flex;flex-direction:column;gap:.35rem}
+.forma-item{display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px}
+.forma-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:.8rem;flex-shrink:0;border:2px solid rgba(255,255,255,.1)}
 .forma-badge.v{background:rgba(34,197,94,.2);color:var(--win);border-color:rgba(34,197,94,.3)}
 .forma-badge.e{background:rgba(245,158,11,.2);color:var(--draw);border-color:rgba(245,158,11,.3)}
 .forma-badge.d{background:rgba(239,68,68,.2);color:var(--loss);border-color:rgba(239,68,68,.3)}
-.forma-rival{font-size:.58rem;color:var(--gray);text-align:center;max-width:42px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.forma-rival{flex:1;font-size:.8rem;color:var(--gray-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.forma-score{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--white);letter-spacing:.05em;flex-shrink:0}
 
 /* SECTION HEADER */
 .section{padding:5rem 2rem}
@@ -439,11 +440,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="forma fade-in">
         <div class="forma-label">Últimos 5 partidos</div>
         <div class="forma-items">
-          <div class="forma-item"><div class="forma-badge e">E</div><div class="forma-rival">Defensor</div></div>
-          <div class="forma-item"><div class="forma-badge v">V</div><div class="forma-rival">Blue Label</div></div>
-          <div class="forma-item"><div class="forma-badge v">V</div><div class="forma-rival">Revolución</div></div>
-          <div class="forma-item"><div class="forma-badge v">V</div><div class="forma-rival">Malasia</div></div>
-          <div class="forma-item"><div class="forma-badge v">V</div><div class="forma-rival">Montero</div></div>
+          <div class="forma-item"><div class="forma-badge e">E</div><span class="forma-rival">Defensor United</span><span class="forma-score">2-2</span></div>
+          <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Blue Label FC</span><span class="forma-score">7-2</span></div>
+          <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Revolución Futbolística</span><span class="forma-score">6-2</span></div>
+          <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Malasia F.C.</span><span class="forma-score">2-1</span></div>
+          <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Club Montero</span><span class="forma-score">2-1</span></div>
         </div>
       </div>
 
