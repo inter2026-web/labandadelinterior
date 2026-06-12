@@ -357,9 +357,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
       <div class="ig-stats">
-        <div class="ig-stat"><div class="ig-stat-num" data-count="84">84</div><div class="ig-stat-label">Posts</div></div>
-        <div class="ig-stat"><div class="ig-stat-num" data-count="234">234</div><div class="ig-stat-label">Seguidores</div></div>
-        <div class="ig-stat"><div class="ig-stat-num" data-count="36">36</div><div class="ig-stat-label">Siguiendo</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="ig-stat-posts" data-count="84">84</div><div class="ig-stat-label">Posts</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="ig-stat-seguidores" data-count="234">234</div><div class="ig-stat-label">Seguidores</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="ig-stat-siguiendo" data-count="36">36</div><div class="ig-stat-label">Siguiendo</div></div>
       </div>
       <div class="ig-bio">
         ðŸ’™ðŸ–¤ Vamo el Inter<br>
@@ -640,7 +640,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
           <div style="font-size:.85rem;color:var(--gray-light);line-height:1.7">Desde el interior para la capital.<br>Fundados el 19/12/2023.<br>Liga MVD Serie 1 â€” DivisiÃ³n B.</div>
           <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:center;gap:2rem">
             <div style="text-align:center">
-              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)">234</div>
+              <div id="ig-contact-seguidores" style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)">234</div>
               <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Seguidores IG</div>
             </div>
             <div style="text-align:center">
@@ -978,6 +978,19 @@ const SCORERS_DATA = PLAYERS
   .filter(p => p.goals > 0)
   .sort((a, b) => b.goals - a.goals || a.name.localeCompare(b.name))
   .map(p => ({ name: p.name, position: p.positions.join(' / '), goals: p.goals, number: p.number }));
+
+// Apply Instagram stats from ADMIN_DATA
+if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.igStats) {
+  const ig = ADMIN_DATA.igStats;
+  const elPosts = document.getElementById('ig-stat-posts');
+  const elSeg = document.getElementById('ig-stat-seguidores');
+  const elSig = document.getElementById('ig-stat-siguiendo');
+  const elContact = document.getElementById('ig-contact-seguidores');
+  if (elPosts) { elPosts.textContent = ig.posts; elPosts.dataset.count = ig.posts; }
+  if (elSeg) { elSeg.textContent = ig.seguidores; elSeg.dataset.count = ig.seguidores; }
+  if (elSig) { elSig.textContent = ig.siguiendo; elSig.dataset.count = ig.siguiendo; }
+  if (elContact) elContact.textContent = ig.seguidores;
+}
 
 // =====================
 // RENDER TABLA
