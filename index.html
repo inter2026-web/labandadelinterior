@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Inter FC | Liga MVD — División B</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Permanent+Marker&family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #060608;
@@ -109,17 +109,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .hero-next-match{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.05em}
 .hero-next-date{font-size:.75rem;color:var(--gray)}
 
-/* TRAPO */
-.trapo{width:100%;user-select:none}
-.trapo-flecos{width:100%;height:14px;background:repeating-linear-gradient(90deg,#0057B7 0px,#0057B7 12px,#060608 12px,#060608 24px);border-radius:3px 3px 0 0}
-.trapo-flecos-bot{border-radius:0 0 3px 3px;position:relative}
-.trapo-flecos-bot::after{content:'';position:absolute;bottom:-10px;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,#0057B7 0,#0057B7 8px,transparent 8px,transparent 14px);clip-path:polygon(0 0,100% 0,100% 100%,calc(100% - 3px) 40%,calc(100% - 6px) 100%,calc(100% - 9px) 40%,calc(100% - 12px) 100%,calc(100% - 15px) 40%,calc(100% - 18px) 100%,3px 100%,0 40%)}
-.trapo-body{background:linear-gradient(180deg,#03080f 0%,#060f1f 50%,#03080f 100%);border-left:4px solid #0057B7;border-right:4px solid #0057B7;padding:.1rem 0;position:relative;overflow:hidden}
-.trapo-body::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,87,183,.04) 0,rgba(0,87,183,.04) 1px,transparent 1px,transparent 18px);pointer-events:none}
-.trapo-top-stripe,.trapo-bot-stripe{height:6px;background:linear-gradient(90deg,#060608,#0057B7 20%,#111 50%,#0057B7 80%,#060608)}
-.trapo-text-wrap{padding:.6rem 1.2rem;text-align:center}
-.trapo-sub{display:block;font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.35em;color:#3d8ef0;margin-bottom:.1rem;text-transform:uppercase}
-.trapo-main{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3rem);line-height:.95;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 0 30px rgba(0,87,183,.6),2px 2px 0 #000,-1px -1px 0 rgba(0,0,0,.8)}
+/* FRASE BARRIO */
+.frase-barrio{font-family:'Permanent Marker',cursive;font-size:clamp(1.8rem,4vw,2.6rem);color:#fff;text-shadow:3px 3px 0 rgba(0,87,183,.7),-1px -1px 4px rgba(0,0,0,.9);transform:rotate(-1.5deg);display:inline-block;line-height:1.1}
 
 /* SECTION HEADER */
 .section{padding:5rem 2rem}
@@ -436,19 +427,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         <div class="hero-next-date">Sáb 13 jun · 09:00 · Cancha 13 · El Inter de visitante</div>
       </div>
 
-      <!-- TRAPO -->
-      <div class="trapo fade-in">
-        <div class="trapo-flecos"></div>
-        <div class="trapo-body">
-          <div class="trapo-top-stripe"></div>
-          <div class="trapo-text-wrap">
-            <span class="trapo-sub">⚽ El Inter FC ⚽</span>
-            <span class="trapo-main">La Banda<br>del Interior</span>
-          </div>
-          <div class="trapo-bot-stripe"></div>
-        </div>
-        <div class="trapo-flecos trapo-flecos-bot"></div>
-      </div>
+      <!-- FRASE BARRIO -->
+      <div class="frase-barrio fade-in">La banda del interior</div>
 
     </div>
   </div>
