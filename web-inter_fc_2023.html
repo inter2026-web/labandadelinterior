@@ -80,9 +80,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .ig-btn-primary:hover{background:var(--blue-light)}
 .ig-btn-secondary{background:transparent;color:var(--white);border:1.5px solid var(--border)}
 .ig-btn-secondary:hover{border-color:var(--blue-light);color:var(--blue-light)}
-.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:8px;overflow:hidden}
-.ig-grid img{width:100%;aspect-ratio:1;object-fit:cover;transition:opacity .2s}
-.ig-grid img:hover{opacity:.8}
+.team-photo-wrap{position:relative;border-radius:12px;overflow:hidden;cursor:pointer}
+.team-photo-img{width:100%;display:block;border-radius:12px;transition:transform .3s}
+.team-photo-wrap:hover .team-photo-img{transform:scale(1.03)}
+.team-photo-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;opacity:0;transition:opacity .25s;border-radius:12px;color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.team-photo-wrap:hover .team-photo-overlay{opacity:1}
+.team-lightbox{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;backdrop-filter:blur(6px)}
+.team-lightbox.open{display:flex}
+.team-lightbox img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,.8);cursor:default;animation:lb-in .25s ease}
+@keyframes lb-in{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.team-lightbox-close{position:absolute;top:1.25rem;right:1.25rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:#fff;transition:background .2s;z-index:1}
+.team-lightbox-close:hover{background:rgba(255,255,255,.25)}
 
 .hero-text{display:flex;flex-direction:column;gap:1.5rem}
 .hero-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .9rem;background:rgba(0,87,183,.15);border:1px solid rgba(0,87,183,.3);border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-light);width:fit-content}
@@ -372,13 +380,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         <a href="#contacto" class="ig-btn ig-btn-secondary">Contactar</a>
         <a href="https://www.ligamvd.com/home/1/1/" target="_blank" class="ig-btn ig-btn-secondary">Liga MVD</a>
       </div>
-      <div class="ig-grid">
-        <img src="assets/instagram/post-9.jpg" alt="Inter FC" loading="lazy">
-        <img src="assets/instagram/post-8.jpg" alt="Inter FC" loading="lazy">
-        <img src="assets/instagram/post-7.jpg" alt="Inter FC" loading="lazy">
-        <img src="assets/instagram/post-6.jpg" alt="Inter FC" loading="lazy">
-        <img src="assets/instagram/post-5.jpg" alt="Inter FC" loading="lazy">
-        <img src="assets/instagram/post-4.jpg" alt="Inter FC" loading="lazy">
+      <div class="team-photo-wrap" onclick="openTeamPhoto()" title="Click para ampliar">
+        <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" loading="lazy" class="team-photo-img">
+        <div class="team-photo-overlay">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white" opacity=".9"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <span>Ver foto</span>
+        </div>
+      </div>
+
+      <!-- Lightbox foto equipo -->
+      <div id="team-photo-lightbox" class="team-lightbox" onclick="closeTeamPhoto()">
+        <button class="team-lightbox-close" onclick="closeTeamPhoto()">✕</button>
+        <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" onclick="event.stopPropagation()">
       </div>
     </div>
 
@@ -1151,7 +1164,17 @@ function openModal(player) {
 
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('playerModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeTeamPhoto(); }
+});
+function openTeamPhoto() {
+  document.getElementById('team-photo-lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTeamPhoto() {
+  document.getElementById('team-photo-lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
 function closeModal() {
   document.getElementById('playerModal').classList.remove('open');
   document.body.style.overflow = '';
