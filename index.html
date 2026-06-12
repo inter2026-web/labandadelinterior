@@ -388,11 +388,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
 
-      <!-- Lightbox foto equipo -->
-      <div id="team-photo-lightbox" class="team-lightbox" onclick="closeTeamPhoto()">
-        <button class="team-lightbox-close" onclick="closeTeamPhoto()">✕</button>
-        <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" onclick="event.stopPropagation()">
-      </div>
     </div>
 
     <!-- Hero text -->
@@ -679,6 +674,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <a href="https://www.ligamvd.com" target="_blank" class="footer-liga">Liga MVD — ligamvd.com</a>
   </div>
 </footer>
+
+<!-- LIGHTBOX FOTO EQUIPO -->
+<div id="team-photo-lightbox" class="team-lightbox" onclick="closeTeamPhoto()">
+  <button class="team-lightbox-close" onclick="closeTeamPhoto()">✕</button>
+  <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" onclick="event.stopPropagation()">
+</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="playerModal" role="dialog" aria-modal="true">
