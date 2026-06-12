@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Inter FC | Liga MVD — División B</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Permanent+Marker&family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Rubik+Dirt&family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #060608;
@@ -110,7 +110,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .hero-next-date{font-size:.75rem;color:var(--gray)}
 
 /* FRASE BARRIO */
-.frase-barrio{font-family:'Permanent Marker',cursive;font-size:clamp(1.8rem,4vw,2.6rem);color:#fff;text-shadow:3px 3px 0 rgba(0,87,183,.7),-1px -1px 4px rgba(0,0,0,.9);transform:rotate(-1.5deg);display:inline-block;line-height:1.1}
+.frase-barrio{display:flex;flex-direction:column;line-height:1;gap:.1rem}
+.fb-l1{font-family:'Rubik Dirt',cursive;font-size:clamp(2.4rem,5.5vw,3.8rem);text-transform:uppercase;letter-spacing:.04em;color:#fff;text-shadow:4px 4px 0 #001e5e,-2px -2px 0 #000,0 0 20px rgba(0,87,183,.4)}
+.fb-l2{font-family:'Rubik Dirt',cursive;font-size:clamp(2rem,4.5vw,3.2rem);text-transform:uppercase;letter-spacing:.04em;color:#3d8ef0;text-shadow:4px 4px 0 #001040,-2px -2px 0 #000,0 0 20px rgba(61,142,240,.3)}
 
 /* SECTION HEADER */
 .section{padding:5rem 2rem}
@@ -428,7 +430,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       </div>
 
       <!-- FRASE BARRIO -->
-      <div class="frase-barrio fade-in">La banda del interior</div>
+      <div class="frase-barrio fade-in">
+        <span class="fb-l1">La Banda</span>
+        <span class="fb-l2">del Interior</span>
+      </div>
 
     </div>
   </div>
