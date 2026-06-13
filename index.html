@@ -189,6 +189,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .badge-draw{background:rgba(245,158,11,.15);color:var(--draw)}
 .badge-loss{background:rgba(239,68,68,.15);color:var(--loss)}
 .badge-friendly{background:rgba(120,120,150,.15);color:var(--gray)}
+.badge-next{background:rgba(255,255,255,.06);color:#888}
 .match-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
 .match-team-block{display:flex;flex-direction:column;align-items:center;gap:.3rem;flex:1}
 .match-team-logo{width:36px;height:36px;object-fit:contain;border-radius:50%}
@@ -892,6 +893,18 @@ const MATCHES = [
   { id: 'f9', label: 'F9 vs Club Montero', result: '2-1', gf: 2, gc: 1, type: 'W', rival: 'Club Montero' },
 ];
 
+// Auto-agregar partidos nuevos desde el panel admin
+if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.matchResults) {
+  const _knownIds = new Set(MATCHES.map(m => m.id));
+  Object.entries(ADMIN_DATA.matchResults).forEach(([id, r]) => {
+    if (!_knownIds.has(id) && r.rival) {
+      const gf = r.gf != null ? r.gf : null;
+      const gc = r.gc != null ? r.gc : null;
+      MATCHES.push({ id, label: `${id} vs ${r.rival}`, result: (gf != null && gc != null) ? `${gf}-${gc}` : null, gf, gc, type: r.type || null, rival: r.rival });
+    }
+  });
+}
+
 const LINEUPS = {
   amistoso:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Couto'},{pos:'DFC',name:'Nando'},{pos:'DFC',name:'Sena'},{pos:'DFI',name:'Brandon'},{pos:'MC',name:'Pato'},{pos:'MC',name:'Franco F'},{pos:'MD',name:'Pata'},{pos:'MCO',name:'Franco Irri'},{pos:'MI',name:'Vidal'},{pos:'DC',name:'Elias'}],suplentes:[{name:'Seba B'},{name:'Negrin'},{name:'Mandinga'}]},
   f1:{titulares:[{pos:'POR',name:'Jubin'},{pos:'DFD',name:'Couto'},{pos:'DFC',name:'Mati'},{pos:'DFC',name:'Sena'},{pos:'DFI',name:'Brandon'},{pos:'MCD',name:'Pato'},{pos:'MCD',name:'Nando'},{pos:'MD',name:'Seba T'},{pos:'MC',name:'Franco F'},{pos:'MI',name:'Franco Irri'},{pos:'DC',name:'Facu M'}],suplentes:[{name:'Lolo'},{name:'Negrin'},{name:'Diego'},{name:'Juli'},{name:'Vicente'}]},
@@ -1185,8 +1198,9 @@ TABLA.forEach(t => {
 // =====================
 const resultsGrid = document.getElementById('results-grid');
 MATCHES.forEach((m, i) => {
-  const typeLabel = { W: 'Victoria', D: 'Empate', L: 'Derrota', friendly: 'Amistoso' }[m.type];
-  const typeBadge = { W: 'badge-win', D: 'badge-draw', L: 'badge-loss', friendly: 'badge-friendly' }[m.type];
+  const typeLabel = { W: 'Victoria', D: 'Empate', L: 'Derrota', friendly: 'Amistoso' }[m.type] || 'Próximo';
+  const typeBadge = { W: 'badge-win', D: 'badge-draw', L: 'badge-loss', friendly: 'badge-friendly' }[m.type] || 'badge-next';
+  const cardType = m.type === 'friendly' ? 'friendly' : (m.type ? m.type.toLowerCase() : 'next');
   const scorers = (SCORERS_BY_MATCH[m.id] || []).map(s => {
     const sm = s.match(/^(.+?)\s+x(\d+)$/);
     const adminName = sm ? sm[1].trim() : s.trim();
@@ -1195,8 +1209,9 @@ MATCHES.forEach((m, i) => {
     const dn = (pl && pl.fullName) || adminName;
     return `<span class="scorer-tag">⚽ ${dn}${goals > 1 ? ' ×'+goals : ''}</span>`;
   }).join('');
-  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${i} · Liga MVD`;
-  const card = `<div class="match-card ${m.type === 'friendly' ? 'friendly' : m.type.toLowerCase()} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
+  const fechaNum = m.id.replace(/\D/g, '');
+  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${fechaNum} · Liga MVD`;
+  const card = `<div class="match-card ${cardType} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
     <div class="match-header">
       <span class="match-fecha">${fechaLabel}</span>
       <span class="match-badge ${typeBadge}">${typeLabel}</span>
@@ -1206,7 +1221,7 @@ MATCHES.forEach((m, i) => {
         <img src="assets/logos/el-inter.png" class="match-team-logo" alt="El Inter" style="position:relative;z-index:2">
         <span class="match-team us">El Inter</span>
       </div>
-      <span class="match-score">${m.result}</span>
+      <span class="match-score">${m.result || 'vs'}</span>
       <div class="match-team-block">
         ${RIVAL_LOGOS[m.rival] ? `<img src="${RIVAL_LOGOS[m.rival]}" class="match-team-logo" alt="${m.rival}">` : '<div style="width:36px;height:36px"></div>'}
         <span class="match-team">${m.rival}</span>

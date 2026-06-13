@@ -1196,7 +1196,7 @@ MATCHES.forEach((m, i) => {
     return `<span class="scorer-tag">⚽ ${dn}${goals > 1 ? ' ×'+goals : ''}</span>`;
   }).join('');
   const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${i} Â· Liga MVD`;
-  const card = `<div class="match-card ${m.type === 'friendly' ? 'friendly' : m.type.toLowerCase()} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
+  const card = `<div class="match-card ${cardType} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
     <div class="match-header">
       <span class="match-fecha">${fechaLabel}</span>
       <span class="match-badge ${typeBadge}">${typeLabel}</span>
@@ -1206,7 +1206,7 @@ MATCHES.forEach((m, i) => {
         <img src="assets/logos/el-inter.png" class="match-team-logo" alt="El Inter" style="position:relative;z-index:2">
         <span class="match-team us">El Inter</span>
       </div>
-      <span class="match-score">${m.result}</span>
+      <span class="match-score">${m.result || 'vs'}</span>
       <div class="match-team-block">
         ${RIVAL_LOGOS[m.rival] ? `<img src="${RIVAL_LOGOS[m.rival]}" class="match-team-logo" alt="${m.rival}">` : '<div style="width:36px;height:36px"></div>'}
         <span class="match-team">${m.rival}</span>
