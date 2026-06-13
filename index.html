@@ -1464,6 +1464,8 @@ function openLineup(matchId) {
   }
   function renderP(p) {
     const adminName = LINEUP_NAME_MAP[p.name] || p.name;
+    const player = PLAYERS.find(pl => pl.name === adminName);
+    const displayName = (player && player.fullName) || adminName;
     const mins = pm[adminName];
     const goals = scorerMap[adminName] || 0;
     const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : '<span style="min-width:34px;display:inline-block"></span>';
@@ -1473,7 +1475,7 @@ function openLineup(matchId) {
       : mins !== undefined ? `<span class="lineup-mins">${mins} min</span>` : '';
     return `<div class="lineup-player${p.noEnter ? ' no-enter' : ''}">
       ${posBadge}
-      <span class="lineup-player-name">${p.name}${goalBadge}</span>
+      <span class="lineup-player-name">${displayName}${goalBadge}</span>
       ${minsEl}
     </div>`;
   }

@@ -1476,7 +1476,7 @@ function openLineup(matchId) {
       : mins !== undefined ? `<span class="lineup-mins">${mins} min</span>` : '';
     return `<div class="lineup-player${p.noEnter ? ' no-enter' : ''}">
       ${posBadge}
-      <span class="lineup-player-name">${p.name}${goalBadge}</span>
+      <span class="lineup-player-name">${displayName}${goalBadge}</span>
       ${minsEl}
     </div>`;
   }

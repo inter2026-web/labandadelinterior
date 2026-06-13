@@ -97,7 +97,9 @@ const ADMIN_DATA = {
       "Facu Munchs": 90,
       "Seba T": 90,
       "Mati": 70,
-      "Sena": 75
+      "Sena": 75,
+      "Fabian Couto": 35,
+      "Pato": 70
     },
     "f2": {
       "Jubin": 90,
@@ -116,7 +118,8 @@ const ADMIN_DATA = {
       "Mati": 90,
       "Mandinga": 30,
       "Fabian Couto": 0,
-      "Sena": 55
+      "Sena": 55,
+      "Pata": 50
     },
     "f3": {
       "Jubin": 90,
@@ -158,7 +161,8 @@ const ADMIN_DATA = {
       "Mandinga": 25,
       "Mariano": 0,
       "Sena": 70,
-      "Ignacio Luy": 30
+      "Ignacio Luy": 30,
+      "Pata": 45
     },
     "f5": {
       "Jubin": 90,
@@ -180,7 +184,8 @@ const ADMIN_DATA = {
       "Mariano": 0,
       "Sena": 45,
       "Ignacio Luy": 45,
-      "Andres Guerra": 0
+      "Andres Guerra": 0,
+      "Fabian Couto": 25
     },
     "f6": {
       "Jubin": 90,
@@ -216,7 +221,9 @@ const ADMIN_DATA = {
       "Mandinga": 65,
       "Sena": 55,
       "Andres Guerra": 30,
-      "Lucas Godoy": 45
+      "Lucas Godoy": 45,
+      "Vicente": 45,
+      "Enzo": 90
     },
     "f8": {
       "Jubin": 90,
@@ -237,7 +244,8 @@ const ADMIN_DATA = {
       "Mandinga": 75,
       "Sena": 90,
       "Ignacio Luy": 30,
-      "Lucas Godoy": 45
+      "Lucas Godoy": 45,
+      "Fabian Couto": 30
     },
     "f9": {
       "Jubin": 90,
