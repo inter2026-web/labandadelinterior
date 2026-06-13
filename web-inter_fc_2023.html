@@ -218,7 +218,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .scorer-rank-1{color:var(--gold)!important}
 .scorer-rank-2{color:#ccc!important}
 .scorer-rank-3{color:#cd7f32!important}
-.scorer-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue-dark, #003880),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1rem;flex-shrink:0;border:2px solid var(--border)}
+.scorer-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--blue-dark, #003880),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1rem;flex-shrink:0;border:2px solid var(--border);overflow:hidden}
+.scorer-avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .scorer-info{flex:1}
 .scorer-name{font-weight:600;font-size:.95rem;margin-bottom:.15rem}
 .scorer-pos{font-size:.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em}
@@ -1213,9 +1214,11 @@ const maxGoals = SCORERS_DATA[0].goals;
 SCORERS_DATA.forEach((s, i) => {
   const rankClass = i < 3 ? `scorer-rank-${i+1}` : '';
   const initials = s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const photoSrc = PLAYER_PHOTOS[s.name];
+  const avatarContent = photoSrc ? `<img src="${photoSrc}" alt="${s.name}" loading="lazy">` : initials;
   const row = `<div class="scorer-row fade-in stagger-${(i%3)+1}">
     <div class="scorer-rank ${rankClass}">${i+1}</div>
-    <div class="scorer-avatar">${initials}</div>
+    <div class="scorer-avatar">${avatarContent}</div>
     <div class="scorer-info">
       <div class="scorer-name">${s.name}${s.number ? ' <span style="color:var(--gray);font-size:.75rem;font-weight:400">#'+s.number+'</span>' : ''}</div>
       <div class="scorer-pos">${s.position}</div>
