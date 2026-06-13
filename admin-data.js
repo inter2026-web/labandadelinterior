@@ -155,6 +155,7 @@ const ADMIN_DATA = {
       "Mandinga x1"
     ]
   },
+  "playerPhotos": {},
   "playerMinutes": {
     "amistoso": {
       "Jubin": 90,

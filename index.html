@@ -328,13 +328,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   .lineup-right{border-left:none;border-top:1px solid var(--border);padding:.5rem 1rem 1.25rem}
 }
 
-/* GALERIA */
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-.gallery-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;aspect-ratio:1}
-.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.gallery-item:hover img{transform:scale(1.05)}
-.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 60%);opacity:0;transition:opacity .3s}
-.gallery-item:hover .gallery-overlay{opacity:1}
+/* FOTOS JUGADOR */
+.modal-fotos-btn{display:inline-flex;align-items:center;gap:.45rem;margin:.75rem 0 1.25rem;padding:.5rem 1.1rem;background:var(--blue);color:var(--white);border:none;border-radius:8px;font-size:.82rem;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:background .2s}
+.modal-fotos-btn:hover{background:#0069d9}
+.fotos-overlay{position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:3000;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s}
+.fotos-overlay.open{opacity:1;pointer-events:all}
+.fotos-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.fotos-header-name{font-family:'Anton',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:.05em;color:var(--white)}
+.fotos-close-btn{background:none;border:none;color:rgba(255,255,255,.55);font-size:1.4rem;cursor:pointer;line-height:1;padding:.2rem .5rem;transition:color .2s}
+.fotos-close-btn:hover{color:var(--white)}
+.fotos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;overflow-y:auto;flex:1}
+.fotos-grid-item{aspect-ratio:1;overflow:hidden;cursor:pointer;border-radius:3px}
+.fotos-grid-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.fotos-grid-item:hover img{transform:scale(1.06)}
+.fotos-viewer{position:fixed;inset:0;background:rgba(0,0,0,.98);z-index:3100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.fotos-viewer.open{opacity:1;pointer-events:all}
+.fotos-viewer-img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:6px}
+.fotos-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:white;font-size:2rem;padding:.35rem .85rem;cursor:pointer;border-radius:8px;transition:background .2s;line-height:1}
+.fotos-nav:hover{background:rgba(255,255,255,.25)}
+.fotos-nav-prev{left:.75rem}
+.fotos-nav-next{right:.75rem}
+.fotos-viewer-x{position:absolute;top:.75rem;right:.75rem;background:rgba(255,255,255,.12);border:none;color:white;font-size:1.1rem;padding:.35rem .65rem;cursor:pointer;border-radius:8px;transition:background .2s}
+.fotos-viewer-x:hover{background:rgba(255,255,255,.25)}
 
 /* CONTACTO */
 .contact-section{background:linear-gradient(135deg,#000520,#001030)}
@@ -403,7 +418,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <li><a href="#posiciones">Tabla</a></li>
     <li><a href="#resultados">Resultados</a></li>
     <li><a href="#plantel">Plantel</a></li>
-    <li><a href="#galeria">Galería</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://www.instagram.com/inter_fc_2023/" target="_blank" class="nav-cta">@inter_fc_2023</a>
@@ -627,48 +641,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   </div>
 </section>
 
-<!-- GALERÍA -->
-<section class="section" id="galeria">
-  <div class="section-inner">
-    <div class="section-header">
-      <div>
-        <div class="section-label">Liga MVD · Divisional B Apertura</div>
-        <div class="section-title">Galería</div>
-      </div>
-      <div class="section-line"></div>
-    </div>
-    <div class="gallery-grid fade-in">
-      <div class="gallery-item"><img src="assets/galeria/foto-22.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-23.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-24.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-25.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-26.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-27.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-28.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-29.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-30.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-31.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-32.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-33.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-34.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-35.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-36.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-37.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-38.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-39.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-40.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-41.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-43.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-44.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-45.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-46.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-47.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-48.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-49.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-      <div class="gallery-item"><img src="assets/galeria/foto-50.jpg" alt="El Inter FC" loading="lazy"><div class="gallery-overlay"></div></div>
-    </div>
-  </div>
-</section>
 
 <!-- CONTACTO -->
 <section id="contacto" class="contact-section">
@@ -799,6 +771,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     </div>
     <div class="modal-body">
       <div class="modal-stats-row" id="modal-stats"></div>
+      <button class="modal-fotos-btn" id="modal-fotos-btn" style="display:none">📷 Fotos</button>
       <div class="modal-table-title">Minutos jugados por partido</div>
       <table class="modal-table">
         <thead>
@@ -1244,6 +1217,16 @@ function openModal(player) {
     <div class="modal-stat"><div class="val">${totalMins}</div><div class="lbl">Minutos</div></div>
     <div class="modal-stat"><div class="val" style="color:var(--gold)">${player.goals}</div><div class="lbl">Goles</div></div>`;
 
+  const playerPhotos = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerPhotos && ADMIN_DATA.playerPhotos[player.name]) || [];
+  const fotosBtn = document.getElementById('modal-fotos-btn');
+  if (playerPhotos.length > 0) {
+    fotosBtn.style.display = 'inline-flex';
+    fotosBtn.textContent = `📷 Fotos (${playerPhotos.length})`;
+    fotosBtn.onclick = () => openFotos(player.name, player.fullName || player.name, playerPhotos);
+  } else {
+    fotosBtn.style.display = 'none';
+  }
+
   const tbody = document.getElementById('modal-minutes-body');
   tbody.innerHTML = '';
   MATCHES.forEach(m => {
@@ -1268,7 +1251,15 @@ function openModal(player) {
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('playerModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeTeamPhoto(); closeLineup(); }
+  if (e.key === 'Escape') {
+    if (document.getElementById('fotosViewer').classList.contains('open')) { closeFotoViewer(); return; }
+    if (document.getElementById('fotosModal').classList.contains('open')) { closeFotos(); return; }
+    closeModal(); closeTeamPhoto(); closeLineup();
+  }
+  if (document.getElementById('fotosViewer').classList.contains('open')) {
+    if (e.key === 'ArrowLeft') { _fotosIdx = (_fotosIdx - 1 + _fotosFiles.length) % _fotosFiles.length; _updateViewer(); }
+    if (e.key === 'ArrowRight') { _fotosIdx = (_fotosIdx + 1) % _fotosFiles.length; _updateViewer(); }
+  }
 });
 function closeModal() {
   document.getElementById('playerModal').classList.remove('open');
@@ -1495,6 +1486,60 @@ window.addEventListener('scroll', () => {
     ? 'rgba(6,6,8,0.98)'
     : 'rgba(6,6,8,0.85)';
 });
+
+// =====================
+// FOTOS JUGADOR
+// =====================
+let _fotosFiles = [], _fotosFolder = '', _fotosIdx = 0;
+
+function openFotos(folder, playerName, files) {
+  _fotosFiles = files;
+  _fotosFolder = folder;
+  document.getElementById('fotos-header-name').textContent = playerName;
+  document.getElementById('fotos-grid').innerHTML = files.map((f, i) =>
+    `<div class="fotos-grid-item" onclick="openFotoViewer(${i})"><img src="assets/fotos/${folder}/${f}" alt="Foto ${i+1}" loading="lazy"></div>`
+  ).join('');
+  document.getElementById('fotosModal').classList.add('open');
+}
+
+function closeFotos() {
+  document.getElementById('fotosModal').classList.remove('open');
+}
+
+function openFotoViewer(idx) {
+  _fotosIdx = idx;
+  _updateViewer();
+  document.getElementById('fotosViewer').classList.add('open');
+}
+
+function _updateViewer() {
+  document.getElementById('fotos-viewer-img').src = `assets/fotos/${_fotosFolder}/${_fotosFiles[_fotosIdx]}`;
+}
+
+function closeFotoViewer() {
+  document.getElementById('fotosViewer').classList.remove('open');
+}
+
+document.getElementById('fotos-close').addEventListener('click', closeFotos);
+document.getElementById('fotos-prev').addEventListener('click', () => { _fotosIdx = (_fotosIdx - 1 + _fotosFiles.length) % _fotosFiles.length; _updateViewer(); });
+document.getElementById('fotos-next').addEventListener('click', () => { _fotosIdx = (_fotosIdx + 1) % _fotosFiles.length; _updateViewer(); });
+document.getElementById('fotos-viewer-x').addEventListener('click', closeFotoViewer);
+document.getElementById('fotosViewer').addEventListener('click', e => { if (e.target === e.currentTarget) closeFotoViewer(); });
 </script>
+
+<!-- FOTOS LIGHTBOX -->
+<div class="fotos-overlay" id="fotosModal">
+  <div class="fotos-header">
+    <span class="fotos-header-name" id="fotos-header-name"></span>
+    <button class="fotos-close-btn" id="fotos-close">✕</button>
+  </div>
+  <div class="fotos-grid" id="fotos-grid"></div>
+</div>
+<div class="fotos-viewer" id="fotosViewer">
+  <img class="fotos-viewer-img" id="fotos-viewer-img" src="" alt="">
+  <button class="fotos-nav fotos-nav-prev" id="fotos-prev">‹</button>
+  <button class="fotos-nav fotos-nav-next" id="fotos-next">›</button>
+  <button class="fotos-viewer-x" id="fotos-viewer-x">✕</button>
+</div>
 </body>
 </html>
