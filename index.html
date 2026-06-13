@@ -481,7 +481,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
         <div class="hero-meta-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
-          25 jugadores en el plantel
+          26 jugadores en el plantel
         </div>
       </div>
       <div class="hero-next">
@@ -591,7 +591,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         <div class="next-date-box">
           <div class="next-date-day" style="font-size:1.2rem;padding-top:.4rem">Por</div>
           <div class="next-date-month">Confirmar</div>
-          <div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">Cancha TBD</div>
+          <div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">A confirmar</div>
         </div>
       </div>
       <!-- NEXT-MATCH-END -->
@@ -719,11 +719,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
               <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Seguidores IG</div>
             </div>
             <div style="text-align:center">
-              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--gold)">19</div>
+              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--gold)">22</div>
               <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Puntos</div>
             </div>
             <div style="text-align:center">
-              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--win)">4°</div>
+              <div style="font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--win)">3°</div>
               <div style="font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em">Posición</div>
             </div>
           </div>
@@ -825,7 +825,7 @@ const TEAM_LOGOS = {
   'La Rotonda': 'assets/logos/la-rotonda.png',
   'El Inter': 'assets/logos/el-inter.png',
   'Blue Label FC': 'assets/logos/blue-label.png',
-  'C.A Tigre Uruguay': 'assets/logos/ca-tigre.png',
+  'C.A. Tigre Uruguay': 'assets/logos/ca-tigre.png',
   'Club Montero': 'assets/logos/club-montero.png',
   'Revolución Futbolística': 'assets/logos/revolucion.png',
   'La Favela FC': 'assets/logos/la-favela.png',
@@ -1103,9 +1103,10 @@ TABLA.forEach(t => {
 // =====================
 const resultsGrid = document.getElementById('results-grid');
 MATCHES.forEach((m, i) => {
-  const typeLabel = { W: 'Victoria', D: 'Empate', L: 'Derrota', friendly: 'Amistoso' }[m.type] || 'Próximo';
-  const typeBadge = { W: 'badge-win', D: 'badge-draw', L: 'badge-loss', friendly: 'badge-friendly' }[m.type] || 'badge-next';
-  const cardType = m.type === 'friendly' ? 'friendly' : (m.type ? m.type.toLowerCase() : 'next');
+  if (!m.type) return;
+  const typeLabel = { W: 'Victoria', D: 'Empate', L: 'Derrota', friendly: 'Amistoso' }[m.type];
+  const typeBadge = { W: 'badge-win', D: 'badge-draw', L: 'badge-loss', friendly: 'badge-friendly' }[m.type];
+  const cardType = m.type === 'friendly' ? 'friendly' : m.type.toLowerCase();
   const scorers = (SCORERS_BY_MATCH[m.id] || []).map(s => {
     const sm = s.match(/^(.+?)\s+x(\d+)$/);
     const adminName = sm ? sm[1].trim() : s.trim();
