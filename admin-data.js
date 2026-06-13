@@ -1,14 +1,21 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-06-12T20:33:06.646Z",
+  "lastUpdated": "2026-06-13T16:32:03.425Z",
   "lineups": {},
   "igStats": {
     "posts": 84,
     "seguidores": 235,
     "siguiendo": 34
   },
-  "matchResults": {},
+  "matchResults": {
+    "Fecha 10": {
+      "gf": null,
+      "gc": null,
+      "type": null,
+      "rival": "Capitol F.C."
+    }
+  },
   "scorersByMatch": {
     "amistoso": [
       "Elias x4",
