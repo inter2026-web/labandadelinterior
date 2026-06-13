@@ -238,10 +238,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .jersey-svg{width:70px;height:70px;display:block;margin:0 auto .5rem}
 .player-number-badge{position:absolute;top:.6rem;right:.6rem;font-family:'Anton',sans-serif;font-size:1rem;color:rgba(255,255,255,.4);line-height:1}
 .player-card-info{padding:.75rem}
-.player-card-name{font-weight:700;font-size:.88rem;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player-card-pos{font-size:.7rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.player-card-name{font-weight:700;font-size:.88rem;margin-bottom:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-card-nick{font-size:.72rem;color:var(--blue-light);font-style:italic;margin-bottom:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-card-pos{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
 .player-card-goals{position:absolute;top:.6rem;left:.6rem;display:flex;align-items:center;gap:.2rem;font-size:.7rem;font-weight:700;color:var(--gold);background:rgba(240,180,41,.1);padding:.15rem .4rem;border-radius:8px}
 .player-card-mins{font-size:.7rem;color:var(--gray);margin-top:.2rem}
+.player-status-badge{position:absolute;bottom:.5rem;left:50%;transform:translateX(-50%);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.1rem .5rem;border-radius:6px;white-space:nowrap}
+.player-status-inactive{background:rgba(255,165,0,.15);color:orange}
+.player-status-ex{background:rgba(255,255,255,.07);color:var(--gray)}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
@@ -843,33 +847,33 @@ const RIVAL_LOGOS = {
 };
 
 const PLAYER_PHOTOS = {
-  'Jubin': 'assets/players/tomas_jubin.jpg',
-  'Vicente': 'assets/players/vicente_gaitano.jpg',
-  'Brandon': 'assets/players/brandon_almenarez.jpg',
-  'Renzo': 'assets/players/diego_rodriguez.jpg',
-  'Juli Rios': 'assets/players/julian_rios_cazard.jpg',
-  'Vidal': 'assets/players/lucas_vidal.jpg',
-  'Franco F': 'assets/players/franco_friedrich.jpg',
-  'Diego': 'assets/players/diego_friedrich.jpg',
-  'Elias': 'assets/players/elias_pastorino.jpg',
-  'Negrin': 'assets/players/martin_negrin.jpg',
-  'Nando': 'assets/players/fernando_garcia.jpg',
-  'Lolo': 'assets/players/lorenzo_camara.jpg',
-  'Pata': 'assets/players/ignacio_zapata.jpg',
-  'Franco Irri': 'assets/players/franco_irisarri_correa.jpg',
-  'Facu Munchs': 'assets/players/facundo_munch.jpg',
-  'Seba B': 'assets/players/sebastian_barisone.jpg',
-  'Enzo Gaione': 'assets/players/enzo_matias_gaione.jpg',
-  'Pato': 'assets/players/mauro_cabrera.jpg',
-  'Seba T': 'assets/players/sebastian_torena.jpg',
-  'Mati': 'assets/players/matias_gonzalez_hernandez.jpg',
-  'Mandinga': 'assets/players/ezequiel_munoz.jpg',
-  'Mariano': 'assets/players/mariano_perdomo.jpg',
-  'Fabian Couto': 'assets/players/fabian_couto.jpg',
-  'Sena': 'assets/players/martin_sena.jpg',
-  'Ignacio Luy': 'assets/players/ignacio_matias_luy_suarez.jpg',
-  'Andres Guerra': 'assets/players/andres_eduardo_guerra.jpg',
-  'Lucas Godoy': 'assets/players/lucas_godoy.jpg',
+  'Jubin':          'assets/players/tomas_jubin.jpg',
+  'Vicente':        'assets/players/vicente_gaitano.jpg',
+  'Brandon':        'assets/players/brandon_almenarez.jpg',
+  'Juli Rios':      'assets/players/julian_rios_cazard.jpg',
+  'Vidal':          'assets/players/lucas_vidal.jpg',
+  'Franco F':       'assets/players/franco_friedrich.jpg',
+  'Diego':          'assets/players/diego_friedrich.jpg',
+  'Diego Rodriguez':'assets/players/diego_rodriguez.jpg',
+  'Elias':          'assets/players/elias_pastorino.jpg',
+  'Negrin':         'assets/players/martin_negrin.jpg',
+  'Nando':          'assets/players/fernando_garcia.jpg',
+  'Lolo':           'assets/players/lorenzo_camara.jpg',
+  'Pata':           'assets/players/ignacio_zapata.jpg',
+  'Franco Irri':    'assets/players/franco_irisarri_correa.jpg',
+  'Facu Munchs':    'assets/players/facundo_munch.jpg',
+  'Seba B':         'assets/players/sebastian_barisone.jpg',
+  'Enzo Gaione':    'assets/players/enzo_matias_gaione.jpg',
+  'Pato':           'assets/players/mauro_cabrera.jpg',
+  'Seba T':         'assets/players/sebastian_torena.jpg',
+  'Mati':           'assets/players/matias_gonzalez_hernandez.jpg',
+  'Mandinga':       'assets/players/ezequiel_munoz.jpg',
+  'Mariano':        'assets/players/mariano_perdomo.jpg',
+  'Fabian Couto':   'assets/players/fabian_couto.jpg',
+  'Sena':           'assets/players/martin_sena.jpg',
+  'Ignacio Luy':    'assets/players/ignacio_matias_luy_suarez.jpg',
+  'Andres Guerra':  'assets/players/andres_eduardo_guerra.jpg',
+  'Lucas Godoy':    'assets/players/lucas_godoy.jpg',
 };
 
 // =====================
@@ -1067,33 +1071,34 @@ const TABLA = [
 ];
 
 const PLAYERS = [
-  { number: 1, name: 'Jubin', positions: ['Golero'], minutes: { amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90 }, avgMins: 90, goals: 0 },
-  { number: 2, name: 'Vicente', positions: ['Zaguero'], minutes: { f1:20,f3:45,f5:45,f6:90,f7:45,f8:30,f9:70 }, avgMins: 49, goals: 0 },
-  { number: 3, name: 'Brandon', positions: ['Lateral Izq','Volante Izq'], minutes: { amistoso:55,f1:60,f2:35,f4:20,f5:45,f6:90,f7:80,f8:45,f9:90 }, avgMins: 58, goals: 0 },
-  { number: 4, name: 'Renzo', positions: ['Volante Der','Lateral Der','Medio'], minutes: {}, avgMins: 0, goals: 0 },
-  { number: 6, name: 'Juli Rios', positions: ['Medio','Zaguero'], minutes: { f1:45,f3:90,f4:60,f7:90,f8:90 }, avgMins: 75, goals: 0 },
-  { number: 7, name: 'Vidal', positions: ['Volante Der','Delantero'], minutes: { amistoso:70,f2:45,f3:45,f4:45,f7:50,f8:60 }, avgMins: 53, goals: 0 },
-  { number: 8, name: 'Franco F', positions: ['Medio','Lateral Izq'], minutes: { amistoso:70,f1:90,f2:90,f3:90,f4:90,f5:60,f8:75,f9:90 }, avgMins: 82, goals: 1 },
-  { number: 9, name: 'Diego', positions: ['Delantero'], minutes: { f1:30,f3:15,f4:0,f5:15,f7:25,f9:20 }, avgMins: 18, goals: 1 },
-  { number: 10, name: 'Elias', positions: ['Delantero','Enganche'], minutes: { amistoso:80,f2:90,f3:40,f4:90,f5:75,f6:55,f7:90,f8:60,f9:90 }, avgMins: 74, goals: 11 },
-  { number: 12, name: 'Negrin', positions: ['Delantero','Enganche'], minutes: { amistoso:45,f1:20,f3:10,f5:0,f6:15,f8:15,f9:25 }, avgMins: 19, goals: 0 },
-  { number: 15, name: 'Nando', positions: ['Zaguero','Medio'], minutes: { amistoso:90,f1:90,f2:90,f4:25,f8:15,f9:75 }, avgMins: 64, goals: 1 },
-  { number: 16, name: 'Lolo', positions: ['Lateral Der','Volante Der'], minutes: { f1:55,f3:15,f4:0,f5:45,f6:20,f7:30 }, avgMins: 28, goals: 0 },
-  { number: 17, name: 'Pata', positions: ['Volante Der','Delantero'], minutes: { amistoso:60,f2:50,f3:75,f4:45,f7:60,f8:45,f9:90 }, avgMins: 61, goals: 1 },
-  { number: 18, name: 'Franco Irri', positions: ['Enganche','Volante Izq'], minutes: { amistoso:65,f1:60,f2:45,f3:45,f4:60,f5:45,f6:75,f7:40 }, avgMins: 54, goals: 0 },
-  { number: 19, name: 'Facu Munchs', positions: ['Delantero'], minutes: { f1:90,f2:25,f5:45,f6:45,f7:15 }, avgMins: 44, goals: 3 },
-  { number: 20, name: 'Seba B', positions: ['Volante Der','Golero'], minutes: { amistoso:50,f2:40,f3:45,f4:90,f5:45,f8:45 }, avgMins: 53, goals: 0 },
-  { number: 21, name: 'Enzo Gaione', positions: ['Zaguero'], minutes: { f2:60,f4:30,f5:90,f6:90,f7:90,f8:45 }, avgMins: 68, goals: 0 },
-  { number: 22, name: 'Pato', positions: ['Medio'], minutes: { amistoso:90,f1:70,f2:90,f3:90,f4:90,f5:90,f6:80,f7:90,f8:45 }, avgMins: 82, goals: 1 },
-  { number: 23, name: 'Seba T', positions: ['Volante Der','Delantero'], minutes: { f1:90,f2:65,f3:35 }, avgMins: 63, goals: 2 },
-  { number: 24, name: 'Mati', positions: ['Zaguero','Medio'], minutes: { f1:70,f2:90,f3:90,f4:65,f5:90,f6:70,f8:60,f9:90 }, avgMins: 78, goals: 0 },
-  { number: 27, name: 'Mandinga', positions: ['Delantero','Volante Der'], minutes: { amistoso:45,f2:30,f3:50,f4:25,f5:65,f6:60,f7:65,f8:75,f9:90 }, avgMins: 56, goals: 4 },
-  { number: 28, name: 'Mariano', positions: ['Zaguero','Lateral Izq'], minutes: { f3:10,f5:0 }, avgMins: 5, goals: 0 },
-  { number: 29, name: 'Fabian Couto', positions: ['Lateral Der','Lateral Izq'], minutes: { amistoso:90,f1:35,f5:25,f8:30 }, avgMins: 45, goals: 0 },
-  { number: 72, name: 'Sena', positions: ['Zaguero','Lateral Izq'], minutes: { amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90 }, avgMins: 74, goals: 4 },
-  { number: 99, name: 'Ignacio Luy', positions: ['Volante Der','Volante Izq'], minutes: { f3:30,f4:30,f5:45,f6:60,f8:30 }, avgMins: 39, goals: 0 },
-  { number: null, name: 'Andres Guerra', positions: ['Delantero'], minutes: { f6:30,f7:30 }, avgMins: 30, goals: 3 },
-  { number: null, name: 'Lucas Godoy', positions: ['Delantero'], minutes: { f6:30,f7:45,f8:45,f9:65 }, avgMins: 46, goals: 0 },
+  { number: 1,  name:'Jubin',         fullName:'Tomás Jubin',         nickname:null,          status:'active',   positions:['Golero'],                    minutes:{amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90}, avgMins:90, goals:0 },
+  { number: 2,  name:'Vicente',        fullName:'Vicente Gaitano',     nickname:'Vena',        status:'active',   positions:['Zaguero'],                   minutes:{f1:20,f3:45,f5:45,f6:90,f7:45,f8:30,f9:70}, avgMins:49, goals:0 },
+  { number: 3,  name:'Brandon',        fullName:'Brandon Almenarez',   nickname:null,          status:'active',   positions:['Lateral Izq','Volante Izq'], minutes:{amistoso:55,f1:60,f2:35,f4:20,f5:45,f6:90,f7:80,f8:45,f9:90}, avgMins:58, goals:0 },
+  { number: 4,  name:'Renzo',          fullName:'Renzo Soliwoda',      nickname:null,          status:'inactive', positions:['Volante Der','Lateral Der'],  minutes:{}, avgMins:0, goals:0 },
+  { number: 6,  name:'Juli Rios',      fullName:'Julián Ríos',         nickname:null,          status:'active',   positions:['Medio','Zaguero'],            minutes:{f1:45,f3:90,f4:60,f7:90,f8:90}, avgMins:75, goals:0 },
+  { number: 7,  name:'Vidal',          fullName:'Lucas Vidal',         nickname:null,          status:'active',   positions:['Volante Der','Delantero'],    minutes:{amistoso:70,f2:45,f3:45,f4:45,f7:50,f8:60}, avgMins:53, goals:0 },
+  { number: 8,  name:'Franco F',       fullName:'Franco Friedrich',    nickname:'Cachete',     status:'active',   positions:['Medio','Lateral Izq'],        minutes:{amistoso:70,f1:90,f2:90,f3:90,f4:90,f5:60,f8:75,f9:90}, avgMins:82, goals:1 },
+  { number: 9,  name:'Diego',          fullName:'Diego Friedrich',     nickname:null,          status:'active',   positions:['Delantero'],                  minutes:{f1:30,f3:15,f4:0,f5:15,f7:25,f9:20}, avgMins:18, goals:1 },
+  { number: 10, name:'Elias',          fullName:'Elias Pastorino',     nickname:'Capi',        status:'active',   positions:['Delantero','Enganche'],       minutes:{amistoso:80,f2:90,f3:40,f4:90,f5:75,f6:55,f7:90,f8:60,f9:90}, avgMins:74, goals:11 },
+  { number: 12, name:'Negrin',         fullName:'Martín Negrín',       nickname:'Discoteka',   status:'active',   positions:['Delantero','Enganche'],       minutes:{amistoso:45,f1:20,f3:10,f5:0,f6:15,f8:15,f9:25}, avgMins:19, goals:0 },
+  { number: 15, name:'Nando',          fullName:'Fernando García',     nickname:'Nando',       status:'active',   positions:['Zaguero','Medio'],            minutes:{amistoso:90,f1:90,f2:90,f4:25,f8:15,f9:75}, avgMins:64, goals:1 },
+  { number: 16, name:'Lolo',           fullName:'Lorenzo Cámara',      nickname:'Lolo',        status:'active',   positions:['Lateral Der','Volante Der'],  minutes:{f1:55,f3:15,f4:0,f5:45,f6:20,f7:30}, avgMins:28, goals:0 },
+  { number: 17, name:'Pata',           fullName:'Ignacio Zapata',      nickname:'Pata',        status:'active',   positions:['Volante Der','Delantero'],    minutes:{amistoso:60,f2:50,f3:75,f4:45,f7:60,f8:45,f9:90}, avgMins:61, goals:1 },
+  { number: 18, name:'Franco Irri',    fullName:'Franco Irisarri',     nickname:null,          status:'active',   positions:['Enganche','Volante Izq'],     minutes:{amistoso:65,f1:60,f2:45,f3:45,f4:60,f5:45,f6:75,f7:40}, avgMins:54, goals:0 },
+  { number: 19, name:'Facu Munchs',    fullName:'Facundo Munchs',      nickname:null,          status:'active',   positions:['Delantero'],                  minutes:{f1:90,f2:25,f5:45,f6:45,f7:15}, avgMins:44, goals:3 },
+  { number: 20, name:'Seba B',         fullName:'Sebastián Barisone',  nickname:null,          status:'active',   positions:['Volante Der','Golero'],       minutes:{amistoso:50,f2:40,f3:45,f4:90,f5:45,f8:45}, avgMins:53, goals:0 },
+  { number: 21, name:'Enzo Gaione',    fullName:'Enzo Gaione',         nickname:null,          status:'active',   positions:['Zaguero'],                    minutes:{f2:60,f4:30,f5:90,f6:90,f7:90,f8:45}, avgMins:68, goals:0 },
+  { number: 22, name:'Pato',           fullName:'Mauro Cabrera',       nickname:'Pato',        status:'active',   positions:['Medio'],                      minutes:{amistoso:90,f1:70,f2:90,f3:90,f4:90,f5:90,f6:80,f7:90,f8:45}, avgMins:82, goals:1 },
+  { number: 23, name:'Seba T',         fullName:'Sebastián Torena',    nickname:null,          status:'inactive', positions:['Volante Der','Delantero'],    minutes:{f1:90,f2:65,f3:35}, avgMins:63, goals:2 },
+  { number: 24, name:'Mati',           fullName:'Matias González',     nickname:null,          status:'active',   positions:['Zaguero','Medio'],            minutes:{f1:70,f2:90,f3:90,f4:65,f5:90,f6:70,f8:60,f9:90}, avgMins:78, goals:0 },
+  { number: 27, name:'Mandinga',       fullName:'Ezequiel Muñoz',      nickname:'Mandinga',    status:'active',   positions:['Delantero','Volante Der'],    minutes:{amistoso:45,f2:30,f3:50,f4:25,f5:65,f6:60,f7:65,f8:75,f9:90}, avgMins:56, goals:4 },
+  { number: 28, name:'Mariano',        fullName:'Mariano Perdomo',     nickname:null,          status:'ex',       positions:['Zaguero','Lateral Izq'],      minutes:{f3:10,f5:0}, avgMins:5, goals:0 },
+  { number: 29, name:'Fabian Couto',   fullName:'Fabián Couto',        nickname:null,          status:'active',   positions:['Lateral Der','Lateral Izq'],  minutes:{amistoso:90,f1:35,f5:25,f8:30}, avgMins:45, goals:0 },
+  { number: 30, name:'Diego Rodriguez',fullName:'Diego Rodríguez',     nickname:null,          status:'active',   positions:['Volante Der','Delantero'],    minutes:{}, avgMins:0, goals:0 },
+  { number: 32, name:'Lucas Godoy',    fullName:'Lucas Godoy',         nickname:null,          status:'active',   positions:['Delantero'],                  minutes:{f6:30,f7:45,f8:45,f9:65}, avgMins:46, goals:0 },
+  { number: 33, name:'Andres Guerra',  fullName:'Andrés Guerra',       nickname:'Cabeza',      status:'active',   positions:['Delantero'],                  minutes:{f6:30,f7:30}, avgMins:30, goals:3 },
+  { number: 72, name:'Sena',           fullName:'Martín Sena',         nickname:null,          status:'active',   positions:['Zaguero','Lateral Izq'],      minutes:{amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90}, avgMins:74, goals:4 },
+  { number: 99, name:'Ignacio Luy',    fullName:'Ignacio Luy',         nickname:null,          status:'ex',       positions:['Volante Der','Volante Izq'],  minutes:{f3:30,f4:30,f5:45,f6:60,f8:30}, avgMins:39, goals:0 },
 ];
 
 // Apply admin data overrides if available
@@ -1141,7 +1146,7 @@ if (typeof ADMIN_DATA !== 'undefined') {
 const SCORERS_DATA = PLAYERS
   .filter(p => p.goals > 0)
   .sort((a, b) => b.goals - a.goals || a.name.localeCompare(b.name))
-  .map(p => ({ name: p.name, position: p.positions.join(' / '), goals: p.goals, number: p.number }));
+  .map(p => ({ name: p.name, fullName: p.fullName, nickname: p.nickname, position: p.positions.join(' / '), goals: p.goals, number: p.number }));
 
 // Apply Instagram stats from ADMIN_DATA
 if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.igStats) {
@@ -1213,14 +1218,16 @@ const scorersList = document.getElementById('scorers-list');
 const maxGoals = SCORERS_DATA[0].goals;
 SCORERS_DATA.forEach((s, i) => {
   const rankClass = i < 3 ? `scorer-rank-${i+1}` : '';
-  const initials = s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const displayName = s.fullName || s.name;
+  const initials = displayName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
   const photoSrc = PLAYER_PHOTOS[s.name];
-  const avatarContent = photoSrc ? `<img src="${photoSrc}" alt="${s.name}" loading="lazy">` : initials;
+  const avatarContent = photoSrc ? `<img src="${photoSrc}" alt="${displayName}" loading="lazy">` : initials;
+  const nickHtml = s.nickname ? ` <span style="color:var(--blue-light);font-size:.72rem;font-weight:400;font-style:italic">"${s.nickname}"</span>` : '';
   const row = `<div class="scorer-row fade-in stagger-${(i%3)+1}">
     <div class="scorer-rank ${rankClass}">${i+1}</div>
     <div class="scorer-avatar">${avatarContent}</div>
     <div class="scorer-info">
-      <div class="scorer-name">${s.name}${s.number ? ' <span style="color:var(--gray);font-size:.75rem;font-weight:400">#'+s.number+'</span>' : ''}</div>
+      <div class="scorer-name">${displayName}${nickHtml}${s.number ? ' <span style="color:var(--gray);font-size:.75rem;font-weight:400">#'+s.number+'</span>' : ''}</div>
       <div class="scorer-pos">${s.position}</div>
     </div>
     <div class="scorer-bar-wrap">
@@ -1260,12 +1267,18 @@ PLAYERS.forEach((p, i) => {
           onerror="this.parentElement.innerHTML='<div class=player-photo-fallback>${jerseysvg(p.number).replace(/`/g,'').replace(/"/g,"'")}</div>'">
       </div>`
     : `<div class="player-jersey">${jerseysvg(p.number)}</div>`;
-  card.innerHTML = `
+  const statusBadge = p.status === 'inactive'
+    ? `<div class="player-status-badge player-status-inactive">No disponible</div>`
+    : p.status === 'ex'
+    ? `<div class="player-status-badge player-status-ex">Ex jugador</div>`
+    : '';
+    card.innerHTML = `
     ${p.goals > 0 ? `<div class="player-card-goals">âš½ ${p.goals}</div>` : ''}
     <div class="player-number-badge" style="position:absolute;top:.6rem;right:.6rem;font-family:'Anton',sans-serif;font-size:1rem;color:rgba(255,255,255,.7);line-height:1;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.8)">#${p.number !== null ? p.number : 'â€”'}</div>
-    ${photoHtml}
+    ${photoHtml}${statusBadge}
     <div class="player-card-info">
-      <div class="player-card-name">${p.name}</div>
+      <div class="player-card-name">${p.fullName || p.name}</div>
+      ${p.nickname ? `<div class="player-card-nick">"${p.nickname}"</div>` : ""}
       <div class="player-card-pos">${p.positions[0]}</div>
       <div class="player-card-mins">â± ${totalMins} min Â· ${partsPlayed} partidos</div>
     </div>`;
@@ -1286,7 +1299,11 @@ function openModal(player) {
     avatarEl.innerHTML = jerseysvg(player.number, '#0057B7', '#000');
   }
   document.getElementById('modal-number').textContent = player.number !== null ? `#${player.number}` : 'Sin nÃºmero';
-  document.getElementById('modal-name').textContent = player.name;
+  const modalNameEl = document.getElementById('modal-name');
+  modalNameEl.textContent = player.fullName || player.name;
+  if (player.nickname) {
+    modalNameEl.innerHTML += ` <span style="font-size:.8em;color:var(--blue-light);font-weight:400;font-style:italic">"${player.nickname}"</span>`;
+  }
   document.getElementById('modal-pos').textContent = player.positions.join(' Â· ');
 
   const totalMins = Object.values(player.minutes).reduce((a,b) => a+b, 0);
