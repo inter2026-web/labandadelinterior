@@ -542,7 +542,7 @@ function getAllMatches() {
     .filter(id => !MATCHES_BASE.find(m => m.id === id))
     .map(id => {
       const r = DATA.matchResults[id];
-      return { id, label: `${id.toUpperCase()} · ${r.rival || 'Partido'}`, gf: r.gf, gc: r.gc, type: r.type, rival: r.rival };
+      return { id, label: `${id} · ${r.rival || 'Partido'}`, gf: r.gf, gc: r.gc, type: r.type, rival: r.rival };
     });
   return [...MATCHES_BASE, ...extra];
 }
@@ -736,7 +736,7 @@ function saveMinute(matchId, playerName, val) {
 // NEW MATCH
 // =====================
 function addNewMatch() {
-  const id = document.getElementById('new-match-id').value.trim().replace(/\s/g,'');
+  const id = document.getElementById('new-match-id').value.trim();
   const rival = document.getElementById('new-match-rival').value.trim();
   if (!id) return toast('Ingresá el ID del partido (ej: f10)', 'err');
   if (!rival) return toast('Ingresá el nombre del rival', 'err');
