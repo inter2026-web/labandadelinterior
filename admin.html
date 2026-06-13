@@ -187,6 +187,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
 
         <div class="match-selector" id="result-match-selector"></div>
 
+        <div class="admin-card">
+          <div class="admin-card-title"><span>➕</span> Agregar nuevo partido</div>
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label>ID del partido (ej: f10, f11)</label>
+              <input type="text" id="new-match-id" placeholder="f10" style="text-transform:lowercase">
+            </div>
+            <div class="form-group">
+              <label>Rival</label>
+              <input type="text" id="new-match-rival" placeholder="Nombre del rival">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addNewMatch()">+ Agregar partido</button>
+        </div>
+
         <div class="admin-card" id="result-editor" style="display:none">
           <div class="admin-card-title"><span>📋</span> <span id="result-editor-title">Partido</span></div>
           <div class="form-row cols-3">
@@ -715,6 +730,24 @@ function saveMinute(matchId, playerName, val) {
     delete DATA.playerMinutes[matchId][playerName];
   }
   setStatus(`Minutos actualizados`, 'ok');
+}
+
+// =====================
+// NEW MATCH
+// =====================
+function addNewMatch() {
+  const id = document.getElementById('new-match-id').value.trim().toLowerCase().replace(/\s/g,'');
+  const rival = document.getElementById('new-match-rival').value.trim();
+  if (!id) return toast('Ingresá el ID del partido (ej: f10)', 'err');
+  if (!rival) return toast('Ingresá el nombre del rival', 'err');
+  if (getAllMatches().find(m => m.id === id)) return toast(`"${id}" ya existe`, 'err');
+  if (!DATA.matchResults) DATA.matchResults = {};
+  DATA.matchResults[id] = { gf: null, gc: null, type: null, rival };
+  buildMatchSelectors();
+  document.getElementById('new-match-id').value = '';
+  document.getElementById('new-match-rival').value = '';
+  toast(`✓ Partido ${id.toUpperCase()} vs ${rival} agregado en todos los tabs`, 'ok');
+  setStatus(`Partido ${id} agregado — recordá guardar en GitHub`, 'ok');
 }
 
 // =====================
