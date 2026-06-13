@@ -907,6 +907,35 @@ const LINEUP_NAME_MAP = {
   'Godoy':'Lucas Godoy','Mariano':'Mariano'
 };
 
+const LINEUP_PHOTOS = {
+  'Jubin':'assets/players/tomas_jubin.jpg',
+  'Couto':'assets/players/fabian_couto.jpg',
+  'Nando':'assets/players/fernando_garcia.jpg',
+  'Sena':'assets/players/martin_sena.jpg',
+  'Brandon':'assets/players/brandon_almenarez.jpg',
+  'Pato':'assets/players/mauro_cabrera.jpg',
+  'Franco F':'assets/players/franco_friedrich.jpg',
+  'Pata':'assets/players/ignacio_zapata.jpg',
+  'Franco Irri':'assets/players/franco_irisarri_correa.jpg',
+  'Vidal':'assets/players/lucas_vidal.jpg',
+  'Elias':'assets/players/elias_pastorino.jpg',
+  'Mati':'assets/players/matias_gonzalez_hernandez.jpg',
+  'Seba T':'assets/players/sebastian_torena.jpg',
+  'Facu M':'assets/players/facundo_munch.jpg',
+  'Lolo':'assets/players/lorenzo_camara.jpg',
+  'Negrin':'assets/players/martin_negrin.jpg',
+  'Diego':'assets/players/diego_friedrich.jpg',
+  'Juli':'assets/players/julian_rios_cazard.jpg',
+  'Vicente':'assets/players/vicente_gaitano.jpg',
+  'Seba B':'assets/players/sebastian_barisone.jpg',
+  'Enzo':'assets/players/enzo_matias_gaione.jpg',
+  'Mandinga':'assets/players/ezequiel_munoz.jpg',
+  'Luy':'assets/players/ignacio_matias_luy_suarez.jpg',
+  'Andres G':'assets/players/andres_eduardo_guerra.jpg',
+  'Godoy':'assets/players/lucas_godoy.jpg',
+  'Mariano':'assets/players/mariano_perdomo.jpg'
+};
+
 const SCORERS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.scorersByMatch)
   ? ADMIN_DATA.scorersByMatch
   : {
@@ -1333,7 +1362,7 @@ function buildFormationLayout(titulares) {
 }
 
 function renderPitchSVG(layout, scorerMap) {
-  const W = 250, H = 360;
+  const W = 250, H = 360, R = 14;
   function chipColor(pos) {
     if (pos === 'POR') return '#b8860b';
     if (pos && pos.startsWith('DF')) return '#0057B7';
@@ -1358,26 +1387,37 @@ function renderPitchSVG(layout, scorerMap) {
   const cPaths = corners.map(([cx,cy,dx,dy])=>
     `<path d="M${cx},${cy} Q${cx+dx*9},${cy} ${cx+dx*9},${cy+dy*9}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1"/>`).join('');
 
-  const chips = layout.map(p => {
+  let defs = '';
+  const chips = layout.map((p, idx) => {
     const px = (p.x/100)*W;
     const py = (p.y/100)*H;
     const col = chipColor(p.pos);
     const adminName = LINEUP_NAME_MAP[p.name] || p.name;
     const goals = scorerMap[adminName] || 0;
     const lbl = p.name.split(' ')[0].substring(0,8);
-    const ring = goals > 0 ? '#f1c40f' : 'rgba(255,255,255,.75)';
-    const rw   = goals > 0 ? 2.5 : 1.8;
-    let g = `<circle cx="${px}" cy="${py}" r="16" fill="${col}" stroke="${ring}" stroke-width="${rw}"/>
-      <text x="${px}" y="${py}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="7.5" font-weight="700" fill="white">${lbl}</text>
-      <text x="${px}" y="${py+23}" text-anchor="middle" font-family="Roboto,Arial,sans-serif" font-size="5.5" fill="rgba(255,255,255,.85)">${p.pos}</text>`;
+    const photoSrc = LINEUP_PHOTOS[p.name];
+    const ring = goals > 0 ? '#f1c40f' : col;
+    const rw = goals > 0 ? 2.5 : 2;
+    defs += `<clipPath id="pcp${idx}"><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${R}"/></clipPath>`;
+    let g = '';
+    if (photoSrc) {
+      g += `<image href="${photoSrc}" x="${(px-R).toFixed(1)}" y="${(py-R).toFixed(1)}" width="${R*2}" height="${R*2}" clip-path="url(#pcp${idx})" preserveAspectRatio="xMidYMid slice"/>`;
+    } else {
+      g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${R}" fill="${col}"/>`;
+      g += `<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="7" font-weight="700" fill="white">${lbl}</text>`;
+    }
+    g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${R}" fill="none" stroke="${ring}" stroke-width="${rw}"/>`;
+    const nly = py + R + 2;
+    g += `<rect x="${(px-17).toFixed(1)}" y="${nly.toFixed(1)}" width="34" height="10" fill="rgba(0,0,0,.65)" rx="3"/>`;
+    g += `<text x="${px.toFixed(1)}" y="${(nly+5.5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="6.5" font-weight="700" fill="white">${lbl}</text>`;
     if (goals > 0) {
-      g += `<circle cx="${px+13}" cy="${py-11}" r="7" fill="#f1c40f" stroke="white" stroke-width="1"/>
-        <text x="${px+13}" y="${py-11}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="7" font-weight="900" fill="#333">${goals}</text>`;
+      g += `<circle cx="${(px+R-1).toFixed(1)}" cy="${(py-R+1).toFixed(1)}" r="6.5" fill="#f1c40f" stroke="white" stroke-width="1"/>`;
+      g += `<text x="${(px+R-1).toFixed(1)}" y="${(py-R+1).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="6.5" font-weight="900" fill="#333">${goals}</text>`;
     }
     return `<g>${g}</g>`;
   }).join('');
 
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;display:block"><rect width="${W}" height="${H}" fill="#2e7d32"/>${stripes}${lines}${cPaths}${chips}</svg>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;inset:0;width:100%;height:100%;display:block"><defs>${defs}</defs><rect width="${W}" height="${H}" fill="#2e7d32"/>${stripes}${lines}${cPaths}${chips}</svg>`;
 }
 
 function openLineup(matchId) {
