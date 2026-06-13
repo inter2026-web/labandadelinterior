@@ -297,7 +297,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-close:hover{background:var(--border);color:var(--white)}
 .lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden}
 .lineup-left{flex:0 0 52%;display:flex;flex-direction:column;padding:.75rem 1rem .75rem 1.25rem;gap:.4rem;min-height:0;overflow:hidden}
-#pitch-container{flex:1;min-height:0;position:relative;border-radius:8px;background:#2e7d32;overflow:hidden}
+#pitch-container{flex:1;min-height:0;position:relative;border-radius:10px;background:radial-gradient(ellipse at 50% 40%, #1a3d1a 0%, #0b200b 60%, #050d05 100%);overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.6)}
 .pitch-legend{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;flex-shrink:0}
 .pitch-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:var(--gray-light)}
 .pitch-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -1418,9 +1418,12 @@ function renderPitchSVG(layout, scorerMap) {
     const goals = scorerMap[adminName] || 0;
     const _pd = PLAYERS.find(pl => pl.name === adminName);
     const lbl = (_pd && _pd.fullName) || adminName;
-    const shortLbl = lbl.split(' ')[0];
-    const pillW = Math.max(34, Math.round(lbl.length * 3.5 + 5));
-    const lblFs = lbl.length > 15 ? 4.8 : lbl.length > 11 ? 5.3 : 6;
+    const nameParts = lbl.trim().split(' ');
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(' ');
+    const pillLongest = Math.max(firstName.length, lastName.length);
+    const pillW = Math.max(26, Math.round(pillLongest * 3.6 + 4));
+    const pillH = lastName ? 15 : 10;
     const photoSrc = LINEUP_PHOTOS[p.name] || PLAYER_PHOTOS[adminName];
     const ring = goals > 0 ? '#f1c40f' : col;
     const rw = goals > 0 ? 2.5 : 2;
@@ -1430,12 +1433,17 @@ function renderPitchSVG(layout, scorerMap) {
       g += `<image href="${photoSrc}" x="${(px-R).toFixed(1)}" y="${(py-R).toFixed(1)}" width="${R*2}" height="${R*2}" clip-path="url(#pcp${idx})" preserveAspectRatio="xMidYMid slice"/>`;
     } else {
       g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${R}" fill="${col}"/>`;
-      g += `<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="7" font-weight="700" fill="white">${shortLbl}</text>`;
+      g += `<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="6.5" font-weight="700" fill="white">${firstName}</text>`;
     }
     g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${R}" fill="none" stroke="${ring}" stroke-width="${rw}"/>`;
     const nly = py + R + 2;
-    g += `<rect x="${(px-pillW/2).toFixed(1)}" y="${nly.toFixed(1)}" width="${pillW}" height="10" fill="rgba(0,0,0,.65)" rx="3"/>`;
-    g += `<text x="${px.toFixed(1)}" y="${(nly+5.5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="${lblFs}" font-weight="700" fill="white">${lbl}</text>`;
+    g += `<rect x="${(px-pillW/2).toFixed(1)}" y="${nly.toFixed(1)}" width="${pillW}" height="${pillH}" fill="rgba(0,0,0,.72)" rx="3"/>`;
+    if (lastName) {
+      g += `<text x="${px.toFixed(1)}" y="${(nly+5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="700" fill="white">${firstName}</text>`;
+      g += `<text x="${px.toFixed(1)}" y="${(nly+11).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="600" fill="rgba(255,255,255,.78)">${lastName}</text>`;
+    } else {
+      g += `<text x="${px.toFixed(1)}" y="${(nly+5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="700" fill="white">${firstName}</text>`;
+    }
     if (goals > 0) {
       g += `<circle cx="${(px+R-1).toFixed(1)}" cy="${(py-R+1).toFixed(1)}" r="6.5" fill="#f1c40f" stroke="white" stroke-width="1"/>`;
       g += `<text x="${(px+R-1).toFixed(1)}" y="${(py-R+1).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="6.5" font-weight="900" fill="#333">${goals}</text>`;
