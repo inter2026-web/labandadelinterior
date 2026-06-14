@@ -1684,11 +1684,19 @@ function openLineup(matchId) {
   document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
-  document.getElementById('lineup-subs-photos').innerHTML = '<div class="subs-photos-title">Banco</div>' + lu.suplentes.filter(p => LINEUP_PHOTOS[p.name]).map(p => {
+  const subsCount = lu.suplentes.length;
+  const subImgSize = Math.max(20, Math.min(44, Math.floor(180 / subsCount)));
+  document.getElementById('lineup-subs-photos').innerHTML = '<div class="subs-photos-title">Banco</div>' + lu.suplentes.map(p => {
     const adminName = LINEUP_NAME_MAP[p.name] || p.name;
     const pl = PLAYERS.find(x => x.name === adminName);
     const firstName = ((pl && pl.fullName) || adminName).trim().split(' ')[0];
-    return `<div class="subs-photo-item"><img class="subs-photo-img" src="${LINEUP_PHOTOS[p.name]}" alt="${firstName}"><span class="subs-photo-name">${firstName}</span></div>`;
+    const mins = pm[adminName];
+    const minsStr = p.noEnter ? '' : mins !== undefined ? `<span class="subs-photo-mins">${mins}'`</span> : '';
+    const photoSrc = LINEUP_PHOTOS[p.name];
+    const photoEl = photoSrc
+      ? `<img class="subs-photo-img" src="${photoSrc}" alt="${firstName}" style="width:${subImgSize}px;height:${subImgSize}px">`
+      : `<div class="subs-photo-placeholder" style="width:${subImgSize}px;height:${subImgSize}px;font-size:${Math.max(8,Math.floor(subImgSize*.38))}px">${firstName.charAt(0)}</div>`;
+    return `<div class="subs-photo-item">${photoEl}<span class="subs-photo-name">${firstName}</span>${minsStr}</div>`;
   }).join('');
   document.getElementById('lineupModal').classList.add('open');
   document.body.style.overflow = 'hidden';

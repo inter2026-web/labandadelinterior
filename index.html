@@ -344,11 +344,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-staff{width:108px;flex-shrink:0;display:flex;flex-direction:column;gap:.65rem;justify-content:center}
 .staff-card{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:.7rem .4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;text-align:center}
 .staff-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,87,183,.4);flex-shrink:0}
-.lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:.4rem;justify-content:center;padding:.6rem .3rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px}
-.subs-photos-title{font-size:.46rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;text-align:center;padding-bottom:.3rem;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:.1rem}
-.subs-photo-item{display:flex;flex-direction:column;align-items:center;gap:.18rem}
-.subs-photo-img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.2)}
-.subs-photo-name{font-size:.5rem;color:var(--gray-light);text-align:center;line-height:1.15;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:0;padding:.5rem .3rem .4rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px}
+.subs-photos-title{font-size:.46rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;text-align:center;padding-bottom:.3rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.subs-photo-item{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;padding:.08rem 0}
+.subs-photo-img{border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0}
+.subs-photo-placeholder{border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gray-light);flex-shrink:0}
+.subs-photo-name{font-size:.48rem;color:var(--gray-light);text-align:center;line-height:1.1;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.subs-photo-mins{font-size:.44rem;color:var(--gray);text-align:center;flex-shrink:0}
 .staff-role-badge{font-size:.5rem;color:var(--blue-light);text-transform:uppercase;font-weight:700;letter-spacing:.08em;background:rgba(0,87,183,.15);padding:.15rem .45rem;border-radius:3px}
 .staff-name{font-size:.63rem;color:var(--white);line-height:1.3;font-weight:500}
 .lineup-right{flex:1;overflow-y:auto;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
@@ -1555,11 +1557,19 @@ function openLineup(matchId) {
   document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
-  document.getElementById('lineup-subs-photos').innerHTML = '<div class="subs-photos-title">Banco</div>' + lu.suplentes.filter(p => LINEUP_PHOTOS[p.name]).map(p => {
+  const subsCount = lu.suplentes.length;
+  const subImgSize = Math.max(20, Math.min(44, Math.floor(180 / subsCount)));
+  document.getElementById('lineup-subs-photos').innerHTML = '<div class="subs-photos-title">Banco</div>' + lu.suplentes.map(p => {
     const adminName = LINEUP_NAME_MAP[p.name] || p.name;
     const pl = PLAYERS.find(x => x.name === adminName);
     const firstName = ((pl && pl.fullName) || adminName).trim().split(' ')[0];
-    return `<div class="subs-photo-item"><img class="subs-photo-img" src="${LINEUP_PHOTOS[p.name]}" alt="${firstName}"><span class="subs-photo-name">${firstName}</span></div>`;
+    const mins = pm[adminName];
+    const minsStr = p.noEnter ? '' : mins !== undefined ? `<span class="subs-photo-mins">${mins}'</span>` : '';
+    const photoSrc = LINEUP_PHOTOS[p.name];
+    const photoEl = photoSrc
+      ? `<img class="subs-photo-img" src="${photoSrc}" alt="${firstName}" style="width:${subImgSize}px;height:${subImgSize}px">`
+      : `<div class="subs-photo-placeholder" style="width:${subImgSize}px;height:${subImgSize}px;font-size:${Math.max(8,Math.floor(subImgSize*.38))}px">${firstName.charAt(0)}</div>`;
+    return `<div class="subs-photo-item">${photoEl}<span class="subs-photo-name">${firstName}</span>${minsStr}</div>`;
   }).join('');
   document.getElementById('lineupModal').classList.add('open');
   document.body.style.overflow = 'hidden';
