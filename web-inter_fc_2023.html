@@ -338,7 +338,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-staff{width:108px;flex-shrink:0;display:flex;flex-direction:column;gap:.65rem;justify-content:center}
 .staff-card{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:.7rem .4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;text-align:center}
 .staff-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,87,183,.4);flex-shrink:0}
-.sub-photo{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.15);flex-shrink:0}
+.lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:.5rem;justify-content:center;padding:.25rem 0}
+.subs-photo-item{display:flex;flex-direction:column;align-items:center;gap:.18rem}
+.subs-photo-img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.15)}
+.subs-photo-name{font-size:.5rem;color:var(--gray-light);text-align:center;line-height:1.15;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .staff-role-badge{font-size:.5rem;color:var(--blue-light);text-transform:uppercase;font-weight:700;letter-spacing:.08em;background:rgba(0,87,183,.15);padding:.15rem .45rem;border-radius:3px}
 .staff-name{font-size:.63rem;color:var(--white);line-height:1.3;font-weight:500}
 .lineup-right{flex:1;overflow-y:auto;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
@@ -872,6 +875,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#f1c40f;width:8px;height:8px;border-radius:2px"></div>Gol</div>
         </div>
         </div>
+        <div class="lineup-subs-photos" id="lineup-subs-photos"></div>
       </div>
       <div class="lineup-right">
         <div class="lineup-section">
@@ -1653,8 +1657,7 @@ function openLineup(matchId) {
     const adminName = LINEUP_NAME_MAP[p.name] || p.name;
     const mins = pm[adminName];
     const goals = scorerMap[adminName] || 0;
-    const photoSrc = LINEUP_PHOTOS[p.name];
-    const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : photoSrc ? `<img class="sub-photo" src="${photoSrc}" alt="">` : '<span style="min-width:28px;display:inline-block"></span>';
+    const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : '<span style="min-width:34px;display:inline-block"></span>';
     const goalBadge = goals > 0 ? `<span class="goal-chip">${goals > 1 ? '⚽×'+goals : '⚽'}</span>` : '';
     const minsEl = p.noEnter
       ? '<span class="no-enter-tag">No ingresó</span>'
@@ -1674,6 +1677,12 @@ function openLineup(matchId) {
   document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
+  document.getElementById('lineup-subs-photos').innerHTML = lu.suplentes.filter(p => LINEUP_PHOTOS[p.name]).map(p => {
+    const adminName = LINEUP_NAME_MAP[p.name] || p.name;
+    const pl = PLAYERS.find(x => x.name === adminName);
+    const firstName = ((pl && pl.fullName) || adminName).trim().split(' ')[0];
+    return `<div class="subs-photo-item"><img class="subs-photo-img" src="${LINEUP_PHOTOS[p.name]}" alt="${firstName}"><span class="subs-photo-name">${firstName}</span></div>`;
+  }).join('');
   document.getElementById('lineupModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
