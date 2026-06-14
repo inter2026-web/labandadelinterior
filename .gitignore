@@ -23,6 +23,7 @@ check-fixture.js
 
 # Archivos de exploración
 *.txt
+!robots.txt
 inter-equipo.html
 inter-fc-team.html
 inter-fc-team.txt
