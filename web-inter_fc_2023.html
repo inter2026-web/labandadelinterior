@@ -887,14 +887,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
             <div class="staff-row">
               <img class="staff-row-avatar" src="assets/fotos/staff/ea.jpg" alt="Ezequiel Arrizabalaga">
               <div class="staff-row-info">
-                <div class="staff-row-name">Ezequiel Arrizabalaga</div>
+                <div class="staff-row-name">Ezequiel<br>Arrizabalaga</div>
                 <div class="staff-row-role">Director T&#233;cnico</div>
               </div>
             </div>
             <div class="staff-row">
-              <img class="staff-row-avatar" src="assets/fotos/staff/at.jpg" alt="Agust&#237;n Rebollo">
+              <img class="staff-row-avatar" src="assets/fotos/staff/at.jpg" alt="Agust&#237;n Rebollo" style="object-position:top center">
               <div class="staff-row-info">
-                <div class="staff-row-name">Agust&#237;n Rebollo</div>
+                <div class="staff-row-name">Agust&#237;n<br>Rebollo</div>
                 <div class="staff-row-role">Asistente T&#233;cnico</div>
               </div>
             </div>
@@ -1635,9 +1635,10 @@ function renderPitchSVG(layout, scorerMap) {
     const lbl = (_pd && _pd.fullName) || adminName;
     const nameParts = lbl.trim().split(' ');
     const firstName = nameParts[0];
-    const lastName = '';
-    const pillW = Math.max(20, Math.round(firstName.length * 3.1 + 2));
-    const pillH = 9;
+    const lastName = nameParts.slice(1).join(' ');
+    const pillLongest = Math.max(firstName.length, lastName.length);
+    const pillW = Math.max(20, Math.round(pillLongest * 2.8 + 2));
+    const pillH = lastName ? 14 : 9;
     const photoSrc = LINEUP_PHOTOS[p.name] || PLAYER_PHOTOS[adminName];
     const ring = goals > 0 ? '#f1c40f' : col;
     const rw = goals > 0 ? 2.5 : 2;
@@ -1654,9 +1655,9 @@ function renderPitchSVG(layout, scorerMap) {
     g += `<rect x="${(px-pillW/2).toFixed(1)}" y="${nly.toFixed(1)}" width="${pillW}" height="${pillH}" fill="rgba(0,0,0,.55)" rx="3"/>`;
     if (lastName) {
       g += `<text x="${px.toFixed(1)}" y="${(nly+4.5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="4.8" font-weight="700" fill="white">${firstName}</text>`;
-      g += `<text x="${px.toFixed(1)}" y="${(nly+11).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="600" fill="rgba(255,255,255,.78)">${lastName}</text>`;
+      g += `<text x="${px.toFixed(1)}" y="${(nly+10).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="4.8" font-weight="600" fill="rgba(255,255,255,.85)">${lastName}</text>`;
     } else {
-      g += `<text x="${px.toFixed(1)}" y="${(nly+5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="700" fill="white">${firstName}</text>`;
+      g += `<text x="${px.toFixed(1)}" y="${(nly+4.5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="4.8" font-weight="700" fill="white">${firstName}</text>`;
     }
     if (goals > 0) {
       g += `<circle cx="${(px+R-1).toFixed(1)}" cy="${(py-R+1).toFixed(1)}" r="6.5" fill="#f1c40f" stroke="white" stroke-width="1"/>`;
