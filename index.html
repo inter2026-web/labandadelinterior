@@ -106,10 +106,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .hero-title span{color:var(--blue-light)}
 .hero-sub{font-size:1rem;color:var(--gray-light);line-height:1.7;max-width:520px}
 .hero-sub--history{font-size:.9rem;margin-top:.5rem;opacity:.85}
-.hero-achievements{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem}
-.achievement-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.38rem .8rem;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:.02em}
-.achievement-chip.gold{background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);color:var(--gold)}
-.achievement-chip.blue{background:rgba(0,87,183,.12);border:1px solid rgba(0,87,183,.3);color:var(--blue-light)}
+.palmares{margin-top:1rem}
+.palmares-label{font-size:.65rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:.5rem}
+.palmares-items{display:flex;flex-direction:column;gap:.3rem}
+.palmares-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .65rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px}
+.palmares-icon{font-size:.95rem;flex-shrink:0}
+.palmares-info{flex:1;min-width:0}
+.palmares-year{font-size:.7rem;color:var(--gray);font-weight:700}
+.palmares-title{font-size:.78rem;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.palmares-badge{font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:10px;flex-shrink:0}
+.palmares-badge.sub{background:rgba(200,200,200,.12);color:#ccc}
+.palmares-badge.cur{background:rgba(0,87,183,.15);color:var(--blue-light)}
 .hero-meta{display:flex;flex-wrap:wrap;gap:1rem}
 .hero-meta-item{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--gray)}
 .hero-meta-item svg{color:var(--blue-light)}
@@ -498,6 +505,37 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
 
+      <!-- PALMARÉS -->
+      <div class="palmares">
+        <div class="palmares-label">Palmarés</div>
+        <div class="palmares-items">
+          <div class="palmares-item">
+            <span class="palmares-icon">🥈</span>
+            <div class="palmares-info">
+              <div class="palmares-year">2024</div>
+              <div class="palmares-title">Liga Centenario F7</div>
+            </div>
+            <span class="palmares-badge sub">Vicecampeón</span>
+          </div>
+          <div class="palmares-item">
+            <span class="palmares-icon">🥈</span>
+            <div class="palmares-info">
+              <div class="palmares-year">2025</div>
+              <div class="palmares-title">Liga Pro F11</div>
+            </div>
+            <span class="palmares-badge sub">Vicecampeón</span>
+          </div>
+          <div class="palmares-item">
+            <span class="palmares-icon">⚽</span>
+            <div class="palmares-info">
+              <div class="palmares-year">2026</div>
+              <div class="palmares-title">Liga MVD Serie 1 Div. B</div>
+            </div>
+            <span class="palmares-badge cur">En curso</span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Hero text -->
@@ -507,12 +545,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         Liga MVD · Serie 1 · Div. B
       </div>
       <h1 class="hero-title">Desde el<br><span>interior</span><br>para la capital</h1>
-      <p class="hero-sub">Un club nacido del interior — jugadores de Libertad y Colonia unidos por un mismo ADN. Distintas procedencias, una sola identidad. 💙🖤</p>
-      <div class="hero-achievements">
-        <div class="achievement-chip gold">🥈 2024 · Vicecampeón Liga F7</div>
-        <div class="achievement-chip gold">🥈 2025 · Vicecampeón Liga Pro</div>
-        <div class="achievement-chip blue">⚽ 2026 · Liga MVD · F11</div>
-      </div>
+      <p class="hero-sub">El Inter FC nació el 19 de diciembre de 2023 de la unión de compañeros de facultad de Libertad y Colonia. Nuestro nombre tiene una razón de ser: somos un club formado por jugadores del interior del país, y eso es parte de nuestra identidad. Hoy nuestro plantel está integrado mayoritariamente por jugadores oriundos de Libertad, con la presencia de algunos representantes de Montevideo — distintas procedencias, un mismo ADN. 💙🖤</p>
       <div class="hero-meta">
         <div class="hero-meta-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
