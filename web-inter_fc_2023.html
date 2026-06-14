@@ -330,7 +330,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-close:hover{background:var(--border);color:var(--white)}
 .lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden}
 .lineup-left{flex:0 0 52%;display:flex;flex-direction:column;padding:.75rem 1rem .75rem 1.25rem;gap:.4rem;min-height:0;overflow:hidden}
-#pitch-container{flex:1;min-height:0;position:relative;border-radius:10px;background:radial-gradient(ellipse at 50% 40%, #1a3d1a 0%, #0b200b 60%, #050d05 100%);overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.6)}
+#pitch-container{flex:1;min-height:0;position:relative;border-radius:10px;background:radial-gradient(ellipse at 50% 30%, #2e7d1a 0%, #1e5c0f 55%, #0f3008 100%);overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.5)}
 .pitch-legend{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;flex-shrink:0}
 .pitch-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:var(--gray-light)}
 .pitch-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -858,7 +858,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         <div class="pitch-legend">
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#b8860b"></div>Portero</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#0057B7"></div>Defensa</div>
-          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#1a7a3c"></div>Mediocampo</div>
+          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#27ae60"></div>Mediocampo</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#c0392b"></div>Delantero</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#f1c40f;width:8px;height:8px;border-radius:2px"></div>Gol</div>
         </div>
@@ -1556,7 +1556,7 @@ function renderPitchSVG(layout, scorerMap) {
     if (pos === 'POR') return '#b8860b';
     if (pos && pos.startsWith('DF')) return '#0057B7';
     if (pos === 'DC' || pos === 'ED' || pos === 'EI') return '#c0392b';
-    return '#1a7a3c';
+    return '#27ae60';
   }
   const stripes = [0,1,2,3,4].map(i=>`<rect x="0" y="${i*72}" width="${W}" height="36" fill="rgba(0,0,0,.07)"/>`).join('');
   const lines = `
