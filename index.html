@@ -81,10 +81,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .ig-btn-secondary{background:transparent;color:var(--white);border:1.5px solid var(--border)}
 .ig-btn-secondary:hover{border-color:var(--blue-light);color:var(--blue-light)}
 .team-photo-wrap{position:relative;border-radius:12px;overflow:hidden;cursor:pointer}
-.team-photo-img{width:100%;display:block;border-radius:12px;transition:transform .3s}
+.team-photo-img{width:100%;display:block;border-radius:12px;transition:opacity .5s,transform .3s}
 .team-photo-wrap:hover .team-photo-img{transform:scale(1.03)}
 .team-photo-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;opacity:0;transition:opacity .25s;border-radius:12px;color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .team-photo-wrap:hover .team-photo-overlay{opacity:1}
+.slide-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);border:none;color:#fff;font-size:1.8rem;padding:.25rem .7rem;cursor:pointer;border-radius:8px;z-index:3;line-height:1;opacity:0;transition:opacity .2s,background .2s}
+.team-photo-wrap:hover .slide-btn{opacity:1}
+.slide-btn:hover{background:rgba(0,0,0,.75)}
+.slide-prev{left:.5rem}
+.slide-next{right:.5rem}
+.staff-card.has-fotos{cursor:pointer;transition:border-color .3s,transform .3s}
+.staff-card.has-fotos:hover{border-color:var(--blue-light);transform:translateY(-3px)}
+.staff-fotos-count{font-size:.72rem;color:var(--blue-light);font-weight:700;margin-top:.4rem}
 .team-lightbox{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;backdrop-filter:blur(6px)}
 .team-lightbox.open{display:flex}
 .team-lightbox img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,.8);cursor:default;animation:lb-in .25s ease}
@@ -477,9 +485,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         <a href="#contacto" class="ig-btn ig-btn-secondary">Contactar</a>
         <a href="https://www.ligamvd.com/home/1/1/" target="_blank" class="ig-btn ig-btn-secondary">Liga MVD</a>
       </div>
-      <div class="team-photo-wrap" onclick="openTeamPhoto()" title="Click para ampliar">
-        <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" loading="lazy" class="team-photo-img">
-        <div class="team-photo-overlay">
+      <div class="team-photo-wrap" title="Click para ampliar">
+        <img src="assets/team-photo.jpg" alt="El Inter FC — Plantel 2026" loading="lazy" class="team-photo-img" id="hero-slide-img" onclick="openTeamPhoto()">
+        <button class="slide-btn slide-prev" onclick="slideManual(-1);event.stopPropagation()" aria-label="Anterior">‹</button>
+        <button class="slide-btn slide-next" onclick="slideManual(1);event.stopPropagation()" aria-label="Siguiente">›</button>
+        <div class="team-photo-overlay" onclick="openTeamPhoto()">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="white" opacity=".9"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
           <span>Ver foto</span>
         </div>
@@ -653,19 +663,21 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <hr class="staff-divider">
     <div class="staff-label">Cuerpo Técnico</div>
     <div class="staff-grid">
-      <div class="staff-card">
+      <div class="staff-card" id="staff-card-dt">
         <div class="staff-avatar-wrap" id="staff-avatar-dt">
           <span class="staff-avatar-initials">EA</span>
         </div>
         <div class="staff-card-name">Ezequiel Arrizabalaga</div>
         <div class="staff-card-role">Director Técnico</div>
+        <div class="staff-fotos-count" id="staff-fotos-dt" style="display:none"></div>
       </div>
-      <div class="staff-card">
+      <div class="staff-card" id="staff-card-at">
         <div class="staff-avatar-wrap" id="staff-avatar-at">
           <span class="staff-avatar-initials">AR</span>
         </div>
         <div class="staff-card-name">Agustín Rebollo</div>
         <div class="staff-card-role">Asistente Técnico</div>
+        <div class="staff-fotos-count" id="staff-fotos-at" style="display:none"></div>
       </div>
     </div>
   </div>
@@ -1466,14 +1478,66 @@ function closeLineup() {
 document.getElementById('lineupModal').addEventListener('click', function(e) {
   if (e.target === this) closeLineup();
 });
+// =====================
+// HERO SLIDESHOW
+// =====================
+const _slides = [];
+let _slideIdx = 0, _slideTimer = null;
+
+(function initSlideshow() {
+  if (typeof ADMIN_DATA === 'undefined' || !ADMIN_DATA.playerPhotos) return;
+  const seen = new Set();
+  Object.values(ADMIN_DATA.playerPhotos).forEach(arr => arr.forEach(p => { if (!seen.has(p)) { seen.add(p); _slides.push(p); } }));
+  for (let i = _slides.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [_slides[i],_slides[j]]=[_slides[j],_slides[i]]; }
+  if (_slides.length === 0) return;
+  _setSlide(0);
+  _startTimer();
+})();
+
+function _encPath(p) { return p.split('/').map(encodeURIComponent).join('/'); }
+
+function _setSlide(idx) {
+  _slideIdx = (idx + _slides.length) % _slides.length;
+  const img = document.getElementById('hero-slide-img');
+  if (!img || _slides.length === 0) return;
+  img.style.opacity = '0';
+  setTimeout(() => { img.src = _encPath(_slides[_slideIdx]); img.style.opacity = '1'; }, 300);
+}
+
+function _startTimer() {
+  clearInterval(_slideTimer);
+  if (_slides.length > 1) _slideTimer = setInterval(() => _setSlide(_slideIdx + 1), 5000);
+}
+
+function slideManual(dir) { _setSlide(_slideIdx + dir); _startTimer(); }
+
 function openTeamPhoto() {
-  document.getElementById('team-photo-lightbox').classList.add('open');
+  const lb = document.getElementById('team-photo-lightbox');
+  const lbImg = lb.querySelector('img');
+  if (_slides.length > 0) lbImg.src = _encPath(_slides[_slideIdx]);
+  lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeTeamPhoto() {
   document.getElementById('team-photo-lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// =====================
+// STAFF CARDS
+// =====================
+[{cardId:'staff-card-dt',badgeId:'staff-fotos-dt',key:'staff-dt',name:'Ezequiel Arrizabalaga'},
+ {cardId:'staff-card-at',badgeId:'staff-fotos-at',key:'staff-at',name:'Agustín Rebollo'}].forEach(s => {
+  const photos = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerPhotos && ADMIN_DATA.playerPhotos[s.key]) || [];
+  if (photos.length === 0) return;
+  const card = document.getElementById(s.cardId);
+  const badge = document.getElementById(s.badgeId);
+  if (!card) return;
+  card.classList.add('has-fotos');
+  badge.textContent = '📷 ' + photos.length + ' fotos';
+  badge.style.display = '';
+  card.addEventListener('click', () => openFotos(s.name, photos));
+});
 
 // =====================
 // INTERSECTION OBSERVER
