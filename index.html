@@ -355,7 +355,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .goal-chip{font-size:.62rem;background:rgba(39,174,96,.2);color:#2ecc71;padding:.06rem .3rem;border-radius:999px;margin-left:.3rem;font-weight:700;vertical-align:middle}
 .lineup-mins{font-size:.72rem;color:var(--gray);font-family:'Roboto Condensed',sans-serif;white-space:nowrap;flex-shrink:0}
 .no-enter-tag{font-size:.6rem;color:var(--gray);background:rgba(255,255,255,.06);padding:.1rem .38rem;border-radius:4px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
-.match-card-hint{font-size:.62rem;color:var(--gray);margin-top:.65rem;opacity:.65}
+.match-card-hint{font-size:.68rem;color:var(--blue-light);margin-top:.8rem;display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border:1px solid rgba(80,160,255,.3);border-radius:6px;background:rgba(0,87,183,.1)}
 @media(max-width:640px){
   .lineup-overlay{padding:.5rem 0 0;align-items:flex-end}
   .lineup-modal{max-width:100%;max-height:96dvh;border-radius:16px 16px 0 0}
@@ -1182,7 +1182,7 @@ MATCHES.forEach((m, i) => {
     return `<span class="scorer-tag">⚽ ${dn}${goals > 1 ? ' ×'+goals : ''}</span>`;
   }).join('');
   const fechaNum = m.id.replace(/\D/g, '');
-  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${fechaNum} · Liga MVD`;
+  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${fechaNum} · Liga MVD · Apertura`;
   const card = `<div class="match-card ${cardType} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
     <div class="match-header">
       <span class="match-fecha">${fechaLabel}</span>
