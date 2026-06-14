@@ -1,48 +1,48 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-06-12T19:33:53.837Z
+// Última actualización: 2026-06-14T17:03:00.872Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-06-12T19:33:53.837Z",
+  "lastUpdated": "2026-06-14T17:03:00.872Z",
   "standings": [
     {
       "pos": 1,
       "name": "Dep. Comandiyú",
-      "pts": 23
+      "pts": 26
     },
     {
       "pos": 2,
+      "name": "La Rotonda",
+      "pts": 24
+    },
+    {
+      "pos": 3,
+      "name": "El Inter",
+      "pts": 22,
+      "isUs": true
+    },
+    {
+      "pos": 4,
       "name": "Capitol F.C.",
       "pts": 21
     },
     {
-      "pos": 3,
-      "name": "La Rotonda",
-      "pts": 21
-    },
-    {
-      "pos": 4,
-      "name": "El Inter",
-      "pts": 19,
-      "isUs": true
-    },
-    {
       "pos": 5,
+      "name": "C.A Tigre Uruguay",
+      "pts": 14
+    },
+    {
+      "pos": 6,
       "name": "Blue Label FC",
       "pts": 13
     },
     {
-      "pos": 6,
-      "name": "C.A Tigre Uruguay",
-      "pts": 11
-    },
-    {
       "pos": 7,
-      "name": "Club Montero",
-      "pts": 11
+      "name": "Revolución Futbolística",
+      "pts": 13
     },
     {
       "pos": 8,
-      "name": "Revolución Futbolística",
-      "pts": 10
+      "name": "Club Montero",
+      "pts": 11
     },
     {
       "pos": 9,
@@ -52,7 +52,7 @@ const LIGA_DATA = {
     {
       "pos": 10,
       "name": "Malasia F.C.",
-      "pts": 5
+      "pts": 8
     },
     {
       "pos": 11,
@@ -66,7 +66,7 @@ const LIGA_DATA = {
     }
   ],
   "nextMatch": {
-    "fechaNum": 10,
+    "fechaNum": 11,
     "home": "Capitol F.C.",
     "away": "El Inter",
     "isHomeForUs": false,
