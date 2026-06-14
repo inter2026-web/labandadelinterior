@@ -329,13 +329,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-close{position:absolute;top:.9rem;right:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--gray);transition:all .2s}
 .lineup-close:hover{background:var(--border);color:var(--white)}
 .lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden}
-.lineup-left{flex:0 0 58%;display:flex;flex-direction:row;padding:.75rem .75rem .75rem 1.25rem;gap:.75rem;min-height:0;overflow:hidden}
-#pitch-container{flex:1;min-height:0;aspect-ratio:230/360;position:relative;background:#2e7d32;overflow:hidden}
+.lineup-left{flex:0 0 48%;display:flex;flex-direction:column;padding:.75rem .75rem .5rem .75rem;gap:.5rem;min-height:0;overflow:hidden}
+#pitch-container{flex:1;min-height:0;aspect-ratio:230/360;position:relative;background:#1e6b3b;overflow:hidden}
 .pitch-legend{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;flex-shrink:0}
 .pitch-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:var(--gray-light)}
 .pitch-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.lineup-pitch-wrap{flex:1;display:flex;flex-direction:column;gap:.4rem;min-height:0;overflow:hidden;align-items:center}
-.lineup-staff{flex-shrink:0;align-self:flex-start;display:flex;flex-direction:column;gap:.65rem}
+.lineup-staff-header{display:flex;gap:.65rem;align-items:flex-start;flex-shrink:0}
+.lineup-pitch-wrap{flex:1;display:flex;flex-direction:column;gap:.3rem;min-height:0;overflow:hidden;align-items:center}
+.lineup-staff{flex-shrink:0}
 .staff-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.6rem .75rem;display:flex;flex-direction:column;gap:.5rem}
 .staff-box-title{font-size:.5rem;color:var(--gray);text-transform:uppercase;font-weight:700;letter-spacing:.1em;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.07)}
 .staff-row{display:flex;align-items:center;gap:.55rem}
@@ -375,8 +376,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   .lineup-modal-body{flex-direction:column;overflow-y:auto}
   .lineup-header{gap:1rem;padding:.7rem 3rem .7rem 1rem}
   .lineup-score{font-size:1.8rem;padding:.1rem .6rem}
-  .lineup-left{flex:none;padding:.75rem 1rem;min-height:0;flex-direction:column;gap:.4rem}
-  .lineup-staff{display:none}
+  .lineup-left{flex:none;padding:.5rem .75rem;min-height:0}
+  .lineup-staff-header{display:none}
   .lineup-subs-photos{display:none}
   .lineup-pitch-wrap{width:100%}
   #pitch-container{aspect-ratio:230/360;flex:none;width:100%;height:auto}
@@ -879,7 +880,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     </div>
     <div class="lineup-modal-body">
       <div class="lineup-left">
-        <div class="lineup-staff">
+        <div class="lineup-staff-header">
           <div class="staff-box">
             <div class="staff-box-title">Cuerpo T&#233;cnico</div>
             <div class="staff-row">
@@ -1605,7 +1606,7 @@ function renderPitchSVG(layout, scorerMap) {
     if (pos === 'DC' || pos === 'ED' || pos === 'EI') return '#e74c3c';
     return '#9333ea';
   }
-  const stripes = [0,1,2,3,4].map(i=>`<rect x="0" y="${i*72}" width="${W}" height="36" fill="rgba(0,0,0,.07)"/>`).join('');
+  const stripes = [0,1,2,3,4].map(i=>`<rect x="0" y="${i*72}" width="${W}" height="36" fill="rgba(0,0,0,.04)"/>`).join('');
   const lines = `
     <rect x="10" y="10" width="${W-20}" height="${H-20}" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="1.5"/>
     <line x1="10" y1="${H/2}" x2="${W-10}" y2="${H/2}" stroke="rgba(255,255,255,.65)" stroke-width="1.2"/>
@@ -1649,8 +1650,8 @@ function renderPitchSVG(layout, scorerMap) {
       g += `<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="6.5" font-weight="700" fill="white">${firstName}</text>`;
     }
     g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${R}" fill="none" stroke="${ring}" stroke-width="${rw}"/>`;
-    const nly = py + R + 2;
-    g += `<rect x="${(px-pillW/2).toFixed(1)}" y="${nly.toFixed(1)}" width="${pillW}" height="${pillH}" fill="rgba(0,0,0,.72)" rx="3"/>`;
+    const nly = py - R - 2 - pillH;
+    g += `<rect x="${(px-pillW/2).toFixed(1)}" y="${nly.toFixed(1)}" width="${pillW}" height="${pillH}" fill="rgba(0,0,0,.55)" rx="3"/>`;
     if (lastName) {
       g += `<text x="${px.toFixed(1)}" y="${(nly+5).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="700" fill="white">${firstName}</text>`;
       g += `<text x="${px.toFixed(1)}" y="${(nly+11).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="5.2" font-weight="600" fill="rgba(255,255,255,.78)">${lastName}</text>`;
@@ -1663,7 +1664,7 @@ function renderPitchSVG(layout, scorerMap) {
     }
     return `<g>${g}</g>`;
   }).join('');
-  return `<svg viewBox="10 0 ${W-20} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;inset:0;width:100%;height:100%;display:block"><defs>${defs}</defs><rect width="${W}" height="${H}" fill="#2e7d32"/>${stripes}${lines}${cPaths}${chips}</svg>`;
+  return `<svg viewBox="10 0 ${W-20} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;inset:0;width:100%;height:100%;display:block"><defs>${defs}</defs><rect width="${W}" height="${H}" fill="#1e6b3b"/>${stripes}${lines}${cPaths}${chips}</svg>`;
 }
 
 function openLineup(matchId) {
@@ -1691,7 +1692,7 @@ function openLineup(matchId) {
     const mins = pm[adminName];
     const goals = scorerMap[adminName] || 0;
     const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : '<span style="min-width:34px;display:inline-block"></span>';
-    const goalBadge = goals > 0 ? `<span class="goal-chip" title="${goals} gol${goals>1?'es':''}">⚽${goals>1?' ×'+goals:''}</span>` : '';
+    const goalBadge = goals > 0 ? `<span class="goal-chip" title="${goals} gol${goals>1?'es':''}">⚽ ×${goals}</span>` : '';
     const minsEl = p.noEnter
       ? '<span class="no-enter-tag">No ingresó</span>'
       : mins !== undefined ? `<span class="lineup-mins">${mins} min</span>` : '';
@@ -1713,7 +1714,7 @@ function openLineup(matchId) {
   });
   const goalsBox=document.getElementById('lineup-goals-box');
   if(goalEntries.length>0){
-    goalsBox.innerHTML='<div class="staff-box"><div class="staff-box-title">Goles</div>'+goalEntries.map(g=>'<div class="goals-row"><span class="goals-name">'+g.name+'</span><span class="goals-count">⚽'+(g.count>1?' \xd7'+g.count:'')+'</span></div>').join('')+'</div>';
+    goalsBox.innerHTML='<div class="staff-box"><div class="staff-box-title">Goles</div>'+goalEntries.map(g=>'<div class="goals-row"><span class="goals-name">'+g.name+'</span><span class="goals-count">'+g.count+'</span></div>').join('')+'</div>';
   } else {
     goalsBox.innerHTML='';
   }
