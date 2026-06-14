@@ -1346,7 +1346,12 @@ function _setSlide(idx){
   var img=document.getElementById('hero-slide-img');
   if(!img||_slides.length===0) return;
   img.style.opacity='0';
-  setTimeout(function(){img.src=_encPath(_slides[_slideIdx]);img.style.opacity='1';},300);
+  setTimeout(function(){
+    var show=function(){img.style.opacity='1';img.onload=null;img.onerror=null;};
+    img.onload=show; img.onerror=show;
+    img.src=_encPath(_slides[_slideIdx]);
+    if(img.complete) show();
+  },300);
 }
 function _startTimer(){clearInterval(_slideTimer);if(_slides.length>1)_slideTimer=setInterval(function(){_setSlide(_slideIdx+1);},5000);}
 function slideManual(dir){_setSlide(_slideIdx+dir);_startTimer();}

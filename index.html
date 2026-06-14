@@ -1501,7 +1501,13 @@ function _setSlide(idx) {
   const img = document.getElementById('hero-slide-img');
   if (!img || _slides.length === 0) return;
   img.style.opacity = '0';
-  setTimeout(() => { img.src = _encPath(_slides[_slideIdx]); img.style.opacity = '1'; }, 300);
+  setTimeout(() => {
+    const show = () => { img.style.opacity = '1'; img.onload = null; img.onerror = null; };
+    img.onload = show;
+    img.onerror = show;
+    img.src = _encPath(_slides[_slideIdx]);
+    if (img.complete) show();
+  }, 300);
 }
 
 function _startTimer() {
