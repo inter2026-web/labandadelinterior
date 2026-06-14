@@ -106,7 +106,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .hero-title span{color:var(--blue-light)}
 .hero-sub{font-size:1rem;color:var(--gray-light);line-height:1.7;max-width:520px}
 .hero-sub--history{font-size:.9rem;margin-top:.5rem;opacity:.85}
-.palmares{margin-top:1rem}
+.hero-left{display:flex;flex-direction:column;gap:1rem}
+.palmares{}
 .palmares-label{font-size:.65rem;color:var(--blue-light);text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:.5rem}
 .palmares-items{display:flex;flex-direction:column;gap:.3rem}
 .palmares-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .65rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px}
@@ -463,7 +464,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   <div class="hero-bg"></div>
   <div class="hero-stripes"></div>
   <div class="hero-content">
-    <!-- Instagram Card -->
+    <!-- Instagram Card + Palmarés -->
+    <div class="hero-left">
     <div class="ig-card fade-in-left">
       <div class="ig-card-header">
         <div class="ig-avatar">
@@ -482,9 +484,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
       <div class="ig-stats">
-        <div class="ig-stat"><div class="ig-stat-num" style="color:var(--win)">7</div><div class="ig-stat-label">Victorias</div></div>
-        <div class="ig-stat"><div class="ig-stat-num" style="color:var(--gold)">22</div><div class="ig-stat-label">Puntos</div></div>
-        <div class="ig-stat"><div class="ig-stat-num">3°</div><div class="ig-stat-label">Posición</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="ig-stat-posts">84</div><div class="ig-stat-label">Posts</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="ig-stat-seguidores">235</div><div class="ig-stat-label">Seguidores</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="ig-stat-siguiendo">34</div><div class="ig-stat-label">Siguiendo</div></div>
       </div>
       <div class="ig-bio">
         💙🖤 Vamo el Inter — <em>Desde el interior para la capital</em><br>
@@ -505,38 +507,41 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
 
-      <!-- PALMARÉS -->
-      <div class="palmares">
-        <div class="palmares-label">Palmarés</div>
-        <div class="palmares-items">
-          <div class="palmares-item">
-            <span class="palmares-icon">🥈</span>
-            <div class="palmares-info">
-              <div class="palmares-year">2024</div>
-              <div class="palmares-title">Liga Centenario F7</div>
-            </div>
-            <span class="palmares-badge sub">Vicecampeón</span>
-          </div>
-          <div class="palmares-item">
-            <span class="palmares-icon">🥈</span>
-            <div class="palmares-info">
-              <div class="palmares-year">2025</div>
-              <div class="palmares-title">Liga Pro F11</div>
-            </div>
-            <span class="palmares-badge sub">Vicecampeón</span>
-          </div>
-          <div class="palmares-item">
-            <span class="palmares-icon">⚽</span>
-            <div class="palmares-info">
-              <div class="palmares-year">2026</div>
-              <div class="palmares-title">Liga MVD Serie 1 Div. B</div>
-            </div>
-            <span class="palmares-badge cur">En curso</span>
-          </div>
-        </div>
-      </div>
 
     </div>
+
+    <!-- PALMARÉS -->
+    <div class="palmares">
+      <div class="palmares-label">Palmarés</div>
+      <div class="palmares-items">
+        <div class="palmares-item">
+          <span class="palmares-icon">🥈</span>
+          <div class="palmares-info">
+            <div class="palmares-year">2024</div>
+            <div class="palmares-title">Liga Centenario F7</div>
+          </div>
+          <span class="palmares-badge sub">Vicecampeón</span>
+        </div>
+        <div class="palmares-item">
+          <span class="palmares-icon">🥈</span>
+          <div class="palmares-info">
+            <div class="palmares-year">2025</div>
+            <div class="palmares-title">Liga Pro F11</div>
+          </div>
+          <span class="palmares-badge sub">Vicecampeón</span>
+        </div>
+        <div class="palmares-item">
+          <span class="palmares-icon">⚽</span>
+          <div class="palmares-info">
+            <div class="palmares-year">2026</div>
+            <div class="palmares-title">Liga MVD Serie 1 Div. B</div>
+          </div>
+          <span class="palmares-badge cur">En curso</span>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /hero-left -->
 
     <!-- Hero text -->
     <div class="hero-text fade-in-right">
