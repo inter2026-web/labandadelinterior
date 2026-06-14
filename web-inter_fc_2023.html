@@ -338,26 +338,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-staff{width:108px;flex-shrink:0;display:flex;flex-direction:column;gap:.65rem;justify-content:center}
 .staff-card{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:.7rem .4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;text-align:center}
 .staff-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,87,183,.4);flex-shrink:0}
-.lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:.5rem;justify-content:center;padding:.25rem 0}
+.lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:.4rem;justify-content:center;padding:.6rem .3rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px}
+.subs-photos-title{font-size:.46rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;text-align:center;padding-bottom:.3rem;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:.1rem}
 .subs-photo-item{display:flex;flex-direction:column;align-items:center;gap:.18rem}
 .subs-photo-img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.15)}
 .subs-photo-name{font-size:.5rem;color:var(--gray-light);text-align:center;line-height:1.15;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .staff-role-badge{font-size:.5rem;color:var(--blue-light);text-transform:uppercase;font-weight:700;letter-spacing:.08em;background:rgba(0,87,183,.15);padding:.15rem .45rem;border-radius:3px}
 .staff-name{font-size:.63rem;color:var(--white);line-height:1.3;font-weight:500}
 .lineup-right{flex:1;overflow-y:auto;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
-.lineup-section{padding:.4rem 0}
-.lineup-section-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.lineup-section{padding:.25rem 0}
+.lineup-section+.lineup-section{margin-top:.85rem;padding-top:.85rem;border-top:1px solid rgba(255,255,255,.08)}
+.lineup-section-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
 .lineup-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.lineup-player{display:flex;align-items:center;gap:.6rem;padding:.38rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.lineup-player{display:flex;align-items:center;gap:.6rem;padding:.44rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .lineup-player:last-child{border-bottom:none}
 .lineup-player.no-enter{opacity:.42}
 .pos-badge{font-size:.56rem;font-weight:700;letter-spacing:.04em;padding:.15rem .35rem;border-radius:4px;min-width:32px;text-align:center;flex-shrink:0}
-.pos-por{background:rgba(245,166,35,.18);color:#f5a623;border:1px solid rgba(245,166,35,.28)}
-.pos-def{background:rgba(0,87,183,.22);color:#5ba3ff;border:1px solid rgba(0,87,183,.32)}
-.pos-mid{background:rgba(39,174,96,.18);color:#2ecc71;border:1px solid rgba(39,174,96,.28)}
-.pos-fwd{background:rgba(231,76,60,.18);color:#e74c3c;border:1px solid rgba(231,76,60,.28)}
+.pos-por{background:rgba(230,126,34,.2);color:#e67e22;border:1px solid rgba(230,126,34,.4)}
+.pos-def{background:rgba(41,128,185,.2);color:#5dade2;border:1px solid rgba(41,128,185,.4)}
+.pos-mid{background:rgba(142,68,173,.2);color:#bb8fce;border:1px solid rgba(142,68,173,.4)}
+.pos-fwd{background:rgba(231,76,60,.2);color:#e74c3c;border:1px solid rgba(231,76,60,.4)}
 .lineup-player-name{flex:1;font-size:.84rem;font-weight:500}
-.goal-chip{font-size:.62rem;background:rgba(39,174,96,.2);color:#2ecc71;padding:.06rem .3rem;border-radius:999px;margin-left:.3rem;font-weight:700;vertical-align:middle}
+.goal-chip{font-size:.7rem;background:rgba(241,196,15,.15);color:#f1c40f;padding:.12rem .5rem;border-radius:999px;margin-left:.5rem;font-weight:800;border:1px solid rgba(241,196,15,.35);cursor:default;display:inline-flex;align-items:center;gap:.2rem;vertical-align:middle;position:relative}
 .lineup-mins{font-size:.72rem;color:var(--gray);font-family:'Roboto Condensed',sans-serif;white-space:nowrap;flex-shrink:0}
 .no-enter-tag{font-size:.6rem;color:var(--gray);background:rgba(255,255,255,.06);padding:.1rem .38rem;border-radius:4px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
 .match-card-hint{font-size:.68rem;color:var(--blue-light);margin-top:.8rem;display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border:1px solid rgba(80,160,255,.3);border-radius:6px;background:rgba(0,87,183,.1)}
@@ -365,8 +367,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   .lineup-overlay{padding:.5rem 0 0;align-items:flex-end}
   .lineup-modal{max-width:100%;max-height:96dvh;border-radius:16px 16px 0 0}
   .lineup-modal-body{flex-direction:column;overflow-y:auto}
+  .lineup-header{gap:1rem;padding:.7rem 3rem .7rem 1rem}
+  .lineup-score{font-size:1.8rem;padding:.1rem .6rem}
   .lineup-left{flex:none;padding:.75rem 1rem;min-height:0;flex-direction:column;gap:.4rem}
   .lineup-staff{display:none}
+  .lineup-subs-photos{display:none}
   .lineup-pitch-wrap{width:100%}
   #pitch-container{aspect-ratio:230/360;flex:none;width:100%;height:auto}
   .lineup-right{border-left:none;border-top:1px solid var(--border);padding:.5rem 1rem 1.25rem}
@@ -857,9 +862,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   <div class="lineup-modal" onclick="event.stopPropagation()">
     <button class="lineup-close" onclick="closeLineup()">✕</button>
     <div class="lineup-header">
-      <div class="lineup-match-label" id="lineup-match-label"></div>
-      <div class="lineup-score-row">
+      <div class="lineup-header-meta">
+        <div class="lineup-match-label" id="lineup-match-label"></div>
         <span class="lineup-rival" id="lineup-rival"></span>
+      </div>
+      <div class="lineup-score-block">
         <span class="lineup-score" id="lineup-score"></span>
         <span class="lineup-result-badge" id="lineup-result-badge"></span>
       </div>
@@ -868,10 +875,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="lineup-left">
         <div id="pitch-container"></div>
         <div class="pitch-legend">
-          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#b8860b"></div>Portero</div>
-          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#0057B7"></div>Defensa</div>
-          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#27ae60"></div>Mediocampo</div>
-          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#c0392b"></div>Delantero</div>
+          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#e67e22"></div>Portero</div>
+          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#2980b9"></div>Defensa</div>
+          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#8e44ad"></div>Mediocampo</div>
+          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#e74c3c"></div>Delantero</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#f1c40f;width:8px;height:8px;border-radius:2px"></div>Gol</div>
         </div>
         </div>
@@ -1567,10 +1574,10 @@ function buildFormationLayout(titulares) {
 function renderPitchSVG(layout, scorerMap) {
   const W = 250, H = 360, R = 14;
   function chipColor(pos) {
-    if (pos === 'POR') return '#b8860b';
-    if (pos && pos.startsWith('DF')) return '#0057B7';
-    if (pos === 'DC' || pos === 'ED' || pos === 'EI') return '#c0392b';
-    return '#27ae60';
+    if (pos === 'POR') return '#e67e22';
+    if (pos && pos.startsWith('DF')) return '#2980b9';
+    if (pos === 'DC' || pos === 'ED' || pos === 'EI') return '#e74c3c';
+    return '#8e44ad';
   }
   const stripes = [0,1,2,3,4].map(i=>`<rect x="0" y="${i*72}" width="${W}" height="36" fill="rgba(0,0,0,.07)"/>`).join('');
   const lines = `
@@ -1658,7 +1665,7 @@ function openLineup(matchId) {
     const mins = pm[adminName];
     const goals = scorerMap[adminName] || 0;
     const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : '<span style="min-width:34px;display:inline-block"></span>';
-    const goalBadge = goals > 0 ? `<span class="goal-chip">${goals > 1 ? '⚽×'+goals : '⚽'}</span>` : '';
+    const goalBadge = goals > 0 ? `<span class="goal-chip" title="${goals} gol${goals>1?'es':''}">⚽${goals>1?' ×'+goals:''}</span>` : '';
     const minsEl = p.noEnter
       ? '<span class="no-enter-tag">No ingresó</span>'
       : mins !== undefined ? `<span class="lineup-mins">${mins} min</span>` : '';
@@ -1677,7 +1684,7 @@ function openLineup(matchId) {
   document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
-  document.getElementById('lineup-subs-photos').innerHTML = lu.suplentes.filter(p => LINEUP_PHOTOS[p.name]).map(p => {
+  document.getElementById('lineup-subs-photos').innerHTML = '<div class="subs-photos-title">Banco</div>' + lu.suplentes.filter(p => LINEUP_PHOTOS[p.name]).map(p => {
     const adminName = LINEUP_NAME_MAP[p.name] || p.name;
     const pl = PLAYERS.find(x => x.name === adminName);
     const firstName = ((pl && pl.fullName) || adminName).trim().split(' ')[0];
