@@ -335,24 +335,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-close{position:absolute;top:.8rem;right:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--gray);transition:all .2s}
 .lineup-close:hover{background:var(--border);color:var(--white)}
 .lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden}
-.lineup-left{flex:0 0 52%;display:flex;flex-direction:row;padding:.75rem .75rem .75rem 1.25rem;gap:.75rem;min-height:0;overflow:hidden}
+.lineup-left{flex:0 0 58%;display:flex;flex-direction:row;padding:.75rem .75rem .75rem 1.25rem;gap:.75rem;min-height:0;overflow:hidden}
 .lineup-pitch-wrap{flex:1;display:flex;flex-direction:column;gap:.4rem;min-height:0;overflow:hidden;align-items:center}
 #pitch-container{flex:1;min-height:0;aspect-ratio:230/360;position:relative;background:#2e7d32;overflow:hidden}
 .pitch-legend{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;flex-shrink:0}
 .pitch-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:var(--gray-light)}
 .pitch-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.lineup-staff{width:108px;flex-shrink:0;display:flex;flex-direction:column;gap:.65rem;justify-content:center}
-.staff-card{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:.7rem .4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;text-align:center}
-.staff-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,87,183,.4);flex-shrink:0}
-.lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:0;padding:.5rem .3rem .4rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px}
-.subs-photos-title{font-size:.46rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;text-align:center;padding-bottom:.3rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
-.subs-photo-item{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;padding:.08rem 0}
-.subs-photo-img{border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0}
-.subs-photo-placeholder{border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gray-light);flex-shrink:0}
-.subs-photo-name{font-size:.48rem;color:var(--gray-light);text-align:center;line-height:1.1;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
-.subs-photo-mins{font-size:.44rem;color:var(--gray);text-align:center;flex-shrink:0}
-.staff-role-badge{font-size:.5rem;color:var(--blue-light);text-transform:uppercase;font-weight:700;letter-spacing:.08em;background:rgba(0,87,183,.15);padding:.15rem .45rem;border-radius:3px}
-.staff-name{font-size:.63rem;color:var(--white);line-height:1.3;font-weight:500}
+.lineup-staff{flex-shrink:0;align-self:flex-start}
+.staff-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.6rem .75rem;display:flex;flex-direction:column;gap:.5rem}
+.staff-box-title{font-size:.5rem;color:var(--gray);text-transform:uppercase;font-weight:700;letter-spacing:.1em;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.staff-row{display:flex;align-items:center;gap:.55rem}
+.staff-row-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,87,183,.35);flex-shrink:0}
+.staff-row-info{display:flex;flex-direction:column;gap:.1rem;min-width:0}
+.staff-row-name{font-size:.63rem;color:var(--white);font-weight:600;line-height:1.2;white-space:nowrap}
+.staff-row-role{font-size:.5rem;color:var(--blue-light);line-height:1}
 .lineup-right{flex:1;overflow-y:auto;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
 .lineup-section{padding:.25rem 0}
 .lineup-section+.lineup-section{margin-top:.85rem;padding-top:.85rem;border-top:1px solid rgba(255,255,255,.08)}
@@ -850,15 +846,22 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <div class="lineup-modal-body">
       <div class="lineup-left">
         <div class="lineup-staff">
-          <div class="staff-card">
-            <img class="staff-avatar" src="assets/fotos/staff/ea.jpg" alt="Ezequiel Arrizabalaga">
-            <div class="staff-role-badge">DT</div>
-            <div class="staff-name">Ezequiel Arrizabalaga</div>
-          </div>
-          <div class="staff-card">
-            <img class="staff-avatar" src="assets/fotos/staff/at.jpg" alt="Agustín Rebollo">
-            <div class="staff-role-badge">AT</div>
-            <div class="staff-name">Agustín Rebollo</div>
+          <div class="staff-box">
+            <div class="staff-box-title">Cuerpo Técnico</div>
+            <div class="staff-row">
+              <img class="staff-row-avatar" src="assets/fotos/staff/ea.jpg" alt="Ezequiel Arrizabalaga">
+              <div class="staff-row-info">
+                <div class="staff-row-name">Ezequiel Arrizabalaga</div>
+                <div class="staff-row-role">Director Técnico</div>
+              </div>
+            </div>
+            <div class="staff-row">
+              <img class="staff-row-avatar" src="assets/fotos/staff/at.jpg" alt="Agustín Rebollo">
+              <div class="staff-row-info">
+                <div class="staff-row-name">Agustín Rebollo</div>
+                <div class="staff-row-role">Asistente Técnico</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="lineup-pitch-wrap">
@@ -872,7 +875,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#f1c40f;width:8px;height:8px;border-radius:2px"></div>Gol</div>
         </div>
         </div>
-        <div class="lineup-subs-photos" id="lineup-subs-photos"></div>
       </div>
       <div class="lineup-right">
         <div class="lineup-section">
@@ -1557,20 +1559,6 @@ function openLineup(matchId) {
   document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
-  const subsCount = lu.suplentes.length;
-  const subImgSize = Math.max(20, Math.min(44, Math.floor(180 / subsCount)));
-  document.getElementById('lineup-subs-photos').innerHTML = '<div class="subs-photos-title">Banco</div>' + lu.suplentes.map(p => {
-    const adminName = LINEUP_NAME_MAP[p.name] || p.name;
-    const pl = PLAYERS.find(x => x.name === adminName);
-    const firstName = ((pl && pl.fullName) || adminName).trim().split(' ')[0];
-    const mins = pm[adminName];
-    const minsStr = p.noEnter ? '' : mins !== undefined ? `<span class="subs-photo-mins">${mins}'</span>` : '';
-    const photoSrc = LINEUP_PHOTOS[p.name];
-    const photoEl = photoSrc
-      ? `<img class="subs-photo-img" src="${photoSrc}" alt="${firstName}" style="width:${subImgSize}px;height:${subImgSize}px">`
-      : `<div class="subs-photo-placeholder" style="width:${subImgSize}px;height:${subImgSize}px;font-size:${Math.max(8,Math.floor(subImgSize*.38))}px">${firstName.charAt(0)}</div>`;
-    return `<div class="subs-photo-item">${photoEl}<span class="subs-photo-name">${firstName}</span>${minsStr}</div>`;
-  }).join('');
   document.getElementById('lineupModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
