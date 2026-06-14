@@ -335,7 +335,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .pitch-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:var(--gray-light)}
 .pitch-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .lineup-pitch-wrap{flex:1;display:flex;flex-direction:column;gap:.4rem;min-height:0;overflow:hidden;align-items:center}
-.lineup-staff{flex-shrink:0;align-self:flex-start}
+.lineup-staff{flex-shrink:0;align-self:flex-start;display:flex;flex-direction:column;gap:.65rem}
 .staff-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.6rem .75rem;display:flex;flex-direction:column;gap:.5rem}
 .staff-box-title{font-size:.5rem;color:var(--gray);text-transform:uppercase;font-weight:700;letter-spacing:.1em;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.07)}
 .staff-row{display:flex;align-items:center;gap:.55rem}
@@ -343,6 +343,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .staff-row-info{display:flex;flex-direction:column;gap:.1rem;min-width:0}
 .staff-row-name{font-size:.63rem;color:var(--white);font-weight:600;line-height:1.2;white-space:nowrap}
 .staff-row-role{font-size:.5rem;color:var(--blue-light);line-height:1}
+.goals-row{display:flex;align-items:center;justify-content:space-between;gap:.4rem}
+.goals-name{font-size:.63rem;color:var(--white);font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.goals-count{font-size:.65rem;color:#f1c40f;font-weight:800;flex-shrink:0}
 .lineup-subs-photos{width:84px;flex-shrink:0;display:flex;flex-direction:column;gap:.4rem;justify-content:center;padding:.6rem .3rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px}
 .subs-photos-title{font-size:.46rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;text-align:center;padding-bottom:.3rem;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:.1rem}
 .subs-photo-item{display:flex;flex-direction:column;align-items:center;gap:.18rem}
@@ -359,7 +362,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .pos-badge{font-size:.56rem;font-weight:700;letter-spacing:.04em;padding:.15rem .35rem;border-radius:4px;min-width:32px;text-align:center;flex-shrink:0}
 .pos-por{background:rgba(230,126,34,.2);color:#e67e22;border:1px solid rgba(230,126,34,.4)}
 .pos-def{background:rgba(41,128,185,.2);color:#5dade2;border:1px solid rgba(41,128,185,.4)}
-.pos-mid{background:rgba(142,68,173,.2);color:#bb8fce;border:1px solid rgba(142,68,173,.4)}
+.pos-mid{background:rgba(147,51,234,.2);color:#c084fc;border:1px solid rgba(147,51,234,.45)}
 .pos-fwd{background:rgba(231,76,60,.2);color:#e74c3c;border:1px solid rgba(231,76,60,.4)}
 .lineup-player-name{flex:1;font-size:.84rem;font-weight:500}
 .goal-chip{font-size:.7rem;background:rgba(241,196,15,.15);color:#f1c40f;padding:.12rem .5rem;border-radius:999px;margin-left:.5rem;font-weight:800;border:1px solid rgba(241,196,15,.35);cursor:default;display:inline-flex;align-items:center;gap:.2rem;vertical-align:middle;position:relative}
@@ -894,13 +897,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
               </div>
             </div>
           </div>
+          <div id="lineup-goals-box"></div>
         </div>
         <div class="lineup-pitch-wrap">
         <div id="pitch-container"></div>
         <div class="pitch-legend">
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#e67e22"></div>Portero</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#2980b9"></div>Defensa</div>
-          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#8e44ad"></div>Mediocampo</div>
+          <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#9333ea"></div>Mediocampo</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#e74c3c"></div>Delantero</div>
           <div class="pitch-legend-item"><div class="pitch-legend-dot" style="background:#f1c40f;width:8px;height:8px;border-radius:2px"></div>Gol</div>
         </div>
@@ -1599,7 +1603,7 @@ function renderPitchSVG(layout, scorerMap) {
     if (pos === 'POR') return '#e67e22';
     if (pos && pos.startsWith('DF')) return '#2980b9';
     if (pos === 'DC' || pos === 'ED' || pos === 'EI') return '#e74c3c';
-    return '#8e44ad';
+    return '#9333ea';
   }
   const stripes = [0,1,2,3,4].map(i=>`<rect x="0" y="${i*72}" width="${W}" height="36" fill="rgba(0,0,0,.07)"/>`).join('');
   const lines = `
@@ -1703,6 +1707,16 @@ function openLineup(matchId) {
   scoreEl.textContent = m.result;
   scoreEl.className = 'lineup-score ' + resultClass;
   document.getElementById('lineup-result-badge').textContent = resultLabel;
+  const goalEntries = Object.entries(scorerMap).sort((a,b)=>b[1]-a[1]).map(([adminName,count])=>{
+    const pl=PLAYERS.find(x=>x.name===adminName);
+    return {name:(pl&&pl.fullName)||adminName,count};
+  });
+  const goalsBox=document.getElementById('lineup-goals-box');
+  if(goalEntries.length>0){
+    goalsBox.innerHTML='<div class="staff-box"><div class="staff-box-title">Goles</div>'+goalEntries.map(g=>'<div class="goals-row"><span class="goals-name">'+g.name+'</span><span class="goals-count">⚽'+(g.count>1?' \xd7'+g.count:'')+'</span></div>').join('')+'</div>';
+  } else {
+    goalsBox.innerHTML='';
+  }
   document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
