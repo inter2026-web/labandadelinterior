@@ -428,11 +428,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   .lineup-score{font-size:1.8rem;padding:.1rem .6rem}
   .lineup-modal-body{flex-direction:column;overflow-y:auto}
   .lineup-left{flex:none;padding:.75rem 1rem;min-height:0;flex-direction:column;gap:.4rem}
-  .lineup-staff{display:none}
+  .lineup-staff{display:block}
   .lineup-subs-photos{display:none}
   .lineup-pitch-wrap{width:100%}
   #pitch-container{aspect-ratio:230/360;flex:none;width:100%;height:auto}
-  .lineup-right{border-left:none;border-top:1px solid var(--border);padding:.5rem 1rem 1.25rem}
+  .lineup-right{display:none;border-left:none;border-top:1px solid var(--border);padding:.5rem 1rem 1.25rem}
+  .lineup-right.mobile-visible{display:block}
+  .lineup-minutos-btn{display:flex}
 }
 
 /* FOTOS JUGADOR */
@@ -495,22 +497,47 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
 .stagger-5{transition-delay:.5s}
 .stagger-6{transition-delay:.6s}
 
+/* MOBILE NAV OVERLAY */
+.mobile-nav-overlay{position:fixed;inset:0;top:64px;background:rgba(6,6,8,.97);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2rem;display:none;backdrop-filter:blur(16px)}
+.mobile-nav-overlay.open{display:flex}
+.mobile-nav-overlay a{color:var(--white);text-decoration:none;font-family:'Anton',sans-serif;font-size:2rem;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
+.mobile-nav-overlay a:hover,.mobile-nav-overlay a:active{color:var(--blue-light)}
+.mob-nav-cta{background:var(--blue);padding:.75rem 2rem;border-radius:8px;font-family:'Roboto',sans-serif!important;font-size:.95rem!important;font-weight:700;margin-top:.5rem;color:var(--white)!important}
+.nav-mobile.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-mobile.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-mobile.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* LINEUP MINUTOS BTN (mobile only) */
+.lineup-minutos-btn{display:none;width:calc(100% - 2rem);margin:.5rem 1rem 0;padding:.55rem 1.25rem;background:var(--blue);color:var(--white);border:none;border-radius:8px;font-size:.82rem;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:background .2s;align-items:center;justify-content:center;gap:.4rem}
+.lineup-minutos-btn:hover{background:#0069d9}
+
 /* RESPONSIVE */
 @media(max-width:900px){
   .hero-content{grid-template-columns:1fr;gap:2rem}
+  .hero-content>.ig-card{grid-column:1!important;grid-row:auto!important}
+  .hero-content>.hero-text{grid-column:1!important;grid-row:auto!important}
+  .hero-content>.palmares{grid-column:1!important;grid-row:auto!important}
+  .hero-content>.forma{grid-column:1!important;grid-row:auto!important}
   .hero-text{order:-1;text-align:center;align-items:center}
   .hero-sub{text-align:left}
-  .stats-bar-inner{grid-template-columns:repeat(4,1fr)}
+  .stats-bar-inner{grid-template-columns:repeat(4,1fr);padding:0 .75rem}
   .contact-inner{grid-template-columns:1fr}
+  .contact-palmares{display:none}
   .nav-links,.nav-cta{display:none}
   .nav-mobile{display:block}
   .next-match-banner{flex-direction:column;text-align:center}
   .next-label{position:static;transform:none;margin-bottom:.5rem}
 }
 @media(max-width:600px){
-  .stats-bar-inner{grid-template-columns:repeat(3,1fr)}
+  .stats-bar-inner{grid-template-columns:repeat(4,1fr);padding:0 .75rem}
   .players-grid{grid-template-columns:repeat(3,1fr)}
-
+  .tabla{font-size:.72rem}
+  .tabla th{padding:.3rem .2rem;font-size:.58rem;letter-spacing:.06em}
+  .tabla td{padding:.38rem .2rem}
+  .tabla .team-badge{width:20px;height:20px;font-size:.55rem}
+  .tabla .pos{font-size:.8rem;width:22px}
+  .tabla .pts{font-size:.9rem}
+  .tabla .team-name{gap:.4rem}
 }
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
@@ -534,6 +561,16 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav-overlay" id="mobileNav" aria-label="Menú móvil">
+  <a href="#inicio" onclick="closeMobileNav()">Inicio</a>
+  <a href="#posiciones" onclick="closeMobileNav()">Posiciones</a>
+  <a href="#resultados" onclick="closeMobileNav()">Resultados</a>
+  <a href="#plantel" onclick="closeMobileNav()">Plantel</a>
+  <a href="#contacto" onclick="closeMobileNav()">Contacto</a>
+  <a href="https://www.instagram.com/inter_fc_2023/" target="_blank" rel="noopener noreferrer" class="mob-nav-cta" onclick="closeMobileNav()">@inter_fc_2023</a>
+</div>
 
 <main>
 <!-- HERO -->
@@ -844,7 +881,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </a>
       </div>
     </div>
-    <div class="fade-in-right" style="text-align:center">
+    <div class="fade-in-right contact-palmares" style="text-align:center">
       <div style="width:100%;max-width:400px;margin:0 auto">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;text-align:center">
           <div style="font-family:'Anton',sans-serif;font-size:4rem;margin-bottom:.5rem">💙🖤</div>
@@ -939,6 +976,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
         </div>
       </div>
+      <button class="lineup-minutos-btn" id="minutosBtn" onclick="toggleMinutos()">📋 Minutos y jugadores</button>
       <div class="lineup-right">
         <div class="lineup-section">
           <div class="lineup-section-title">Titulares</div>
@@ -1639,6 +1677,10 @@ function openLineup(matchId) {
 function closeLineup() {
   document.getElementById('lineupModal').classList.remove('open');
   document.body.style.overflow = '';
+  var right = document.querySelector('.lineup-right');
+  var btn = document.getElementById('minutosBtn');
+  if(right) right.classList.remove('mobile-visible');
+  if(btn) btn.textContent = '📋 Minutos y jugadores';
 }
 document.getElementById('lineupModal').addEventListener('click', function(e) {
   if (e.target === this) closeLineup();
@@ -1812,6 +1854,37 @@ document.getElementById('fotosViewer').addEventListener('click', e => { if (e.ta
   <button class="fotos-nav fotos-nav-next" id="fotos-next" onclick="_fotosIdx=(_fotosIdx+1)%_fotosFiles.length;_updateViewer()">›</button>
   <button class="fotos-viewer-x" id="fotos-viewer-x" onclick="closeFotoViewer()">✕</button>
 </div>
+
+<!-- ===================== MOBILE UI ===================== -->
+<script>
+// Hamburger menu
+(function(){
+  var btn = document.getElementById('menuToggle');
+  var nav = document.getElementById('mobileNav');
+  function closeMobileNav(){
+    nav.classList.remove('open');
+    btn.classList.remove('open');
+  }
+  window.closeMobileNav = closeMobileNav;
+  btn.addEventListener('click', function(){
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+  });
+  // Close on scroll / resize
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 900) closeMobileNav();
+  });
+})();
+
+// Lineup modal "Minutos" toggle
+function toggleMinutos(){
+  var right = document.querySelector('.lineup-right');
+  var btn = document.getElementById('minutosBtn');
+  if(!right || !btn) return;
+  right.classList.toggle('mobile-visible');
+  btn.textContent = right.classList.contains('mobile-visible') ? '✕ Ocultar jugadores' : '📋 Minutos y jugadores';
+}
+</script>
 
 <!-- ===================== ANALYTICS ===================== -->
 <script src="firebase-config.js"></script>
