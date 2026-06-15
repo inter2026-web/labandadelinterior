@@ -172,6 +172,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
       <div class="nav-item" onclick="showTab('minutos',this)"><span class="nav-icon">⏱</span> Minutos</div>
       <div class="nav-item" onclick="showTab('alineacion',this)"><span class="nav-icon">📋</span> Alineación</div>
       <div class="nav-item" onclick="showTab('config',this)"><span class="nav-icon">⚙️</span> Configuración</div>
+      <div class="nav-item" onclick="showTab('stats',this)"><span class="nav-icon">📊</span> Estadísticas</div>
       <div class="sidebar-bottom">
         <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
       </div>
@@ -416,6 +417,37 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
             <input type="text" id="gh-repo" value="rebolloagus/inter-fc-web">
           </div>
           <button class="btn btn-primary" onclick="saveRepo()">Guardar</button>
+        </div>
+      </div>
+
+      <!-- ESTADÍSTICAS -->
+      <div class="tab-section" id="tab-stats">
+        <div class="page-title">Estadísticas</div>
+        <div class="page-sub" id="stats-last-update">Cargando datos en tiempo real...</div>
+
+        <!-- Visitas -->
+        <div class="admin-card" style="margin-bottom:1.5rem">
+          <div class="admin-card-title"><span>👀</span> Visitas totales a la página</div>
+          <div style="display:flex;align-items:baseline;gap:.75rem">
+            <div id="stats-pageviews" style="font-family:'Anton',sans-serif;font-size:3.5rem;color:var(--blue-light);line-height:1">—</div>
+            <div style="color:var(--gray);font-size:.8rem">visitas acumuladas</div>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="admin-card" style="margin-bottom:1.5rem">
+          <div class="admin-card-title"><span>🔗</span> Clicks en links</div>
+          <div id="stats-links" style="display:flex;flex-direction:column;gap:.75rem">
+            <div style="color:var(--gray);font-size:.85rem">Cargando...</div>
+          </div>
+        </div>
+
+        <!-- Popular del plantel -->
+        <div class="admin-card">
+          <div class="admin-card-title"><span>⭐</span> Popular del plantel</div>
+          <div id="stats-players" style="display:flex;flex-direction:column;gap:.5rem">
+            <div style="color:var(--gray);font-size:.85rem">Cargando...</div>
+          </div>
         </div>
       </div>
 
@@ -1078,6 +1110,96 @@ function toast(msg, type = 'info') {
   // Success toasts auto-hide; errors require click
   if (type !== 'err') setTimeout(() => el.classList.remove('show'), 4000);
   else el.onclick = () => el.classList.remove('show');
+}
+</script>
+
+<!-- ===================== ANALYTICS READ ===================== -->
+<script src="firebase-config.js"></script>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {getDatabase,ref,onValue} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+const STAFF_NAMES = {'_staff_dt':'Ezequiel Arrizabalaga (DT)','_staff_at':'Agustín Rebollo (AT)'};
+const LINK_LABELS = {instagram:'Instagram 📸',whatsapp:'WhatsApp 📱',ligamvd:'Liga MVD ⚽'};
+
+// Mapa de apodo → nombre completo (desde PLAYERS del index — lo replicamos aquí para mostrar bien)
+const FULL_NAMES = {
+  'Jubin':'Tomás Jubin','Vicente':'Vicente Gaitano','Brandon':'Brandon Almenarez',
+  'Juli Rios':'Julián Ríos Cazard','Vidal':'Lucas Vidal','Franco F':'Franco Friedrich',
+  'Diego':'Diego Friedrich','Diego Rodriguez':'Diego Rodríguez','Elias':'Elias Pastorino',
+  'Negrin':'Martín Negrín','Nando':'Fernando García','Lolo':'Lorenzo Cámara',
+  'Pata':'Ignacio Zapata','Franco Irri':'Franco Irisarri Correa','Facu Munchs':'Facundo Munch',
+  'Seba B':'Sebastián Barisone','Enzo Gaione':'Enzo Matías Gaione','Pato':'Mauro Cabrera',
+  'Seba T':'Sebastián Torena','Mati':'Matías González Hernández','Mandinga':'Ezequiel Muñoz',
+  'Mariano':'Mariano Perdomo','Fabian Couto':'Fabián Couto','Sena':'Martín Sena',
+  'Ignacio Luy':'Ignacio Matías Luy Suárez','Andres Guerra':'Andrés Eduardo Guerra',
+  'Lucas Godoy':'Lucas Godoy'
+};
+
+function fmt(n){return n!=null?n.toLocaleString('es-UY'):'0';}
+function bar(val,max){
+  const pct=max>0?Math.round(val/max*100):0;
+  return `<div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden">
+    <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-light));border-radius:3px"></div></div>`;
+}
+
+function renderStats(data){
+  if(!data) return;
+
+  // Visitas
+  document.getElementById('stats-pageviews').textContent = fmt(data.pageViews);
+
+  // Timestamp
+  const now=new Date();
+  document.getElementById('stats-last-update').textContent =
+    `Actualizado: ${now.toLocaleDateString('es-UY')} ${now.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}`;
+
+  // Links
+  const links = data.links || {};
+  const linkMax = Math.max(...Object.values(links).map(Number), 1);
+  const linkHtml = ['instagram','whatsapp','ligamvd'].map(k => {
+    const v = links[k] || 0;
+    return `<div style="display:flex;align-items:center;gap:.75rem">
+      <div style="width:140px;font-size:.85rem;color:var(--gray-light)">${LINK_LABELS[k]||k}</div>
+      ${bar(v,linkMax)}
+      <div style="width:48px;text-align:right;font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--blue-light)">${fmt(v)}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('stats-links').innerHTML = linkHtml || '<div style="color:var(--gray)">Sin datos aún</div>';
+
+  // Jugadores
+  const players = data.players || {};
+  const sorted = Object.entries(players)
+    .map(([k,v])=>({key:k,val:Number(v)}))
+    .sort((a,b)=>b.val-a.val);
+  const pMax = sorted[0]?.val || 1;
+  const medals = ['🥇','🥈','🥉'];
+  const playerHtml = sorted.map(({key,val},i) => {
+    const displayName = STAFF_NAMES[key] || FULL_NAMES[key] || key;
+    const isStaff = key.startsWith('_staff');
+    return `<div style="display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.05)">
+      <div style="width:28px;text-align:center;font-size:${i<3?'1.1rem':'.85rem'};${i<3?'':'color:var(--gray)'}">${i<3?medals[i]:i+1}</div>
+      <div style="flex:1;font-size:.88rem;${isStaff?'color:var(--blue-light)':''}">${displayName}</div>
+      ${bar(val,pMax)}
+      <div style="width:48px;text-align:right;font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--blue-light)">${fmt(val)}</div>
+      <div style="width:60px;color:var(--gray);font-size:.7rem">perfiles</div>
+    </div>`;
+  }).join('');
+  document.getElementById('stats-players').innerHTML =
+    playerHtml || '<div style="color:var(--gray)">Nadie clickeó perfiles aún</div>';
+}
+
+try {
+  if (!window.FIREBASE_CONFIG || window.FIREBASE_CONFIG.apiKey === 'REEMPLAZAR_apiKey')
+    throw new Error('Firebase no configurado aún');
+  const db = getDatabase(initializeApp(window.FIREBASE_CONFIG, 'admin-analytics'));
+  onValue(ref(db,'stats'), snap => renderStats(snap.val()));
+} catch(e) {
+  ['stats-pageviews','stats-links','stats-players'].forEach(id => {
+    const el=document.getElementById(id);
+    if(el) el.innerHTML='<div style="color:var(--gray)">⚠️ '+e.message+'</div>';
+  });
+  document.getElementById('stats-last-update').textContent = 'Firebase pendiente de configuración';
 }
 </script>
 </body>

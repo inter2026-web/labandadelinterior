@@ -39,6 +39,17 @@
 }
 </script>
 
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+// El ID real se carga desde firebase-config.js
+document.addEventListener('DOMContentLoaded',()=>{
+  if(window.GA4_ID&&window.GA4_ID!=='G-XXXXXXXXXX'){gtag('config',window.GA4_ID);}
+});
+</script>
 <link rel="icon" type="image/png" href="assets/logos/el-inter.png">
 <meta name="theme-color" content="#0057B7">
 <link rel="preload" as="image" href="assets/team-photo.jpg">
@@ -1379,6 +1390,7 @@ PLAYERS.forEach((p, i) => {
 // MODAL
 // =====================
 function openModal(player) {
+  window._trackPlayer(player.name);
   const modal = document.getElementById('playerModal');
   const photoSrc = PLAYER_PHOTOS[player.name];
   const avatarEl = document.getElementById('modal-avatar');
@@ -1800,5 +1812,43 @@ document.getElementById('fotosViewer').addEventListener('click', e => { if (e.ta
   <button class="fotos-nav fotos-nav-next" id="fotos-next" onclick="_fotosIdx=(_fotosIdx+1)%_fotosFiles.length;_updateViewer()">›</button>
   <button class="fotos-viewer-x" id="fotos-viewer-x" onclick="closeFotoViewer()">✕</button>
 </div>
+
+<!-- ===================== ANALYTICS ===================== -->
+<script src="firebase-config.js"></script>
+<script>
+// No-ops por defecto hasta que Firebase cargue
+window._trackPlayer = () => {};
+window._trackLink   = () => {};
+</script>
+<script type="module">
+import {initializeApp}            from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {getDatabase,ref,increment,update} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+try {
+  if (!window.FIREBASE_CONFIG || window.FIREBASE_CONFIG.apiKey === 'REEMPLAZAR_apiKey') throw new Error('Config pendiente');
+  const db = getDatabase(initializeApp(window.FIREBASE_CONFIG, 'analytics'));
+
+  // Visita a la página
+  update(ref(db,'stats'), {pageViews: increment(1)});
+
+  // Tracking de jugadores y cuerpo técnico
+  window._trackPlayer = name => update(ref(db,'stats/players'), {[name]: increment(1)});
+
+  // Tracking de links
+  window._trackLink = name => update(ref(db,'stats/links'), {[name]: increment(1)});
+  document.querySelectorAll('a[href*="instagram.com"]').forEach(a =>
+    a.addEventListener('click', () => window._trackLink('instagram'), {once:true}));
+  document.querySelectorAll('a[href*="wa.me"]').forEach(a =>
+    a.addEventListener('click', () => window._trackLink('whatsapp'), {once:true}));
+  document.querySelectorAll('a[href*="ligamvd.com"]').forEach(a =>
+    a.addEventListener('click', () => window._trackLink('ligamvd'), {once:true}));
+
+  // Tracking del cuerpo técnico (siempre, tenga o no fotos)
+  const staffMap = {'staff-card-dt':'_staff_dt','staff-card-at':'_staff_at'};
+  Object.entries(staffMap).forEach(([id,key]) => {
+    document.getElementById(id)?.addEventListener('click', () => window._trackPlayer(key));
+  });
+
+} catch(e) { console.info('Analytics: ' + e.message); }
+</script>
 </body>
 </html>
