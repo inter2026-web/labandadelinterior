@@ -464,7 +464,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 
 /* FOOTER */
 footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text-align:center}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:.5rem;text-align:center}
 .footer-brand{font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:.05em}
 .footer-copy{font-size:.75rem;color:var(--gray)}
 .footer-liga{font-size:.75rem;color:var(--blue-light);text-decoration:none}
@@ -499,7 +499,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
 @media(max-width:600px){
   .stats-bar-inner{grid-template-columns:repeat(3,1fr)}
   .players-grid{grid-template-columns:repeat(3,1fr)}
-  .footer-inner{flex-direction:column;text-align:center}
+
 }
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
@@ -871,7 +871,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <div class="footer-copy">© 2026 El Inter FC · Todos los derechos reservados</div>
     <a href="https://www.ligamvd.com" target="_blank" rel="noopener noreferrer" class="footer-liga">Liga MVD — ligamvd.com</a>
   </div>
-  <div style="margin-top:.75rem;font-size:.68rem;color:var(--gray);opacity:.6">Diseño y desarrollo · Agustín Rebollo</div>
+  <div style="margin-top:.75rem;font-size:.68rem;color:var(--gray);opacity:.6;text-align:center">Diseño y desarrollo · Agustín Rebollo</div>
 </footer>
 
 <!-- LIGHTBOX FOTO EQUIPO -->
