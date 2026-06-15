@@ -427,14 +427,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   .lineup-header{gap:1rem;padding:.7rem 3rem .7rem 1rem}
   .lineup-score{font-size:1.8rem;padding:.1rem .6rem}
   .lineup-modal-body{flex-direction:column;overflow-y:auto}
-  .lineup-left{flex:none;padding:.75rem 1rem;min-height:0;flex-direction:column;gap:.4rem}
+  .lineup-left{flex:none;padding:.75rem 1rem;min-height:0;flex-direction:column;gap:.4rem;overflow:visible}
   .lineup-staff{display:block}
   .lineup-subs-photos{display:none}
+  #lineup-goals-box{display:none!important}
+  .staff-panel-ct{flex-direction:row;gap:.5rem;padding-bottom:.25rem}
+  .staff-row{flex-direction:column;align-items:center;text-align:center;flex:1;gap:.35rem}
+  .staff-row-avatar{width:64px;height:64px}
+  .staff-row-name{text-align:center}
   .lineup-pitch-wrap{width:100%}
   #pitch-container{aspect-ratio:230/360;flex:none;width:100%;height:auto}
+  .lineup-minutos-btn{display:flex;margin:.5rem 0 0}
   .lineup-right{display:none;border-left:none;border-top:1px solid var(--border);padding:.5rem 1rem 1.25rem}
   .lineup-right.mobile-visible{display:block}
-  .lineup-minutos-btn{display:flex}
 }
 
 /* FOTOS JUGADOR */
@@ -968,6 +973,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
           </div>
           <div id="lineup-goals-box"></div>
         </div>
+        <button class="lineup-minutos-btn" id="minutosBtn" onclick="toggleMinutos()">📋 Minutos y jugadores</button>
         <div class="lineup-pitch-wrap">
         <div id="pitch-container"></div>
 
@@ -980,7 +986,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
         </div>
       </div>
-      <button class="lineup-minutos-btn" id="minutosBtn" onclick="toggleMinutos()">📋 Minutos y jugadores</button>
       <div class="lineup-right">
         <div class="lineup-section">
           <div class="lineup-section-title">Titulares</div>
