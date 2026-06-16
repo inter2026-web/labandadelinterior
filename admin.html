@@ -414,7 +414,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
           <div class="admin-card-title"><span>📁</span> Repositorio</div>
           <div class="form-group">
             <label>Repo GitHub</label>
-            <input type="text" id="gh-repo" value="rebolloagus/inter-fc-web">
+            <input type="text" id="gh-repo" value="inter2026-web/labandadelinterior">
           </div>
           <button class="btn btn-primary" onclick="saveRepo()">Guardar</button>
         </div>
@@ -927,7 +927,7 @@ function updateLP(section, idx, field, value) {
 // GITHUB SAVE
 // =====================
 function getToken() { return localStorage.getItem(TOKEN_KEY) || ''; }
-function getRepo() { return document.getElementById('gh-repo')?.value || localStorage.getItem(REPO_KEY) || 'rebolloagus/inter-fc-web'; }
+function getRepo() { return document.getElementById('gh-repo')?.value || localStorage.getItem(REPO_KEY) || 'inter2026-web/labandadelinterior'; }
 
 function loadIgStats() {
   const ig = DATA.igStats || { posts: 84, seguidores: 234, siguiendo: 36 };
