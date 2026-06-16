@@ -85,7 +85,7 @@ body{background:var(--bg);color:var(--white);font-family:'Roboto',sans-serif;ove
 
 /* NAVBAR */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,8,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .3s}
-.nav-logo{display:flex;align-items:center;gap:.75rem}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;cursor:pointer}
 .nav-logo img{width:36px;height:36px;border-radius:50%;border:none}
 .nav-logo span{font-family:'Anton',sans-serif;font-size:1.3rem;letter-spacing:.05em;color:var(--white)}
 .nav-links{display:flex;gap:2rem;list-style:none}
@@ -562,10 +562,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
 
 <!-- NAVBAR -->
 <nav id="navbar" aria-label="Navegación principal">
-  <div class="nav-logo">
+  <a href="#inicio" class="nav-logo" onclick="closeMobileNav&&closeMobileNav()">
     <img src="assets/logos/el-inter.png" alt="El Inter FC" width="36" height="36" style="border-radius:50%;object-fit:contain;position:relative;z-index:2" onerror="this.style.display='none'">
     <span>El Inter FC</span>
-  </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#posiciones">Tabla</a></li>
     <li><a href="#resultados">Resultados</a></li>
