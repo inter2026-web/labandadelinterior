@@ -1512,7 +1512,7 @@ function openModal(player) {
       ? `<span class="mins-not-played">No jugó</span>`
       : `<div class="mins-played">${mins}'</div><div class="mins-bar"><div class="mins-bar-fill" style="width:${Math.round(mins/90*100)}%"></div></div>`;
     tbody.innerHTML += `<tr>
-      <td>${m.label.replace(/^(F\d+) vs /,'$1 / ').replace('Amistoso vs ','Amistoso / ')}</td>
+      <td>${m.label.replace(/^F(\d+) vs /,'Fecha $1 / ').replace(/ vs /,' / ')}</td>
       <td><span class="result-dot ${dotClass}"></span>${typeLabel} ${m.result}</td>
       <td class="mins-cell">${minsDisplay}</td>
     </tr>`;
