@@ -1456,7 +1456,6 @@ PLAYERS.forEach((p, i) => {
     <div class="player-card-info">
       <div class="player-card-name">${p.fullName || p.name}</div>
       ${p.nickname ? `<div class="player-card-nick">"${p.nickname}"</div>` : ''}
-      <div class="player-card-pos">${p.positions[0]}</div>
       <div class="player-card-mins">⏱ ${totalMins} min · ${partsPlayed} partidos</div>
     </div>`;
   card.addEventListener('click', () => openModal(p));
