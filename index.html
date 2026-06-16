@@ -431,16 +431,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   .lineup-staff{display:block}
   .lineup-subs-photos{display:none}
   #lineup-goals-box{display:none!important}
-  .staff-panel-ct{flex-direction:row;flex-wrap:wrap;gap:.35rem .5rem;padding-bottom:.25rem}
+  .lineup-modal-body{overflow:hidden}
+  .lineup-left{flex:1;overflow:hidden}
+  .staff-panel-ct{flex-direction:row;flex-wrap:wrap;gap:.35rem .5rem;padding-bottom:.25rem;justify-content:center}
   .staff-panel-ct .staff-section-title{width:100%;flex-shrink:0}
-  .staff-row{flex-direction:column;align-items:center;text-align:center;flex:1;gap:.35rem}
+  .staff-row{flex-direction:column;align-items:center;text-align:center;flex:0 0 auto;width:110px;gap:.35rem}
   .staff-row-avatar{width:64px;height:64px}
   .staff-row-name{text-align:center}
-  .lineup-pitch-wrap{width:100%}
-  #pitch-container{aspect-ratio:230/360;flex:none;width:100%;height:auto}
+  .lineup-pitch-wrap{flex:1;min-height:0;overflow:hidden;width:100%}
+  #pitch-container{width:100%;height:100%;aspect-ratio:auto}
   .lineup-minutos-btn{display:flex!important;margin:.5rem 0 0;width:100%}
-  .lineup-right{display:none;border-left:none;border-top:1px solid var(--border);padding:.5rem 1rem 1.25rem}
-  .lineup-right.mobile-visible{display:block}
+  .lineup-right{position:fixed;inset:0;z-index:3500;background:rgba(6,6,8,.97);overflow-y:auto;padding:1.25rem 1rem 2rem;display:none;flex-direction:column;border:none}
+  .lineup-right.mobile-visible{display:flex}
+  .lineup-right-close{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);flex-shrink:0}
+  .lineup-right-close-title{font-family:'Anton',sans-serif;font-size:1.2rem;letter-spacing:.05em}
+  .lineup-right-close-btn{background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;color:var(--gray)}
 }
 
 /* FOTOS JUGADOR */
@@ -988,6 +993,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
       <div class="lineup-right">
+        <div class="lineup-right-close">
+          <span class="lineup-right-close-title">Jugadores</span>
+          <button class="lineup-right-close-btn" onclick="toggleMinutos()">✕</button>
+        </div>
         <div class="lineup-section">
           <div class="lineup-section-title">Titulares</div>
           <div id="lineup-titulares"></div>
@@ -1578,7 +1587,7 @@ function renderPitchSVG(layout, scorerMap) {
     <circle cx="${W/2}" cy="${H-38}" r="2" fill="rgba(255,255,255,.45)"/>`;
   const corners = [[10,10,1,1],[W-10,10,-1,1],[10,H-10,1,-1],[W-10,H-10,-1,-1]];
   const cPaths = corners.map(([cx,cy,dx,dy])=>
-    `<path d="M${cx},${cy} Q${cx+dx*9},${cy} ${cx+dx*9},${cy+dy*9}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1"/>`).join('');
+    `<path d="M${cx},${cy+dy*9} Q${cx},${cy} ${cx+dx*9},${cy}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>`).join('');
 
   let defs = '';
   const chips = layout.map((p, idx) => {
