@@ -549,7 +549,14 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   .next-label{position:static;transform:none;margin-bottom:.5rem}
 }
 @media(max-width:600px){
-  .players-grid{grid-template-columns:repeat(3,1fr)}
+  .players-grid{grid-template-columns:repeat(3,1fr);gap:.6rem}
+  .player-card-info{padding:.6rem .5rem}
+  .player-card-name{white-space:normal;overflow:visible;text-overflow:clip;font-size:.78rem;line-height:1.2}
+  .player-card-nick{white-space:normal;overflow:visible;text-overflow:clip}
+  .player-card-pos{font-size:.62rem}
+  .player-card-mins{font-size:.62rem}
+  .player-status-badge{font-size:.54rem;padding:.1rem .35rem}
+  .player-card.has-status .player-card-info{padding-bottom:1.7rem}
   .tabla{font-size:.72rem}
   .tabla th{padding:.3rem .2rem;font-size:.58rem;letter-spacing:.06em}
   .tabla td{padding:.38rem .2rem}
@@ -1429,7 +1436,7 @@ PLAYERS.forEach((p, i) => {
   const totalMins = Object.values(p.minutes).reduce((a,b) => a+b, 0);
   const photoSrc = PLAYER_PHOTOS[p.name];
   const card = document.createElement('div');
-  card.className = 'player-card fade-in';
+  card.className = 'player-card fade-in' + (p.status === 'inactive' || p.status === 'ex' ? ' has-status' : '');
   card.style.transitionDelay = `${(i%6)*0.07}s`;
   const photoHtml = photoSrc
     ? `<div class="player-photo-wrap">
