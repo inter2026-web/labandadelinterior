@@ -433,7 +433,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
   #lineup-goals-box{display:none!important}
   .lineup-modal-body{overflow:hidden}
   .lineup-left{flex:1;overflow:hidden}
-  .staff-panel-ct{flex-direction:row;flex-wrap:nowrap;gap:.5rem 2.5rem;padding-bottom:.25rem;justify-content:center;align-items:flex-start}
+  .staff-panel-ct{flex-direction:row;flex-wrap:wrap;gap:.5rem 2.5rem;padding-bottom:.25rem;justify-content:center;align-items:flex-start}
   .staff-panel-ct .staff-section-title{flex-basis:100%;width:100%;flex-shrink:0;text-align:center}
   .staff-row{flex-direction:column;align-items:center;text-align:center;flex:0 0 auto;width:100px;gap:.35rem}
   .staff-row-avatar{width:64px;height:64px}
@@ -1586,8 +1586,9 @@ function renderPitchSVG(layout, scorerMap) {
     <rect x="99" y="${H-11}" width="${W-198}" height="7"  fill="rgba(0,0,0,.18)" stroke="rgba(255,255,255,.65)" stroke-width="1.5"/>
     <circle cx="${W/2}" cy="${H-38}" r="2" fill="rgba(255,255,255,.45)"/>`;
   const corners = [[10,10,1,1],[W-10,10,-1,1],[10,H-10,1,-1],[W-10,H-10,-1,-1]];
+  const cr = 11;
   const cPaths = corners.map(([cx,cy,dx,dy])=>
-    `<path d="M${cx},${cy+dy*9} Q${cx},${cy} ${cx+dx*9},${cy}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>`).join('');
+    `<path d="M${cx},${cy+dy*cr} Q${cx+dx*cr},${cy+dy*cr} ${cx+dx*cr},${cy}" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>`).join('');
 
   let defs = '';
   const chips = layout.map((p, idx) => {
