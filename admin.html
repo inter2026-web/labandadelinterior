@@ -801,7 +801,7 @@ function showMinutesEditor(matchId) {
   tbody.innerHTML = PLAYERS.map(p => `
     <tr>
       <td><span class="pos-badge" style="color:var(--gray-light)">${p.number ?? '—'}</span></td>
-      <td style="font-size:.88rem">${p.name}</td>
+      <td style="font-size:.88rem">${p.fullName || p.name}</td>
       <td style="font-size:.75rem;color:var(--gray)">${p.pos}</td>
       <td><input type="number" min="0" max="90" placeholder="—"
         value="${saved[p.name] !== undefined ? saved[p.name] : ''}"
