@@ -418,6 +418,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .pos-fwd{background:rgba(231,76,60,.2);color:#e74c3c;border:1px solid rgba(231,76,60,.4)}
 .lineup-player-name{flex:1;font-size:.84rem;font-weight:500}
 .goal-chip{font-size:.7rem;background:rgba(241,196,15,.15);color:#f1c40f;padding:.12rem .5rem;border-radius:999px;margin-left:.5rem;font-weight:800;border:1px solid rgba(241,196,15,.35);cursor:default;display:inline-flex;align-items:center;gap:.2rem;vertical-align:middle;position:relative}
+.rc-chip{font-size:.7rem;background:rgba(227,36,43,.15);color:#ff5a5f;padding:.12rem .5rem;border-radius:999px;margin-left:.4rem;font-weight:800;border:1px solid rgba(227,36,43,.4);cursor:default;display:inline-flex;align-items:center;gap:.3rem;vertical-align:middle}
+.rc-card{display:inline-block;width:9px;height:13px;background:#e3242b;border-radius:2px}
 .lineup-mins{font-size:.72rem;color:var(--gray);font-family:'Roboto Condensed',sans-serif;white-space:nowrap;flex-shrink:0}
 .no-enter-tag{font-size:.6rem;color:var(--gray);background:rgba(255,255,255,.06);padding:.1rem .38rem;border-radius:4px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
 .match-card-hint{font-size:.68rem;color:var(--blue-light);margin-top:.8rem;display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border:1px solid rgba(80,160,255,.3);border-radius:6px;background:rgba(0,87,183,.1)}
@@ -1220,6 +1222,8 @@ const SCORERS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.scorer
     f9: ['Sena x1', 'Diego x1'],
   };
 
+const CARDS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.cardsByMatch) ? ADMIN_DATA.cardsByMatch : {};
+
 const TABLA = [
   { "pos": 1,  "name": "Dep. Comandiyú",         "pj": 10, "g": 8, "e": 2, "p": 0, "pts": 26 },
   { "pos": 2,  "name": "La Rotonda",              "pj": 10, "g": 7, "e": 3, "p": 0, "pts": 24 },
@@ -1582,7 +1586,7 @@ function buildFormationLayout(titulares) {
   return out;
 }
 
-function renderPitchSVG(layout, scorerMap) {
+function renderPitchSVG(layout, scorerMap, cardMap = {}) {
   const W = 250, H = 360, R = 14;
   function chipColor(pos) {
     if (pos === 'POR') return '#e67e22';
@@ -1648,6 +1652,10 @@ function renderPitchSVG(layout, scorerMap) {
       g += `<circle cx="${(px+R-1).toFixed(1)}" cy="${(py-R+1).toFixed(1)}" r="6.5" fill="#f1c40f" stroke="white" stroke-width="1"/>`;
       g += `<text x="${(px+R-1).toFixed(1)}" y="${(py-R+1).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Roboto,Arial,sans-serif" font-size="6.5" font-weight="900" fill="#333">${goals}</text>`;
     }
+    if (cardMap[adminName]) {
+      const cx = (px-R+2), cy = (py-R+1);
+      g += `<rect x="${(cx-3).toFixed(1)}" y="${(cy-4.5).toFixed(1)}" width="6.5" height="9" rx="1.3" fill="#e3242b" stroke="white" stroke-width=".8"/>`;
+    }
     return `<g>${g}</g>`;
   }).join('');
 
@@ -1663,6 +1671,8 @@ function openLineup(matchId) {
     const parts = s.split(' x');
     scorerMap[parts[0].trim()] = parseInt(parts[1]) || 1;
   });
+  const cardMap = {};
+  (CARDS_BY_MATCH[matchId] || []).forEach(c => { if (c && c.name) cardMap[c.name] = c; });
   const pm = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerMinutes && ADMIN_DATA.playerMinutes[matchId]) || {};
   const resultClass = {W:'w',D:'d',L:'l',friendly:'f'}[m.type] || 'f';
   const resultLabel = {W:'Victoria',D:'Empate',L:'Derrota',friendly:'Amistoso'}[m.type];
@@ -1682,12 +1692,14 @@ function openLineup(matchId) {
     const goals = scorerMap[adminName] || 0;
     const posBadge = p.pos ? `<span class="pos-badge ${posCls(p.pos)}">${p.pos}</span>` : '<span style="min-width:34px;display:inline-block"></span>';
     const goalBadge = goals > 0 ? `<span class="goal-chip" title="${goals} gol${goals>1?'es':''}">⚽ ×${goals}</span>` : '';
+    const card = cardMap[adminName];
+    const cardBadge = card ? `<span class="rc-chip" title="Tarjeta roja${card.min != null ? " (min "+card.min+"')" : ''}"><span class="rc-card"></span>${card.min != null ? card.min+"'" : ''}</span>` : '';
     const minsEl = p.noEnter
       ? '<span class="no-enter-tag">No ingresó</span>'
       : mins !== undefined ? `<span class="lineup-mins">${mins} min</span>` : '';
     return `<div class="lineup-player${p.noEnter ? ' no-enter' : ''}">
       ${posBadge}
-      <span class="lineup-player-name">${displayName}${goalBadge}</span>
+      <span class="lineup-player-name">${displayName}${goalBadge}${cardBadge}</span>
       ${minsEl}
     </div>`;
   }
@@ -1707,7 +1719,7 @@ function openLineup(matchId) {
   } else {
     goalsBox.innerHTML='';
   }
-  document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap);
+  document.getElementById('pitch-container').innerHTML = renderPitchSVG(buildFormationLayout(lu.titulares), scorerMap, cardMap);
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
   document.getElementById('lineupModal').classList.add('open');

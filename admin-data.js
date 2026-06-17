@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-06-16T23:30:50.203Z",
+  "lastUpdated": "2026-06-17T19:57:31.688Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -1491,5 +1491,40 @@ const ADMIN_DATA = {
       "Andres Guerra": 5,
       "Sena": 55
     }
+  },
+  "cardsByMatch": {
+    "f4": [
+      {
+        "name": "Nando",
+        "type": "red",
+        "min": 25
+      }
+    ],
+    "f5": [
+      {
+        "name": "Franco F",
+        "type": "red",
+        "min": 60
+      }
+    ],
+    "f9": [
+      {
+        "name": "Nando",
+        "type": "red",
+        "min": 75
+      }
+    ],
+    "Fecha 10": [
+      {
+        "name": "Sena",
+        "type": "red",
+        "min": 55
+      },
+      {
+        "name": "Pata",
+        "type": "red",
+        "min": 70
+      }
+    ]
   }
 };
