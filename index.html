@@ -346,6 +346,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .modal-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:var(--gray);transition:all .2s}
 .modal-close:hover{background:var(--border);color:var(--white)}
 .modal-body{padding:1.5rem 2rem 2rem}
+.modal-pitch-wrap{margin-bottom:1.5rem}
+.modal-pitch-title{font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:.7rem}
+#modal-pitch{max-width:230px;margin:0 auto}
 .modal-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
 .modal-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.75rem;text-align:center}
 .modal-stat .val{font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)}
@@ -1047,6 +1050,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     </div>
     <div class="modal-body">
       <div class="modal-stats-row" id="modal-stats"></div>
+      <div class="modal-pitch-wrap">
+        <div class="modal-pitch-title">Posiciones</div>
+        <div id="modal-pitch"></div>
+      </div>
       <button class="modal-fotos-btn" id="modal-fotos-btn" style="display:none">📷 Fotos</button>
       <div class="modal-table-title">Minutos jugados por partido</div>
       <table class="modal-table">
@@ -1494,6 +1501,8 @@ function openModal(player) {
     <div class="modal-stat"><div class="val">${totalMins}</div><div class="lbl">Minutos</div></div>
     <div class="modal-stat"><div class="val" style="color:var(--gold)">${player.goals}</div><div class="lbl">Goles</div></div>`;
 
+  document.getElementById('modal-pitch').innerHTML = renderPositionPitch(player.positions || []);
+
   const playerPhotos = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerPhotos && ADMIN_DATA.playerPhotos[player.name]) || [];
   const fotosBtn = document.getElementById('modal-fotos-btn');
   if (playerPhotos.length > 0) {
@@ -1584,6 +1593,36 @@ function buildFormationLayout(titulares) {
   if (hasAM) push(aMid,  dist(aMid.length),  yAM);
   if (fwd.length) push(fwd, dist(fwd.length), 13);
   return out;
+}
+
+function renderPositionPitch(positions) {
+  const W = 220, H = 300;
+  const COORD = {
+    POR:[50,92], DFI:[26,78], DFC:[50,80], DFD:[74,78],
+    LI:[11,61], LD:[89,61], MCD:[50,67], MC:[50,51], MCO:[50,35],
+    MI:[20,49], MD:[80,49], EI:[15,21], ED:[85,21], DC:[50,13]
+  };
+  const set = new Set((positions||[]).map(p => String(p).toUpperCase().trim()));
+  const lines = `
+    <rect x="6" y="6" width="${W-12}" height="${H-12}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4" rx="3"/>
+    <line x1="6" y1="${H/2}" x2="${W-6}" y2="${H/2}" stroke="rgba(255,255,255,.4)" stroke-width="1.1"/>
+    <circle cx="${W/2}" cy="${H/2}" r="26" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.1"/>
+    <circle cx="${W/2}" cy="${H/2}" r="2" fill="rgba(255,255,255,.55)"/>
+    <rect x="${W/2-34}" y="6" width="68" height="34" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1"/>
+    <rect x="${W/2-16}" y="6" width="32" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+    <rect x="${W/2-34}" y="${H-40}" width="68" height="34" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1"/>
+    <rect x="${W/2-16}" y="${H-19}" width="32" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>`;
+  let dots = '';
+  for (const [code, xy] of Object.entries(COORD)) {
+    const cx = (xy[0]/100)*W, cy = (xy[1]/100)*H;
+    if (set.has(code)) {
+      dots += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="13" fill="#0057B7" stroke="#fff" stroke-width="1.6"/>`;
+      dots += `<text x="${cx.toFixed(1)}" y="${cy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="Archivo,Arial,sans-serif" font-size="8.5" font-weight="800" fill="#fff">${code}</text>`;
+    } else {
+      dots += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3" fill="rgba(255,255,255,.16)"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block"><rect width="${W}" height="${H}" rx="6" fill="#1e6b3b"/>${lines}${dots}</svg>`;
 }
 
 function renderPitchSVG(layout, scorerMap, cardMap = {}) {
