@@ -713,10 +713,10 @@ function renderAllResults() {
     const saved = DATA.matchResults[m.id];
     const gf = saved?.gf !== undefined ? saved.gf : m.gf;
     const gc = saved?.gc !== undefined ? saved.gc : m.gc;
-    const type = saved?.type || m.type || 'friendly';
+    const type = saved?.type || m.type || (m.id === 'amistoso' ? 'friendly' : 'pending');
     const result = (gf !== null && gf !== undefined && gc !== null && gc !== undefined) ? `${gf}-${gc}` : '—';
-    const typeLabel = {W:'Victoria',D:'Empate',L:'Derrota',friendly:'Amistoso'}[type] || type;
-    const badgeClass = {W:'W',D:'D',L:'L',friendly:'D'}[type] || '';
+    const typeLabel = {W:'Victoria',D:'Empate',L:'Derrota',friendly:'Amistoso',pending:'Por jugar'}[type] || type;
+    const badgeClass = {W:'W',D:'D',L:'L',friendly:'D',pending:''}[type] || '';
     return `<div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--border)">
       <span style="font-size:.85rem">${m.label}</span>
       <div style="display:flex;align-items:center;gap:.8rem">
