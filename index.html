@@ -396,7 +396,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-result-badge{font-size:.53rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
 .lineup-close{position:absolute;top:.8rem;right:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--gray);transition:all .2s}
 .lineup-close:hover{background:var(--border);color:var(--white)}
-.lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden}
+.lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden;overscroll-behavior:contain}
 .lineup-left{flex:0 0 60%;display:flex;flex-direction:row;padding:.75rem .75rem .75rem 1.25rem;gap:.75rem;min-height:0;overflow:hidden}
 .lineup-pitch-wrap{flex:1;display:flex;flex-direction:column;gap:.3rem;min-height:0;overflow:hidden;align-items:center;background:#1e6b3b}
 #pitch-container{flex:1;min-height:0;aspect-ratio:230/360;position:relative;background:#1e6b3b;overflow:hidden}
@@ -416,7 +416,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .goals-row{display:flex;align-items:center;justify-content:space-between;gap:.4rem}
 .goals-name{font-size:.63rem;color:var(--white);font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .goals-count{font-size:.65rem;color:#f1c40f;font-weight:800;flex-shrink:0}
-.lineup-right{flex:1;overflow-y:auto;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
+.lineup-right{flex:1;overflow-y:auto;overscroll-behavior:contain;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
 .lineup-section{padding:.25rem 0}
 .lineup-section+.lineup-section{margin-top:.85rem;padding-top:.85rem;border-top:1px solid rgba(255,255,255,.08)}
 .lineup-section-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
@@ -474,7 +474,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .fotos-header-name{font-family:'Anton',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:.05em;color:var(--white)}
 .fotos-close-btn{background:none;border:none;color:rgba(255,255,255,.55);font-size:1.4rem;cursor:pointer;line-height:1;padding:.2rem .5rem;transition:color .2s}
 .fotos-close-btn:hover{color:var(--white)}
-.fotos-grid{columns:2;column-gap:4px;padding:4px;overflow-y:auto;flex:1}
+.fotos-grid{columns:2;column-gap:4px;padding:4px;overflow-y:auto;overscroll-behavior:contain;flex:1}
 .fotos-grid-item{break-inside:avoid;margin-bottom:4px;border-radius:6px;overflow:hidden;cursor:pointer;display:block}
 .fotos-grid-item img{width:100%;height:auto;display:block;transition:transform .35s}
 .fotos-grid-item:hover img{transform:scale(1.04)}
