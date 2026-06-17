@@ -337,7 +337,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:24px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:24px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;overscroll-behavior:contain;position:relative}
 .modal-header{padding:2rem 2rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1.5rem;position:sticky;top:0;background:var(--card);z-index:1;border-radius:24px 24px 0 0}
 .modal-avatar{width:64px;height:64px;flex-shrink:0}
 .modal-player-name{font-family:'Anton',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.03em}
@@ -346,6 +346,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .modal-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:var(--gray);transition:all .2s}
 .modal-close:hover{background:var(--border);color:var(--white)}
 .modal-body{padding:1.5rem 2rem 2rem}
+.modal-pitch-wrap{margin-bottom:1.5rem}
+.modal-pitch-title{font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:.7rem}
+#modal-pitch{max-width:230px;margin:0 auto}
+.modal-cols{display:block}
+@media(min-width:601px){
+  .modal-overlay{padding:0}
+  .modal{max-width:none;width:100%;height:100%;max-height:100%;border-radius:0;border:none}
+  .modal-header{border-radius:0;padding:1.75rem 3rem 1.25rem}
+  .modal-body{padding:2rem 3rem 3rem}
+  .modal-stats-row{max-width:560px}
+  .modal-cols{display:grid;grid-template-columns:320px minmax(0,1fr);gap:3rem;align-items:start}
+  #modal-pitch{max-width:300px}
+}
 .modal-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
 .modal-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.75rem;text-align:center}
 .modal-stat .val{font-family:'Anton',sans-serif;font-size:1.5rem;color:var(--blue-light)}
@@ -383,7 +396,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .lineup-result-badge{font-size:.53rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
 .lineup-close{position:absolute;top:.8rem;right:1rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;color:var(--gray);transition:all .2s}
 .lineup-close:hover{background:var(--border);color:var(--white)}
-.lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden}
+.lineup-modal-body{display:flex;flex:1;min-height:0;overflow:hidden;overscroll-behavior:contain}
 .lineup-left{flex:0 0 60%;display:flex;flex-direction:row;padding:.75rem .75rem .75rem 1.25rem;gap:.75rem;min-height:0;overflow:hidden}
 .lineup-pitch-wrap{flex:1;display:flex;flex-direction:column;gap:.3rem;min-height:0;overflow:hidden;align-items:center;background:#1e6b3b}
 #pitch-container{flex:1;min-height:0;aspect-ratio:230/360;position:relative;background:#1e6b3b;overflow:hidden}
@@ -403,7 +416,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .goals-row{display:flex;align-items:center;justify-content:space-between;gap:.4rem}
 .goals-name{font-size:.63rem;color:var(--white);font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .goals-count{font-size:.65rem;color:#f1c40f;font-weight:800;flex-shrink:0}
-.lineup-right{flex:1;overflow-y:auto;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
+.lineup-right{flex:1;overflow-y:auto;overscroll-behavior:contain;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
 .lineup-section{padding:.25rem 0}
 .lineup-section+.lineup-section{margin-top:.85rem;padding-top:.85rem;border-top:1px solid rgba(255,255,255,.08)}
 .lineup-section-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
@@ -420,6 +433,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .goal-chip{font-size:.7rem;background:rgba(241,196,15,.15);color:#f1c40f;padding:.12rem .5rem;border-radius:999px;margin-left:.5rem;font-weight:800;border:1px solid rgba(241,196,15,.35);cursor:default;display:inline-flex;align-items:center;gap:.2rem;vertical-align:middle;position:relative}
 .rc-chip{font-size:.7rem;background:rgba(227,36,43,.15);color:#ff5a5f;padding:.12rem .5rem;border-radius:999px;margin-left:.4rem;font-weight:800;border:1px solid rgba(227,36,43,.4);cursor:default;display:inline-flex;align-items:center;gap:.3rem;vertical-align:middle}
 .rc-card{display:inline-block;width:9px;height:13px;background:#e3242b;border-radius:2px}
+.rc-mins{display:inline-flex;align-items:center;gap:4px;margin-left:7px;font-size:.72rem;font-weight:800;color:#ff5a5f;vertical-align:middle}
+.rc-mins .rc-card{width:8px;height:11px}
 .lineup-mins{font-size:.72rem;color:var(--gray);font-family:'Roboto Condensed',sans-serif;white-space:nowrap;flex-shrink:0}
 .no-enter-tag{font-size:.6rem;color:var(--gray);background:rgba(255,255,255,.06);padding:.1rem .38rem;border-radius:4px;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
 .match-card-hint{font-size:.68rem;color:var(--blue-light);margin-top:.8rem;display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border:1px solid rgba(80,160,255,.3);border-radius:6px;background:rgba(0,87,183,.1)}
@@ -459,7 +474,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .fotos-header-name{font-family:'Anton',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:.05em;color:var(--white)}
 .fotos-close-btn{background:none;border:none;color:rgba(255,255,255,.55);font-size:1.4rem;cursor:pointer;line-height:1;padding:.2rem .5rem;transition:color .2s}
 .fotos-close-btn:hover{color:var(--white)}
-.fotos-grid{columns:2;column-gap:4px;padding:4px;overflow-y:auto;flex:1}
+.fotos-grid{columns:2;column-gap:4px;padding:4px;overflow-y:auto;overscroll-behavior:contain;flex:1}
 .fotos-grid-item{break-inside:avoid;margin-bottom:4px;border-radius:6px;overflow:hidden;cursor:pointer;display:block}
 .fotos-grid-item img{width:100%;height:auto;display:block;transition:transform .35s}
 .fotos-grid-item:hover img{transform:scale(1.04)}
@@ -1047,18 +1062,28 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     </div>
     <div class="modal-body">
       <div class="modal-stats-row" id="modal-stats"></div>
-      <button class="modal-fotos-btn" id="modal-fotos-btn" style="display:none">📷 Fotos</button>
-      <div class="modal-table-title">Minutos jugados por partido</div>
-      <table class="modal-table">
-        <thead>
-          <tr>
-            <th>Partido</th>
-            <th>Resultado</th>
-            <th>Minutos</th>
-          </tr>
-        </thead>
-        <tbody id="modal-minutes-body"></tbody>
-      </table>
+      <div class="modal-cols">
+        <div class="modal-col-left">
+          <div class="modal-pitch-wrap">
+            <div class="modal-pitch-title">Posiciones</div>
+            <div id="modal-pitch"></div>
+          </div>
+          <button class="modal-fotos-btn" id="modal-fotos-btn" style="display:none">📷 Fotos</button>
+        </div>
+        <div class="modal-col-right">
+          <div class="modal-table-title">Minutos jugados por partido</div>
+          <table class="modal-table">
+            <thead>
+              <tr>
+                <th>Partido</th>
+                <th>Resultado</th>
+                <th>Minutos</th>
+              </tr>
+            </thead>
+            <tbody id="modal-minutes-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1240,34 +1265,34 @@ const TABLA = [
 ];
 
 const PLAYERS = [
-  { number: 1,  name:'Jubin',         fullName:'Tomás Jubin',         nickname:null,          status:'active',   positions:['Golero'],                    minutes:{amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90}, avgMins:90, goals:0 },
-  { number: 2,  name:'Vicente',        fullName:'Vicente Gaitano',     nickname:'Vena',        status:'active',   positions:['Zaguero'],                   minutes:{f1:20,f3:45,f5:45,f6:90,f7:45,f8:30,f9:70}, avgMins:49, goals:0 },
-  { number: 3,  name:'Brandon',        fullName:'Brandon Almenarez',   nickname:null,          status:'active',   positions:['Lateral Izq','Volante Izq'], minutes:{amistoso:55,f1:60,f2:35,f4:20,f5:45,f6:90,f7:80,f8:45,f9:90}, avgMins:58, goals:0 },
-  { number: 4,  name:'Renzo',          fullName:'Renzo Soliwoda',      nickname:null,          status:'inactive', positions:['Volante Der','Lateral Der'],  minutes:{}, avgMins:0, goals:0 },
-  { number: 6,  name:'Juli Rios',      fullName:'Julián Ríos',         nickname:null,          status:'active',   positions:['Medio','Zaguero'],            minutes:{f1:45,f3:90,f4:60,f7:90,f8:90}, avgMins:75, goals:0 },
-  { number: 7,  name:'Vidal',          fullName:'Lucas Vidal',         nickname:null,          status:'active',   positions:['Volante Der','Delantero'],    minutes:{amistoso:70,f2:45,f3:45,f4:45,f7:50,f8:60}, avgMins:53, goals:0 },
-  { number: 8,  name:'Franco F',       fullName:'Franco Friedrich',    nickname:'Cachete',     status:'active',   positions:['Medio','Lateral Izq'],        minutes:{amistoso:70,f1:90,f2:90,f3:90,f4:90,f5:60,f8:75,f9:90}, avgMins:82, goals:1 },
-  { number: 9,  name:'Diego',          fullName:'Diego Friedrich',     nickname:null,          status:'active',   positions:['Delantero'],                  minutes:{f1:30,f3:15,f4:0,f5:15,f7:25,f9:20}, avgMins:18, goals:1 },
-  { number: 10, name:'Elias',          fullName:'Elias Pastorino',     nickname:'Capi',        status:'active',   positions:['Delantero','Enganche'],       minutes:{amistoso:80,f2:90,f3:40,f4:90,f5:75,f6:55,f7:90,f8:60,f9:90}, avgMins:74, goals:11 },
-  { number: 12, name:'Negrin',         fullName:'Martín Negrín',       nickname:'Discoteka',   status:'active',   positions:['Delantero','Enganche'],       minutes:{amistoso:45,f1:20,f3:10,f5:0,f6:15,f8:15,f9:25}, avgMins:19, goals:0 },
-  { number: 15, name:'Nando',          fullName:'Fernando García',     nickname:'Nando',       status:'active',   positions:['Zaguero','Medio'],            minutes:{amistoso:90,f1:90,f2:90,f4:25,f8:15,f9:75}, avgMins:64, goals:1 },
-  { number: 16, name:'Lolo',           fullName:'Lorenzo Cámara',      nickname:'Lolo',        status:'active',   positions:['Lateral Der','Volante Der'],  minutes:{f1:55,f3:15,f4:0,f5:45,f6:20,f7:30}, avgMins:28, goals:0 },
-  { number: 17, name:'Pata',           fullName:'Ignacio Zapata',      nickname:'Pata',        status:'active',   positions:['Volante Der','Delantero'],    minutes:{amistoso:60,f2:50,f3:75,f4:45,f7:60,f8:45,f9:90}, avgMins:61, goals:1 },
-  { number: 18, name:'Franco Irri',    fullName:'Franco Irisarri',     nickname:null,          status:'active',   positions:['Enganche','Volante Izq'],     minutes:{amistoso:65,f1:60,f2:45,f3:45,f4:60,f5:45,f6:75,f7:40}, avgMins:54, goals:0 },
-  { number: 19, name:'Facu Munchs',    fullName:'Facundo Munchs',      nickname:null,          status:'active',   positions:['Delantero'],                  minutes:{f1:90,f2:25,f5:45,f6:45,f7:15}, avgMins:44, goals:3 },
-  { number: 20, name:'Seba B',         fullName:'Sebastián Barisone',  nickname:null,          status:'active',   positions:['Volante Der','Golero'],       minutes:{amistoso:50,f2:40,f3:45,f4:90,f5:45,f8:45}, avgMins:53, goals:0 },
-  { number: 21, name:'Enzo',           fullName:'Enzo Gaione',         nickname:null,          status:'active',   positions:['Zaguero'],                    minutes:{f2:60,f4:30,f5:90,f6:90,f7:90,f8:45}, avgMins:68, goals:0 },
-  { number: 22, name:'Pato',           fullName:'Mauro Cabrera',       nickname:'Pato',        status:'active',   positions:['Medio'],                      minutes:{amistoso:90,f1:70,f2:90,f3:90,f4:90,f5:90,f6:80,f7:90,f8:45}, avgMins:82, goals:1 },
-  { number: 23, name:'Seba T',         fullName:'Sebastián Torena',    nickname:null,          status:'inactive', positions:['Volante Der','Delantero'],    minutes:{f1:90,f2:65,f3:35}, avgMins:63, goals:2 },
-  { number: 24, name:'Mati',           fullName:'Matias González',     nickname:null,          status:'active',   positions:['Zaguero','Medio'],            minutes:{f1:70,f2:90,f3:90,f4:65,f5:90,f6:70,f8:60,f9:90}, avgMins:78, goals:0 },
-  { number: 27, name:'Mandinga',       fullName:'Ezequiel Muñoz',      nickname:'Mandinga',    status:'active',   positions:['Delantero','Volante Der'],    minutes:{amistoso:45,f2:30,f3:50,f4:25,f5:65,f6:60,f7:65,f8:75,f9:90}, avgMins:56, goals:4 },
-  { number: 28, name:'Mariano',        fullName:'Mariano Perdomo',     nickname:null,          status:'ex',       positions:['Zaguero','Lateral Izq'],      minutes:{f3:10,f5:0}, avgMins:5, goals:0 },
-  { number: 29, name:'Fabian Couto',   fullName:'Fabián Couto',        nickname:null,          status:'active',   positions:['Lateral Der','Lateral Izq'],  minutes:{amistoso:90,f1:35,f5:25,f8:30}, avgMins:45, goals:0 },
-  { number: 30, name:'Diego Rodriguez',fullName:'Diego Rodríguez',     nickname:null,          status:'active',   positions:['Volante Der','Delantero'],    minutes:{}, avgMins:0, goals:0 },
-  { number: 32, name:'Lucas Godoy',    fullName:'Lucas Godoy',         nickname:null,          status:'active',   positions:['Delantero'],                  minutes:{f6:30,f7:45,f8:45,f9:65}, avgMins:46, goals:0 },
-  { number: 33, name:'Andres Guerra',  fullName:'Andrés Guerra',       nickname:'Cabeza',      status:'active',   positions:['Delantero'],                  minutes:{f6:30,f7:30}, avgMins:30, goals:3 },
-  { number: 72, name:'Sena',           fullName:'Martín Sena',         nickname:null,          status:'active',   positions:['Zaguero','Lateral Izq'],      minutes:{amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90}, avgMins:74, goals:4 },
-  { number: 99, name:'Ignacio Luy',    fullName:'Ignacio Luy',         nickname:null,          status:'ex',       positions:['Volante Der','Volante Izq'],  minutes:{f3:30,f4:30,f5:45,f6:60,f8:30}, avgMins:39, goals:0 },
+  { number: 1,  name:'Jubin',         fullName:'Tomás Jubin',         nickname:null,          status:'active',   positions:['POR'],                    minutes:{amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90}, avgMins:90, goals:0 },
+  { number: 2,  name:'Vicente',        fullName:'Vicente Gaitano',     nickname:'Vena',        status:'active',   positions:['DFC'],                   minutes:{f1:20,f3:45,f5:45,f6:90,f7:45,f8:30,f9:70}, avgMins:49, goals:0 },
+  { number: 3,  name:'Brandon',        fullName:'Brandon Almenarez',   nickname:null,          status:'active',   positions:['DFI','LI','MI','EI'], minutes:{amistoso:55,f1:60,f2:35,f4:20,f5:45,f6:90,f7:80,f8:45,f9:90}, avgMins:58, goals:0 },
+  { number: 4,  name:'Renzo',          fullName:'Renzo Soliwoda',      nickname:null,          status:'inactive', positions:['MD','DFD','LD','ED'],  minutes:{}, avgMins:0, goals:0 },
+  { number: 6,  name:'Juli Rios',      fullName:'Julián Ríos',         nickname:null,          status:'active',   positions:['DFC','MC','MCD'],            minutes:{f1:45,f3:90,f4:60,f7:90,f8:90}, avgMins:75, goals:0 },
+  { number: 7,  name:'Vidal',          fullName:'Lucas Vidal',         nickname:null,          status:'active',   positions:['MD','ED','MI','EI'],    minutes:{amistoso:70,f2:45,f3:45,f4:45,f7:50,f8:60}, avgMins:53, goals:0 },
+  { number: 8,  name:'Franco F',       fullName:'Franco Friedrich',    nickname:'Cachete',     status:'active',   positions:['MC','EI','ED','MI','MD','MCO'],        minutes:{amistoso:70,f1:90,f2:90,f3:90,f4:90,f5:60,f8:75,f9:90}, avgMins:82, goals:1 },
+  { number: 9,  name:'Diego',          fullName:'Diego Friedrich',     nickname:null,          status:'active',   positions:['DC'],                  minutes:{f1:30,f3:15,f4:0,f5:15,f7:25,f9:20}, avgMins:18, goals:1 },
+  { number: 10, name:'Elias',          fullName:'Elias Pastorino',     nickname:'Capi',        status:'active',   positions:['DC','MCO','MC'],       minutes:{amistoso:80,f2:90,f3:40,f4:90,f5:75,f6:55,f7:90,f8:60,f9:90}, avgMins:74, goals:11 },
+  { number: 12, name:'Negrin',         fullName:'Martín Negrín',       nickname:'Discoteka',   status:'active',   positions:['DC','MCO','MD','ED','EI','MI'],       minutes:{amistoso:45,f1:20,f3:10,f5:0,f6:15,f8:15,f9:25}, avgMins:19, goals:0 },
+  { number: 15, name:'Nando',          fullName:'Fernando García',     nickname:'Nando',       status:'active',   positions:['MCD','MC','DFC'],            minutes:{amistoso:90,f1:90,f2:90,f4:25,f8:15,f9:75}, avgMins:64, goals:1 },
+  { number: 16, name:'Lolo',           fullName:'Lorenzo Cámara',      nickname:'Lolo',        status:'active',   positions:['DFD','LD','MCD','MD','ED'],  minutes:{f1:55,f3:15,f4:0,f5:45,f6:20,f7:30}, avgMins:28, goals:0 },
+  { number: 17, name:'Pata',           fullName:'Ignacio Zapata',      nickname:'Pata',        status:'active',   positions:['MD','ED','DFD','LD','EI','MI'],    minutes:{amistoso:60,f2:50,f3:75,f4:45,f7:60,f8:45,f9:90}, avgMins:61, goals:1 },
+  { number: 18, name:'Franco Irri',    fullName:'Franco Irisarri',     nickname:null,          status:'active',   positions:['MCO','MI','MD','MC','EI','ED'],     minutes:{amistoso:65,f1:60,f2:45,f3:45,f4:60,f5:45,f6:75,f7:40}, avgMins:54, goals:0 },
+  { number: 19, name:'Facu Munchs',    fullName:'Facundo Munchs',      nickname:null,          status:'active',   positions:['DC'],                  minutes:{f1:90,f2:25,f5:45,f6:45,f7:15}, avgMins:44, goals:3 },
+  { number: 20, name:'Seba B',         fullName:'Sebastián Barisone',  nickname:null,          status:'active',   positions:['DFD','MD','ED','POR'],       minutes:{amistoso:50,f2:40,f3:45,f4:90,f5:45,f8:45}, avgMins:53, goals:0 },
+  { number: 21, name:'Enzo',           fullName:'Enzo Gaione',         nickname:null,          status:'active',   positions:['DFC','DFD','LD'],                    minutes:{f2:60,f4:30,f5:90,f6:90,f7:90,f8:45}, avgMins:68, goals:0 },
+  { number: 22, name:'Pato',           fullName:'Mauro Cabrera',       nickname:'Pato',        status:'active',   positions:['MC','MCD'],                      minutes:{amistoso:90,f1:70,f2:90,f3:90,f4:90,f5:90,f6:80,f7:90,f8:45}, avgMins:82, goals:1 },
+  { number: 23, name:'Seba T',         fullName:'Sebastián Torena',    nickname:null,          status:'inactive', positions:['MD','ED','MI','EI','DC'],    minutes:{f1:90,f2:65,f3:35}, avgMins:63, goals:2 },
+  { number: 24, name:'Mati',           fullName:'Matias González',     nickname:null,          status:'active',   positions:['DFC','MCD','MC'],            minutes:{f1:70,f2:90,f3:90,f4:65,f5:90,f6:70,f8:60,f9:90}, avgMins:78, goals:0 },
+  { number: 27, name:'Mandinga',       fullName:'Ezequiel Muñoz',      nickname:'Mandinga',    status:'active',   positions:['DC','ED','EI','MD','MI','POR'],    minutes:{amistoso:45,f2:30,f3:50,f4:25,f5:65,f6:60,f7:65,f8:75,f9:90}, avgMins:56, goals:4 },
+  { number: 28, name:'Mariano',        fullName:'Mariano Perdomo',     nickname:null,          status:'ex',       positions:['DFC','DFD','DFI','LI','LD'],      minutes:{f3:10,f5:0}, avgMins:5, goals:0 },
+  { number: 29, name:'Fabian Couto',   fullName:'Fabián Couto',        nickname:null,          status:'active',   positions:['DFD','LD','MC','MCD','MD','ED'],  minutes:{amistoso:90,f1:35,f5:25,f8:30}, avgMins:45, goals:0 },
+  { number: 30, name:'Diego Rodriguez',fullName:'Diego Rodríguez',     nickname:null,          status:'active',   positions:['DC'],    minutes:{}, avgMins:0, goals:0 },
+  { number: 32, name:'Lucas Godoy',    fullName:'Lucas Godoy',         nickname:null,          status:'active',   positions:['ED','MD','EI','MI','DC'],                  minutes:{f6:30,f7:45,f8:45,f9:65}, avgMins:46, goals:0 },
+  { number: 33, name:'Andres Guerra',  fullName:'Andrés Guerra',       nickname:'Cabeza',      status:'active',   positions:['DC','MCO'],                  minutes:{f6:30,f7:30}, avgMins:30, goals:3 },
+  { number: 72, name:'Sena',           fullName:'Martín Sena',         nickname:null,          status:'active',   positions:['DFI','LI','MCD','MC','DFC'],      minutes:{amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90}, avgMins:74, goals:4 },
+  { number: 99, name:'Ignacio Luy',    fullName:'Ignacio Luy',         nickname:null,          status:'ex',       positions:['EI','ED','MI','MD'],  minutes:{f3:30,f4:30,f5:45,f6:60,f8:30}, avgMins:39, goals:0 },
 ];
 
 // Apply admin data overrides if available
@@ -1494,6 +1519,8 @@ function openModal(player) {
     <div class="modal-stat"><div class="val">${totalMins}</div><div class="lbl">Minutos</div></div>
     <div class="modal-stat"><div class="val" style="color:var(--gold)">${player.goals}</div><div class="lbl">Goles</div></div>`;
 
+  document.getElementById('modal-pitch').innerHTML = renderPositionPitch(player.positions || []);
+
   const playerPhotos = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerPhotos && ADMIN_DATA.playerPhotos[player.name]) || [];
   const fotosBtn = document.getElementById('modal-fotos-btn');
   if (playerPhotos.length > 0) {
@@ -1511,9 +1538,11 @@ function openModal(player) {
     const mins = player.minutes[m.id];
     const dotClass = { W:'dot-win', D:'dot-draw', L:'dot-loss', friendly:'dot-friendly' }[m.type];
     const typeLabel = { W:'V', D:'E', L:'D', friendly:'A' }[m.type];
+    const card = (CARDS_BY_MATCH[m.id] || []).find(c => c && c.name === player.name);
+    const cardHtml = card ? `<span class="rc-mins" title="Tarjeta roja${card.min != null ? ' (min '+card.min+')' : ''}"><span class="rc-card"></span>${card.min != null ? card.min+"'" : ''}</span>` : '';
     const minsDisplay = mins === undefined
-      ? `<span class="mins-not-played">No jugó</span>`
-      : `<div class="mins-played">${mins}'</div><div class="mins-bar"><div class="mins-bar-fill" style="width:${Math.round(mins/90*100)}%"></div></div>`;
+      ? `<span class="mins-not-played">No jugó</span>${cardHtml}`
+      : `<div class="mins-played">${mins}'${cardHtml}</div><div class="mins-bar"><div class="mins-bar-fill" style="width:${Math.round(mins/90*100)}%"></div></div>`;
     tbody.innerHTML += `<tr>
       <td>${m.label.replace(/^F(\d+) vs /,'Fecha $1 / ').replace(/ vs /,' / ')}</td>
       <td><span class="result-dot ${dotClass}"></span>${typeLabel} ${m.result}</td>
@@ -1522,6 +1551,7 @@ function openModal(player) {
   });
 
   modal.classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 
@@ -1540,6 +1570,7 @@ document.addEventListener('keydown', e => {
 });
 function closeModal() {
   document.getElementById('playerModal').classList.remove('open');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
 }
 
@@ -1584,6 +1615,36 @@ function buildFormationLayout(titulares) {
   if (hasAM) push(aMid,  dist(aMid.length),  yAM);
   if (fwd.length) push(fwd, dist(fwd.length), 13);
   return out;
+}
+
+function renderPositionPitch(positions) {
+  const W = 220, H = 300;
+  const COORD = {
+    POR:[50,92], DFI:[14,78], DFC:[50,80], DFD:[86,78],
+    LI:[12,67], LD:[88,67], MCD:[50,66], MC:[50,51], MCO:[50,35],
+    MI:[15,49], MD:[85,49], EI:[15,21], ED:[85,21], DC:[50,13]
+  };
+  const set = new Set((positions||[]).map(p => String(p).toUpperCase().trim()));
+  const lines = `
+    <rect x="6" y="6" width="${W-12}" height="${H-12}" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4" rx="3"/>
+    <line x1="6" y1="${H/2}" x2="${W-6}" y2="${H/2}" stroke="rgba(255,255,255,.4)" stroke-width="1.1"/>
+    <circle cx="${W/2}" cy="${H/2}" r="26" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.1"/>
+    <circle cx="${W/2}" cy="${H/2}" r="2" fill="rgba(255,255,255,.55)"/>
+    <rect x="${W/2-34}" y="6" width="68" height="34" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1"/>
+    <rect x="${W/2-16}" y="6" width="32" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+    <rect x="${W/2-34}" y="${H-40}" width="68" height="34" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1"/>
+    <rect x="${W/2-16}" y="${H-19}" width="32" height="13" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>`;
+  let dots = '';
+  for (const [code, xy] of Object.entries(COORD)) {
+    const cx = (xy[0]/100)*W, cy = (xy[1]/100)*H;
+    if (set.has(code)) {
+      dots += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="13" fill="#0057B7" stroke="#fff" stroke-width="1.6"/>`;
+      dots += `<text x="${cx.toFixed(1)}" y="${cy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="Archivo,Arial,sans-serif" font-size="8.5" font-weight="800" fill="#fff">${code}</text>`;
+    } else {
+      dots += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3" fill="rgba(255,255,255,.16)"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block"><rect width="${W}" height="${H}" rx="6" fill="#1e6b3b"/>${lines}${dots}</svg>`;
 }
 
 function renderPitchSVG(layout, scorerMap, cardMap = {}) {
@@ -1723,10 +1784,12 @@ function openLineup(matchId) {
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
   document.getElementById('lineupModal').classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 function closeLineup() {
   document.getElementById('lineupModal').classList.remove('open');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
   var right = document.querySelector('.lineup-right');
   var btn = document.getElementById('minutosBtn');
@@ -1784,10 +1847,12 @@ function openTeamPhoto() {
   const lbImg = lb.querySelector('img');
   if (_slides.length > 0) lbImg.src = _encPath(_slides[_slideIdx]);
   lb.classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 function closeTeamPhoto() {
   document.getElementById('team-photo-lightbox').classList.remove('open');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
 }
 
