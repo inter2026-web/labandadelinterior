@@ -1403,7 +1403,6 @@ SCORERS_DATA.forEach((s, i) => {
     <div class="scorer-avatar">${avatarContent}</div>
     <div class="scorer-info">
       <div class="scorer-name">${displayName}${nickHtml}${s.number ? ' <span style="color:var(--gray);font-size:.75rem;font-weight:400">#'+s.number+'</span>' : ''}</div>
-      <div class="scorer-pos">${s.position}</div>
     </div>
     <div class="scorer-bar-wrap">
       <div class="scorer-bar"><div class="scorer-bar-fill" style="width:0%" data-width="${(s.goals/maxGoals*100).toFixed(0)}%"></div></div>
@@ -1482,7 +1481,7 @@ function openModal(player) {
   if (player.nickname) {
     modalNameEl.innerHTML += ` <span style="font-size:.8em;color:var(--blue-light);font-weight:400;font-style:italic">"${player.nickname}"</span>`;
   }
-  document.getElementById('modal-pos').textContent = player.positions.join(' · ');
+  document.getElementById('modal-pos').style.display = 'none';
 
   const totalMins = Object.values(player.minutes).reduce((a,b) => a+b, 0);
   const partsPlayed = Object.values(player.minutes).filter(m => m > 0).length;
