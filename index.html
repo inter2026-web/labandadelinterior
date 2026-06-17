@@ -1551,6 +1551,7 @@ function openModal(player) {
   });
 
   modal.classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 
@@ -1569,6 +1570,7 @@ document.addEventListener('keydown', e => {
 });
 function closeModal() {
   document.getElementById('playerModal').classList.remove('open');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
 }
 
@@ -1782,10 +1784,12 @@ function openLineup(matchId) {
   document.getElementById('lineup-titulares').innerHTML = lu.titulares.map(renderP).join('');
   document.getElementById('lineup-suplentes').innerHTML = lu.suplentes.map(renderP).join('');
   document.getElementById('lineupModal').classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 function closeLineup() {
   document.getElementById('lineupModal').classList.remove('open');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
   var right = document.querySelector('.lineup-right');
   var btn = document.getElementById('minutosBtn');
@@ -1843,10 +1847,12 @@ function openTeamPhoto() {
   const lbImg = lb.querySelector('img');
   if (_slides.length > 0) lbImg.src = _encPath(_slides[_slideIdx]);
   lb.classList.add('open');
+  document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
 }
 function closeTeamPhoto() {
   document.getElementById('team-photo-lightbox').classList.remove('open');
+  document.documentElement.style.overflow = '';
   document.body.style.overflow = '';
 }
 
