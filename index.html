@@ -733,13 +733,13 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="hero-next">
         <div class="hero-next-label">Próximo partido · Fecha 11 · Liga MVD</div>
         <div class="hero-next-match" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-          <img src="assets/logos/la-favela.png" width="24" height="24" style="width:24px;height:24px;object-fit:contain;border-radius:50%" alt="La Favela FC">
+          <img src="assets/logos/la-favela.png" style="width:24px;height:24px;object-fit:contain;border-radius:50%" alt="La Favela FC">
           <span>La Favela FC</span>
           <span style="color:var(--gray);font-size:.85rem">vs</span>
-          <img src="assets/logos/el-inter.png" width="24" height="24" style="width:24px;height:24px;object-fit:contain;position:relative;z-index:2" alt="El Inter">
+          <img src="assets/logos/el-inter.png" style="width:24px;height:24px;object-fit:contain;position:relative;z-index:2" alt="El Inter">
           <span>El Inter</span>
         </div>
-        <div class="hero-next-date">Cancha por confirmar</div>
+        <div class="hero-next-date">Sáb 20 jun · 11:00 · Cancha 15 · El Inter de visitante</div>
       </div>
 
     </div>
@@ -819,13 +819,13 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="section-label" style="margin-bottom:1rem">Próxima fecha</div>
       <!-- NEXT-MATCH-START -->
       <div class="next-match-banner fade-in">
-        <div class="next-label" id="next-label-text">FECHA 11 · Liga MVD Div. B</div>
+        <div class="next-label">FECHA 11 · Liga MVD Div. B · Cancha 15</div>
         <div class="next-team">
           <div class="next-team-logo">
             <img src="assets/logos/la-favela.png" alt="La Favela FC" style="border-radius:50%">
           </div>
-          <div class="next-team-name">La Favela FC</div>
-          <div class="next-team-sub">9° en tabla · 9 pts</div>
+          <div class="next-team-name" >La Favela FC</div>
+          <div class="next-team-sub">Local · 9° en tabla · 9 pts</div>
         </div>
         <div class="next-vs">VS</div>
         <div class="next-team">
@@ -833,12 +833,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
             <img src="assets/logos/el-inter.png" alt="El Inter" style="position:relative;z-index:2">
           </div>
           <div class="next-team-name" style="color:var(--blue-light)">El Inter</div>
-          <div class="next-team-sub">3° en tabla · 22 pts</div>
+          <div class="next-team-sub">Visitante · 3° en tabla · 22 pts</div>
         </div>
         <div class="next-date-box">
-          <div class="next-date-day" style="font-size:1.2rem;padding-top:.4rem">Por</div>
-          <div class="next-date-month">Confirmar</div>
-          <div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">A confirmar</div>
+          <div class="next-date-day">20</div>
+          <div class="next-date-month">Jun 2026</div>
+          <div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">11:00</div>
         </div>
       </div>
       <!-- NEXT-MATCH-END -->
@@ -1250,18 +1250,115 @@ const SCORERS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.scorer
 const CARDS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.cardsByMatch) ? ADMIN_DATA.cardsByMatch : {};
 
 const TABLA = [
-  { "pos": 1,  "name": "Dep. Comandiyú",         "pj": 10, "g": 8, "e": 2, "p": 0, "pts": 26 },
-  { "pos": 2,  "name": "La Rotonda",              "pj": 10, "g": 7, "e": 3, "p": 0, "pts": 24 },
-  { "pos": 3,  "name": "El Inter",                "pj": 10, "g": 7, "e": 1, "p": 2, "pts": 22, "isUs": true },
-  { "pos": 4,  "name": "Capitol F.C.",            "pj": 10, "g": 6, "e": 3, "p": 1, "pts": 21 },
-  { "pos": 5,  "name": "C.A. Tigre Uruguay",      "pj": 10, "g": 4, "e": 2, "p": 4, "pts": 14 },
-  { "pos": 6,  "name": "Blue Label FC",           "pj": 10, "g": 4, "e": 1, "p": 5, "pts": 13 },
-  { "pos": 7,  "name": "Revolución Futbolística", "pj": 10, "g": 4, "e": 1, "p": 5, "pts": 13 },
-  { "pos": 8,  "name": "Club Montero",            "pj": 10, "g": 3, "e": 2, "p": 5, "pts": 11 },
-  { "pos": 9,  "name": "La Favela FC",            "pj": 10, "g": 3, "e": 0, "p": 7, "pts": 9  },
-  { "pos": 10, "name": "Malasia F.C.",            "pj": 10, "g": 2, "e": 2, "p": 6, "pts": 8  },
-  { "pos": 11, "name": "Palestino",               "pj": 10, "g": 0, "e": 4, "p": 6, "pts": 4  },
-  { "pos": 12, "name": "Defensor United",         "pj": 10, "g": 0, "e": 3, "p": 7, "pts": 3  },
+  {
+      "pos": 1,
+      "name": "Dep. Comandiyú",
+      "pj": 10,
+      "g": 8,
+      "e": 2,
+      "p": 0,
+      "pts": 26
+    },
+    {
+      "pos": 2,
+      "name": "La Rotonda",
+      "pj": 10,
+      "g": 7,
+      "e": 3,
+      "p": 0,
+      "pts": 24
+    },
+    {
+      "pos": 3,
+      "name": "El Inter",
+      "pj": 10,
+      "g": 7,
+      "e": 1,
+      "p": 2,
+      "pts": 22,
+      "isUs": true
+    },
+    {
+      "pos": 4,
+      "name": "Capitol F.C.",
+      "pj": 10,
+      "g": 6,
+      "e": 3,
+      "p": 1,
+      "pts": 21
+    },
+    {
+      "pos": 5,
+      "name": "C.A Tigre Uruguay",
+      "pj": 5,
+      "g": 0,
+      "e": 0,
+      "p": 0,
+      "pts": 14
+    },
+    {
+      "pos": 6,
+      "name": "Blue Label FC",
+      "pj": 10,
+      "g": 4,
+      "e": 1,
+      "p": 5,
+      "pts": 13
+    },
+    {
+      "pos": 7,
+      "name": "Revolución Futbolística",
+      "pj": 10,
+      "g": 4,
+      "e": 1,
+      "p": 5,
+      "pts": 13
+    },
+    {
+      "pos": 8,
+      "name": "Club Montero",
+      "pj": 10,
+      "g": 3,
+      "e": 2,
+      "p": 5,
+      "pts": 11
+    },
+    {
+      "pos": 9,
+      "name": "La Favela FC",
+      "pj": 10,
+      "g": 3,
+      "e": 0,
+      "p": 7,
+      "pts": 9
+    },
+    {
+      "pos": 10,
+      "name": "Malasia F.C.",
+      "pj": 10,
+      "g": 2,
+      "e": 2,
+      "p": 6,
+      "pts": 8
+    },
+    {
+      "pos": 11,
+      "name": "Palestino",
+      "pj": 10,
+      "g": 0,
+      "e": 4,
+      "p": 6,
+      "pts": 4
+    },
+    {
+      "pos": 12,
+      "name": "Defensor United",
+      "pj": 10,
+      "g": 0,
+      "e": 3,
+      "p": 7,
+      "pts": 3
+    }
 ];
 
 const PLAYERS = [

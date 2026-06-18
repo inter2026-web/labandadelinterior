@@ -1,13 +1,13 @@
 /**
  * update-html.js
- * Lee liga-data.js generado por auto-scraper.js y parchea web-inter_fc_2023.html
+ * Lee liga-data.js generado por auto-scraper.js y parchea index.html (la pagina publicada)
  * Uso: node update-html.js
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const HTML_FILE = path.join(__dirname, 'web-inter_fc_2023.html');
+const HTML_FILE = path.join(__dirname, 'index.html');
 const DATA_FILE = path.join(__dirname, 'liga-data.js');
 
 if (!fs.existsSync(DATA_FILE)) {
