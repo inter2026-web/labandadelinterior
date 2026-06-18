@@ -98,8 +98,7 @@ if (nm && nm.home && nm.away) {
     dateInfo = `Resultado: ${gf}-${gc} · Fecha ${nm.fechaNum} · Liga MVD`;
   } else {
     const fieldStr = nm.field ? ` · Cancha ${nm.field}` : '';
-    const awayStr = isHomeForUs ? '' : ' · El Inter de visitante';
-    dateInfo = `${nm.dateDisplay} · ${nm.time}${fieldStr}${awayStr}`;
+    dateInfo = `${nm.dateDisplay} · ${nm.time}${fieldStr}`;
   }
 
   const heroNext = `<div class="hero-next-label">Próximo partido · Fecha ${nm.fechaNum} · Liga MVD</div>
@@ -138,12 +137,8 @@ if (nm && nm.home && nm.away) {
   // Get current standings for subtitle
   const localStanding = LIGA_DATA.standings.find(s => s.name === local);
   const visitStanding = LIGA_DATA.standings.find(s => s.name === visit);
-  const localSub = localIsUs
-    ? `Local · ${localStanding ? `${localStanding.pos}° en tabla · ${localStanding.pts} pts` : 'Liga MVD'}`
-    : `Local · ${localStanding ? `${localStanding.pos}° en tabla · ${localStanding.pts} pts` : ''}`;
-  const visitSub = visitIsUs
-    ? `Visitante · ${visitStanding ? `${visitStanding.pos}° en tabla · ${visitStanding.pts} pts` : 'Liga MVD'}`
-    : `Visitante · ${visitStanding ? `${visitStanding.pos}° en tabla · ${visitStanding.pts} pts` : ''}`;
+  const localSub = localStanding ? `${localStanding.pos}° en tabla · ${localStanding.pts} pts` : (localIsUs ? 'Liga MVD' : '');
+  const visitSub = visitStanding ? `${visitStanding.pos}° en tabla · ${visitStanding.pts} pts` : (visitIsUs ? 'Liga MVD' : '');
 
   const fieldLabel = nm.field ? ` · Cancha ${nm.field}` : '';
   const [, , d] = (nm.dateStr || '2026-06-13').split('-');
