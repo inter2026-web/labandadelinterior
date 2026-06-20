@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-06-20T23:04:24.278Z",
+  "lastUpdated": "2026-06-20T23:06:44.021Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -69,6 +69,68 @@ const ADMIN_DATA = {
         },
         {
           "name": "Andres Guerra",
+          "pos": ""
+        }
+      ]
+    },
+    "Fecha 11": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Seba B",
+          "pos": "DFD"
+        },
+        {
+          "name": "Mati",
+          "pos": "DFC"
+        },
+        {
+          "name": "Vicente",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "MD"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MC"
+        },
+        {
+          "name": "Pato",
+          "pos": "MC"
+        },
+        {
+          "name": "Mandinga",
+          "pos": "MI"
+        },
+        {
+          "name": "Elias",
+          "pos": "DC"
+        },
+        {
+          "name": "Negrin",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Diego",
+          "pos": ""
+        },
+        {
+          "name": "Lolo",
+          "pos": ""
+        },
+        {
+          "name": "Franco Irri",
           "pos": ""
         }
       ]
