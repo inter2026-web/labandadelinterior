@@ -85,7 +85,10 @@ if (LIGA_DATA.standings && LIGA_DATA.standings.length > 0) {
 // 2. ACTUALIZAR HERO-NEXT (próximo partido en el hero)
 // -----------------------------------------------------------------------
 const nm = LIGA_DATA.nextMatch;
-if (nm && nm.home && nm.away) {
+const _today = new Date().toISOString().slice(0, 10);
+// Solo auto-actualizar el próximo partido si es a futuro (evita pisar un override manual durante el parate entre torneos)
+const nmFuture = !!(nm && nm.dateStr && nm.dateStr >= _today);
+if (nm && nm.home && nm.away && nmFuture) {
   const isHomeForUs = nm.home === 'El Inter';
   const local = isHomeForUs ? 'El Inter' : nm.home;
   const visit = isHomeForUs ? nm.away : nm.away;
@@ -127,7 +130,7 @@ if (nm && nm.home && nm.away) {
 // -----------------------------------------------------------------------
 // 3. ACTUALIZAR SECCIÓN PRÓXIMA FECHA
 // -----------------------------------------------------------------------
-if (nm && nm.home && nm.away) {
+if (nm && nm.home && nm.away && nmFuture) {
   const isHomeForUs = nm.home === 'El Inter';
   const local = nm.home;
   const visit = nm.away;
