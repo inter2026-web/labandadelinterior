@@ -747,13 +747,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
     <!-- ÚLTIMOS RESULTADOS -->
     <div class="forma fade-in">
       <div class="forma-label">Últimos 5 partidos</div>
-      <div class="forma-items">
-        <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Blue Label FC</span><span class="forma-score">7-2</span></div>
-        <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Revolución Futbolística</span><span class="forma-score">6-2</span></div>
-        <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Malasia F.C.</span><span class="forma-score">2-1</span></div>
-        <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Club Montero</span><span class="forma-score">2-1</span></div>
-        <div class="forma-item"><div class="forma-badge v">V</div><span class="forma-rival">Capitol F.C.</span><span class="forma-score">4-1</span></div>
-      </div>
+      <div class="forma-items" id="forma-items"></div>
     </div>
 
   </div>
@@ -1033,7 +1027,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="lineup-right">
         <div class="lineup-right-close">
           <span class="lineup-right-close-title">Jugadores</span>
-          <button class="lineup-right-close-btn" onclick="toggleMinutos()">✕</button>
         </div>
         <div class="lineup-section">
           <div class="lineup-section-title">Titulares</div>
@@ -1107,6 +1100,17 @@ const TEAM_LOGOS = {
   'Palestino': 'assets/logos/palestino.png',
   'Defensor United': 'assets/logos/defensor-united.png',
 };
+
+// Busca el escudo de un equipo tolerando variaciones de nombre (puntos, acentos, "FC"/"F.C.")
+function teamLogo(name) {
+  if (!name) return null;
+  if (TEAM_LOGOS[name]) return TEAM_LOGOS[name];
+  const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+  const strip = s => norm(s).replace(/(fc|sc|cf)$/, '');
+  const key = norm(name), skey = strip(name);
+  for (const k in TEAM_LOGOS) { if (norm(k) === key || strip(k) === skey) return TEAM_LOGOS[k]; }
+  return null;
+}
 
 const RIVAL_LOGOS = {
   'Cristal F.C.': 'assets/logos/cristal-fc.png',
@@ -1458,8 +1462,7 @@ if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.igStats) {
 const tablaBody = document.getElementById('tabla-body');
 TABLA.forEach(t => {
   const posClass = t.pos <= 3 ? `pos-${t.pos}` : (t.isUs ? 'pos-4' : '');
-  const _ln = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
-  const logoSrc = TEAM_LOGOS[t.name] || (Object.entries(TEAM_LOGOS).find(([k]) => _ln(k) === _ln(t.name)) || [])[1];
+  const logoSrc = teamLogo(t.name);
   const badgeHtml = logoSrc
     ? `<div class="team-badge" style="background:var(--bg2)"><img src="${logoSrc}" alt="${t.name}" loading="lazy"></div>`
     : `<div class="team-badge" style="${t.isUs?'background:var(--blue);color:#fff':''}">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>`;
@@ -1503,7 +1506,7 @@ MATCHES.forEach((m, i) => {
       </div>
       <span class="match-score">${m.result || 'vs'}</span>
       <div class="match-team-block">
-        ${RIVAL_LOGOS[m.rival] ? `<img src="${RIVAL_LOGOS[m.rival]}" class="match-team-logo" alt="${m.rival}">` : '<div style="width:36px;height:36px"></div>'}
+        ${teamLogo(m.rival) ? `<img src="${teamLogo(m.rival)}" class="match-team-logo" alt="${m.rival}">` : '<div style="width:36px;height:36px"></div>'}
         <span class="match-team">${m.rival}</span>
       </div>
     </div>
@@ -1512,6 +1515,25 @@ MATCHES.forEach((m, i) => {
   </div>`;
   resultsGrid.innerHTML += card;
 });
+
+// =====================
+// RENDER FORMA (últimos 5 partidos jugados, con escudo del rival)
+// =====================
+(function renderForma() {
+  const fc = document.getElementById('forma-items');
+  if (!fc) return;
+  const played = MATCHES.filter(m => m.type && m.type !== 'friendly' && m.result);
+  const last5 = played.slice(-5).reverse();
+  fc.innerHTML = last5.map(m => {
+    const cls = { W: 'v', D: 'e', L: 'd' }[m.type] || 'v';
+    const letter = { W: 'V', D: 'E', L: 'D' }[m.type] || '';
+    const logo = teamLogo(m.rival);
+    const badge = logo
+      ? `<div class="forma-badge ${cls}" style="overflow:hidden;background:var(--bg2)"><img src="${logo}" alt="${m.rival}" style="width:100%;height:100%;object-fit:contain"></div>`
+      : `<div class="forma-badge ${cls}">${letter}</div>`;
+    return `<div class="forma-item">${badge}<span class="forma-rival">${m.rival}</span><span class="forma-score">${m.result}</span></div>`;
+  }).join('');
+})();
 
 // =====================
 // RENDER SCORERS
