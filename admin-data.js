@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-06-20T23:00:20.781Z",
+  "lastUpdated": "2026-06-20T23:04:24.278Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -1477,7 +1477,22 @@ const ADMIN_DATA = {
       "Franco F": 90,
       "Jubin": 90
     },
-    "Fecha 11": {},
+    "Fecha 11": {
+      "Jubin": 90,
+      "Vicente": 90,
+      "Brandon": 90,
+      "Franco F": 90,
+      "Diego": 10,
+      "Elias": 90,
+      "Negrin": 55,
+      "Lolo": 45,
+      "Franco Irri": 55,
+      "Seba B": 45,
+      "Pato": 90,
+      "Mati": 90,
+      "Mandinga": 70,
+      "Lucas Godoy": 80
+    },
     "Fecha 10": {
       "Jubin": 90,
       "Vicente": 10,
