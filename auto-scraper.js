@@ -56,6 +56,7 @@ function monthName(n) {
   });
   const page = await context.newPage();
 
+
   // ----------------------------------------------------------------
   // 1. Cargar home para inicializar el SPA
   // ----------------------------------------------------------------
@@ -101,41 +102,45 @@ function monthName(n) {
   // ----------------------------------------------------------------
   // 3. Abrir el modal de Torneos/Posiciones para standings completas
   // ----------------------------------------------------------------
-  console.log('\n3. Cargando página de posiciones...');
+  console.log('\n3. Cargando tabla de posiciones COMPLETA (Divisional B)...');
   let standings = [];
 
-  // Try the torneos/posiciones modal or page
-  const torneosLink = await page.$('a[href="/torneos/posiciones/"]').catch(() => null);
-  if (torneosLink) {
-    await page.evaluate(el => el.click(), torneosLink);
-    await page.waitForTimeout(4000);
-  } else {
-    await page.goto('https://www.ligamvd.com/torneos/posiciones/', { waitUntil: 'networkidle', timeout: 20000 }).catch(() => {});
-    await page.waitForTimeout(3000);
-  }
+  // Tabla completa con PJ/PG/PE/PP/GF/GC/PTS (cambia el slug/id por torneo: apertura/clausura).
+  const STANDINGS_URL = 'https://www.ligamvd.com/posiciones/divisional_b_apertura/810/1/';
+  await page.goto(STANDINGS_URL, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
+  await page.waitForTimeout(5000);
 
-  // Extract standings: find the TABLE that contains El Inter, return only that group
-  standings = await page.evaluate(() => {
-    // Find all tables with team links
+  // Extract standings: preferir la tabla COMPLETA (con PJ/G/E/P) que contenga a El Inter
+  const _res = await page.evaluate(() => {
     const tables = Array.from(document.querySelectorAll('table'));
+    const candidates = [];
     for (const table of tables) {
       const rows = [];
       table.querySelectorAll('tr').forEach(tr => {
         const link = tr.querySelector('a[href*="/equipos/"]');
+        if (!link) return;
         const cells = Array.from(tr.querySelectorAll('td'));
-        const ptsCell = cells.find(c => /\d+\s*PTS/i.test(c.innerText) || /^\s*\d{1,3}\s*$/.test(c.innerText));
-        if (!link || !ptsCell) return;
-        const name = link.innerText.trim();
-        const pts = parseInt(ptsCell.innerText.replace(/[^\d]/g, ''));
-        if (name && !isNaN(pts) && pts >= 0) rows.push({ name: name.replace(/\s+/g, ' ').trim(), pts });
+        let pts = null;
+        const ptsCell = cells.find(c => /\d+\s*PTS/i.test(c.innerText || ''));
+        if (ptsCell) pts = parseInt(ptsCell.innerText.replace(/[^\d]/g, ''), 10);
+        const nums = cells.map(c => (c.innerText || '').trim()).filter(t => /^-?\d+$/.test(t)).map(Number);
+        if (pts == null && nums.length) pts = nums[nums.length - 1];
+        if (pts == null || isNaN(pts) || pts < 0) return;
+        const name = link.innerText.replace(/\s+/g, ' ').trim();
+        let pj = null, g = null, e = null, p = null;
+        if (nums.length >= 8) {
+          const L = nums.slice(-8); // PJ, PG, PE, PP, GF, GC, DIF, PTS (ignora el ranking inicial)
+          if (L[1] + L[2] + L[3] === L[0] && (3 * L[1] + L[2]) === L[7]) { pj = L[0]; g = L[1]; e = L[2]; p = L[3]; pts = L[7]; }
+        }
+        if (name) rows.push({ name, pj, g, e, p, pts });
       });
-      // Check if this table has El Inter (ID 1046 in href or name match)
-      const hasElInter = rows.some(r => r.name === 'El Inter' || table.innerHTML.includes('/1046/'));
-      if (hasElInter && rows.length >= 6) return rows;
+      const hasElInter = rows.some(r => r.name === 'El Inter') || table.innerHTML.includes('/1046/');
+      if (hasElInter && rows.length >= 6) candidates.push(rows);
     }
-    return [];
+    const full = candidates.find(rows => rows.some(r => r.pj != null));
+    return full || candidates[0] || [];
   });
-
+  standings = _res;
   console.log('  Standings encontrados:', standings.length, standings.slice(0,3));
 
   // If no standings yet from posiciones modal, fall back to fixture page sidebar
@@ -151,12 +156,21 @@ function monthName(n) {
         const rows = [];
         table.querySelectorAll('tr').forEach(tr => {
           const link = tr.querySelector('a[href*="/equipos/"]');
+          if (!link) return;
           const cells = Array.from(tr.querySelectorAll('td'));
-          const ptsCell = cells.find(c => /\d+\s*PTS/i.test(c.innerText) || /^\s*\d{1,3}\s*$/.test(c.innerText));
-          if (!link || !ptsCell) return;
-          const name = link.innerText.trim();
-          const pts = parseInt(ptsCell.innerText.replace(/[^\d]/g,''));
-          if (name && !isNaN(pts) && pts >= 0) rows.push({ name: name.replace(/\s+/g,' ').trim(), pts });
+          let pts = null;
+          const ptsCell = cells.find(c => /\d+\s*PTS/i.test(c.innerText || ''));
+          if (ptsCell) pts = parseInt(ptsCell.innerText.replace(/[^\d]/g, ''), 10);
+          const nums = cells.map(c => (c.innerText || '').trim()).filter(t => /^-?\d+$/.test(t)).map(Number);
+          if (pts == null && nums.length) pts = nums[nums.length - 1];
+          if (pts == null || isNaN(pts) || pts < 0) return;
+          const name = link.innerText.replace(/\s+/g, ' ').trim();
+          let pj = null, g = null, e = null, p = null;
+          if (nums.length >= 8) {
+            const L = nums.slice(-8);
+            if (L[1] + L[2] + L[3] === L[0] && (3 * L[1] + L[2]) === L[7]) { pj = L[0]; g = L[1]; e = L[2]; p = L[3]; pts = L[7]; }
+          }
+          if (name) rows.push({ name, pj, g, e, p, pts });
         });
         if (rows.some(r => r.name === 'El Inter' || table.innerHTML.includes('/1046/')) && rows.length >= 6)
           return rows;
@@ -251,7 +265,8 @@ function monthName(n) {
     .sort((a, b) => b.pts - a.pts)
     .map((s, i) => {
       const name = normName(s.name) || s.name.trim();
-      return { pos: i + 1, name, pts: s.pts, ...(name === 'El Inter' ? { isUs: true } : {}) };
+      const full = (s.pj != null && s.g != null && s.e != null && s.p != null) ? { pj: s.pj, g: s.g, e: s.e, p: s.p } : {};
+      return { pos: i + 1, name, ...full, pts: s.pts, ...(name === 'El Inter' ? { isUs: true } : {}) };
     });
 
   // Build date display

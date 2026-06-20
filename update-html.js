@@ -49,15 +49,17 @@ if (LIGA_DATA.standings && LIGA_DATA.standings.length > 0) {
   }
 
   // Build new TABLA merging scraped pts+pos with existing G/E/P
+  const norm = n => (n || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
   const newTabla = LIGA_DATA.standings.map((s, i) => {
-    const existing = existingTabla.find(t => t.name === s.name || t.name.trim() === s.name.trim());
+    const existing = existingTabla.find(t => norm(t.name) === norm(s.name));
+    const hasFull = s.pj != null && s.g != null && s.e != null && s.p != null;
     return {
       pos: i + 1,
       name: s.name,
-      pj: existing ? existing.pj : Math.floor(s.pts / 2.5), // estimate if no data
-      g: existing ? existing.g : 0,
-      e: existing ? existing.e : 0,
-      p: existing ? existing.p : 0,
+      pj: hasFull ? s.pj : (existing ? existing.pj : Math.floor(s.pts / 2.5)),
+      g: hasFull ? s.g : (existing ? existing.g : 0),
+      e: hasFull ? s.e : (existing ? existing.e : 0),
+      p: hasFull ? s.p : (existing ? existing.p : 0),
       pts: s.pts,
       ...(s.isUs || s.name === 'El Inter' ? { isUs: true } : {}),
     };
