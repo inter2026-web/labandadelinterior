@@ -651,9 +651,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
         </div>
       </div>
       <div class="ig-stats">
-        <div class="ig-stat"><div class="ig-stat-num">29</div><div class="ig-stat-label">Goles</div></div>
-        <div class="ig-stat"><div class="ig-stat-num" style="color:var(--gold)">22</div><div class="ig-stat-label">Puntos</div></div>
-        <div class="ig-stat"><div class="ig-stat-num" style="color:var(--win)">3°</div><div class="ig-stat-label">Posición</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="igc-goles">29</div><div class="ig-stat-label">Goles</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="igc-puntos" style="color:var(--gold)">22</div><div class="ig-stat-label">Puntos</div></div>
+        <div class="ig-stat"><div class="ig-stat-num" id="igc-pos" style="color:var(--win)">3°</div><div class="ig-stat-label">Posición</div></div>
       </div>
       <div class="ig-bio">
         💙🖤 <strong>La Banda del Interior</strong><br>
@@ -757,12 +757,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
 <div class="stats-bar">
   <div class="stats-bar-label">Liga MVD · Serie 1 División B</div>
   <div class="stats-bar-inner">
-    <div class="stat-item fade-in stagger-2"><span class="val" data-count="7" style="color:var(--win)">7</span><span class="lbl">Victorias</span><div class="stat-tooltip">✅ F2 vs Tigre (3-1)<br>✅ F3 vs Palestino (1-0)<br>✅ F6 vs Blue Label (7-2)<br>✅ F7 vs Rev.F. (6-2)<br>✅ F8 vs Malasia (2-1)<br>✅ F9 vs Montero (2-1)<br>✅ F10 vs Capitol (4-1)</div></div>
-    <div class="stat-item fade-in stagger-3"><span class="val" data-count="1" style="color:var(--draw)">1</span><span class="lbl">Empates</span><div class="stat-tooltip">🤝 vs Defensor United<br>Resultado: 2-2 · F5</div></div>
-    <div class="stat-item fade-in stagger-4"><span class="val" data-count="2" style="color:var(--loss)">2</span><span class="lbl">Derrotas</span><div class="stat-tooltip">❌ F1 vs La Rotonda (1-3)<br>❌ F4 vs Dep. Comandiyú (1-4)</div></div>
-    <div class="stat-item fade-in stagger-5"><span class="val" data-count="29" style="color:var(--win)">29</span><span class="lbl">Goles a Favor</span><div class="stat-tooltip">⚽ Goleador: <span id="tip-goleador">Elias</span><br>Promedio: 2.9 por partido</div></div>
-    <div class="stat-item fade-in stagger-6"><span class="val" data-count="17" style="color:var(--loss)">17</span><span class="lbl">Goles en Contra</span><div class="stat-tooltip">🧤 Promedio: 1.7 por partido</div></div>
-    <div class="stat-item fade-in" style="transition-delay:.7s"><span class="val" data-count="22">22</span><span class="lbl">Puntos</span><div class="stat-tooltip">🏆 3° en tabla · Serie 1 Div. B<br>A 4 puntos del líder</div></div>
+    <div class="stat-item fade-in stagger-2"><span class="val" id="sb-w" data-count="7" style="color:var(--win)">7</span><span class="lbl">Victorias</span><div class="stat-tooltip" id="tt-w">✅</div></div>
+    <div class="stat-item fade-in stagger-3"><span class="val" id="sb-d" data-count="1" style="color:var(--draw)">1</span><span class="lbl">Empates</span><div class="stat-tooltip" id="tt-d">🤝</div></div>
+    <div class="stat-item fade-in stagger-4"><span class="val" id="sb-l" data-count="2" style="color:var(--loss)">2</span><span class="lbl">Derrotas</span><div class="stat-tooltip" id="tt-l">❌</div></div>
+    <div class="stat-item fade-in stagger-5"><span class="val" id="sb-gf" data-count="29" style="color:var(--win)">29</span><span class="lbl">Goles a Favor</span><div class="stat-tooltip" id="tt-gf">⚽ Goleador: <span id="tip-goleador">Elias</span></div></div>
+    <div class="stat-item fade-in stagger-6"><span class="val" id="sb-gc" data-count="17" style="color:var(--loss)">17</span><span class="lbl">Goles en Contra</span><div class="stat-tooltip" id="tt-gc">🧤</div></div>
+    <div class="stat-item fade-in" style="transition-delay:.7s"><span class="val" id="sb-pts" data-count="22">22</span><span class="lbl">Puntos</span><div class="stat-tooltip" id="tt-pts">🏆 Serie 1 Div. B</div></div>
   </div>
 </div>
 
@@ -1443,6 +1443,42 @@ const SCORERS_DATA = PLAYERS
   .sort((a, b) => b.goals - a.goals || a.name.localeCompare(b.name))
   .map(p => ({ name: p.name, fullName: p.fullName, nickname: p.nickname, position: p.positions.join(' / '), goals: p.goals, number: p.number }));
 
+// =====================
+// STATS DINÁMICAS (IG card + barra) — se calculan de la tabla (auto) y los resultados
+// =====================
+function computeStats() {
+  const us = (typeof TABLA !== 'undefined' && TABLA) ? TABLA.find(t => t.isUs || t.name === 'El Inter') : null;
+  const liga = (typeof MATCHES !== 'undefined' ? MATCHES : []).filter(m => m.type && m.type !== 'friendly' && m.gf != null && m.gc != null);
+  let gf = 0, gc = 0;
+  liga.forEach(m => { gf += m.gf; gc += m.gc; });
+  const w = us ? us.g : liga.filter(m => m.type === 'W').length;
+  const d = us ? us.e : liga.filter(m => m.type === 'D').length;
+  const l = us ? us.p : liga.filter(m => m.type === 'L').length;
+  const pj = us ? us.pj : liga.length;
+  const pts = us ? us.pts : (3 * w + d);
+  const pos = us ? us.pos : null;
+  const leaderPts = (typeof TABLA !== 'undefined' && TABLA && TABLA[0]) ? TABLA[0].pts : null;
+  return { gf, gc, w, d, l, pj, pts, pos, leaderPts };
+}
+(function renderStats() {
+  const s = computeStats();
+  const liga = (typeof MATCHES !== 'undefined' ? MATCHES : []).filter(m => m.type && m.type !== 'friendly' && m.result);
+  const fechaLbl = m => m.id === 'amistoso' ? 'Amist.' : 'F' + String(m.id).replace(/\D/g, '');
+  const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const setCount = (id, v) => { const el = document.getElementById(id); if (el) { el.setAttribute('data-count', v); el.textContent = v; } };
+  const setHTML = (id, h) => { const el = document.getElementById(id); if (el) el.innerHTML = h; };
+  setText('igc-goles', s.gf); setText('igc-puntos', s.pts); setText('igc-pos', s.pos != null ? s.pos + '°' : '—');
+  setCount('sb-w', s.w); setCount('sb-d', s.d); setCount('sb-l', s.l);
+  setCount('sb-gf', s.gf); setCount('sb-gc', s.gc); setCount('sb-pts', s.pts);
+  const listOf = (type, emoji) => { const a = liga.filter(m => m.type === type).map(m => `${emoji} ${fechaLbl(m)} vs ${m.rival} (${m.result})`); return a.length ? a.join('<br>') : '—'; };
+  setHTML('tt-w', listOf('W', '✅')); setHTML('tt-d', listOf('D', '🤝')); setHTML('tt-l', listOf('L', '❌'));
+  setHTML('tt-gf', `⚽ Goleador: <span id="tip-goleador"></span><br>Promedio: ${(s.gf / Math.max(s.pj, 1)).toFixed(1)} por partido`);
+  setHTML('tt-gc', `🧤 Promedio: ${(s.gc / Math.max(s.pj, 1)).toFixed(1)} por partido`);
+  const gap = (s.leaderPts != null && s.pts != null) ? (s.leaderPts - s.pts) : null;
+  const gapTxt = gap == null ? '' : (gap > 0 ? `<br>A ${gap} ${gap === 1 ? 'punto' : 'puntos'} del líder` : '<br>¡Puntero! 🏆');
+  setHTML('tt-pts', `🏆 ${s.pos != null ? s.pos + '° en tabla · ' : ''}Serie 1 Div. B${gapTxt}`);
+})();
+
 // Apply Instagram stats from ADMIN_DATA
 if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.igStats) {
   const ig = ADMIN_DATA.igStats;
@@ -1527,11 +1563,12 @@ MATCHES.forEach((m, i) => {
   fc.innerHTML = last5.map(m => {
     const cls = { W: 'v', D: 'e', L: 'd' }[m.type] || 'v';
     const letter = { W: 'V', D: 'E', L: 'D' }[m.type] || '';
+    const ring = { W: 'var(--win)', D: 'var(--draw)', L: 'var(--loss)' }[m.type] || 'var(--win)';
     const logo = teamLogo(m.rival);
     const badge = logo
-      ? `<div class="forma-badge ${cls}" style="overflow:hidden;background:var(--bg2)"><img src="${logo}" alt="${m.rival}" style="width:100%;height:100%;object-fit:contain"></div>`
+      ? `<div class="forma-badge" style="overflow:hidden;background:var(--bg2);border:2px solid ${ring}"><img src="${logo}" alt="${m.rival}" style="width:100%;height:100%;object-fit:contain"></div>`
       : `<div class="forma-badge ${cls}">${letter}</div>`;
-    return `<div class="forma-item">${badge}<span class="forma-rival">${m.rival}</span><span class="forma-score">${m.result}</span></div>`;
+    return `<div class="forma-item">${badge}<span class="forma-rival">${m.rival}</span><span class="forma-score" style="color:${ring}">${m.result}</span></div>`;
   }).join('');
 })();
 
