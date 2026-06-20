@@ -739,7 +739,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
           <img src="assets/logos/el-inter.png" style="width:24px;height:24px;object-fit:contain;position:relative;z-index:2" alt="El Inter">
           <span>El Inter</span>
         </div>
-        <div class="hero-next-date">Sáb 20 jun · 11:00 · Cancha 15</div>
+        <div class="hero-next-date">Sáb 20 jun · 11:00 · Cancha 2</div>
       </div>
 
     </div>
@@ -819,13 +819,13 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="section-label" style="margin-bottom:1rem">Próxima fecha</div>
       <!-- NEXT-MATCH-START -->
       <div class="next-match-banner fade-in">
-        <div class="next-label">FECHA 11 · Liga MVD Div. B · Cancha 15</div>
+        <div class="next-label">FECHA 11 · Liga MVD Div. B · Cancha 2</div>
         <div class="next-team">
           <div class="next-team-logo">
             <img src="assets/logos/la-favela.png" alt="La Favela FC" style="border-radius:50%">
           </div>
           <div class="next-team-name" >La Favela FC</div>
-          <div class="next-team-sub">9° en tabla · 9 pts</div>
+          <div class="next-team-sub">10° en tabla · 9 pts</div>
         </div>
         <div class="next-vs">VS</div>
         <div class="next-team">
@@ -833,7 +833,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
             <img src="assets/logos/el-inter.png" alt="El Inter" style="position:relative;z-index:2">
           </div>
           <div class="next-team-name" style="color:var(--blue-light)">El Inter</div>
-          <div class="next-team-sub">3° en tabla · 22 pts</div>
+          <div class="next-team-sub">3° en tabla · 25 pts</div>
         </div>
         <div class="next-date-box">
           <div class="next-date-day">20</div>
@@ -1252,6 +1252,15 @@ const CARDS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.cardsByM
 const TABLA = [
   {
       "pos": 1,
+      "name": "La Rotonda",
+      "pj": 10,
+      "g": 7,
+      "e": 3,
+      "p": 0,
+      "pts": 27
+    },
+    {
+      "pos": 2,
       "name": "Dep. Comandiyú",
       "pj": 10,
       "g": 8,
@@ -1260,22 +1269,13 @@ const TABLA = [
       "pts": 26
     },
     {
-      "pos": 2,
-      "name": "La Rotonda",
-      "pj": 10,
-      "g": 7,
-      "e": 3,
-      "p": 0,
-      "pts": 24
-    },
-    {
       "pos": 3,
       "name": "El Inter",
       "pj": 10,
       "g": 7,
       "e": 1,
       "p": 2,
-      "pts": 22,
+      "pts": 25,
       "isUs": true
     },
     {
@@ -1285,10 +1285,19 @@ const TABLA = [
       "g": 6,
       "e": 3,
       "p": 1,
-      "pts": 21
+      "pts": 24
     },
     {
       "pos": 5,
+      "name": "Revolución Futbolística",
+      "pj": 10,
+      "g": 4,
+      "e": 1,
+      "p": 5,
+      "pts": 16
+    },
+    {
+      "pos": 6,
       "name": "C.A Tigre Uruguay",
       "pj": 5,
       "g": 0,
@@ -1297,17 +1306,8 @@ const TABLA = [
       "pts": 14
     },
     {
-      "pos": 6,
-      "name": "Blue Label FC",
-      "pj": 10,
-      "g": 4,
-      "e": 1,
-      "p": 5,
-      "pts": 13
-    },
-    {
       "pos": 7,
-      "name": "Revolución Futbolística",
+      "name": "Blue Label FC",
       "pj": 10,
       "g": 4,
       "e": 1,
@@ -1321,10 +1321,19 @@ const TABLA = [
       "g": 3,
       "e": 2,
       "p": 5,
-      "pts": 11
+      "pts": 12
     },
     {
       "pos": 9,
+      "name": "Malasia F.C.",
+      "pj": 10,
+      "g": 2,
+      "e": 2,
+      "p": 6,
+      "pts": 11
+    },
+    {
+      "pos": 10,
       "name": "La Favela FC",
       "pj": 10,
       "g": 3,
@@ -1333,22 +1342,13 @@ const TABLA = [
       "pts": 9
     },
     {
-      "pos": 10,
-      "name": "Malasia F.C.",
-      "pj": 10,
-      "g": 2,
-      "e": 2,
-      "p": 6,
-      "pts": 8
-    },
-    {
       "pos": 11,
       "name": "Palestino",
       "pj": 10,
       "g": 0,
       "e": 4,
       "p": 6,
-      "pts": 4
+      "pts": 5
     },
     {
       "pos": 12,
