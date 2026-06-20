@@ -1458,7 +1458,8 @@ if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.igStats) {
 const tablaBody = document.getElementById('tabla-body');
 TABLA.forEach(t => {
   const posClass = t.pos <= 3 ? `pos-${t.pos}` : (t.isUs ? 'pos-4' : '');
-  const logoSrc = TEAM_LOGOS[t.name];
+  const _ln = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+  const logoSrc = TEAM_LOGOS[t.name] || (Object.entries(TEAM_LOGOS).find(([k]) => _ln(k) === _ln(t.name)) || [])[1];
   const badgeHtml = logoSrc
     ? `<div class="team-badge" style="background:var(--bg2)"><img src="${logoSrc}" alt="${t.name}" loading="lazy"></div>`
     : `<div class="team-badge" style="${t.isUs?'background:var(--blue);color:#fff':''}">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>`;
