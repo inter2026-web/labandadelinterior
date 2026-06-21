@@ -169,6 +169,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
       </div>
       <div class="nav-item active" onclick="showTab('resultados',this)"><span class="nav-icon">🏆</span> Resultados</div>
       <div class="nav-item" onclick="showTab('goleadores',this)"><span class="nav-icon">⚽</span> Goleadores</div>
+      <div class="nav-item" onclick="showTab('tarjetas',this)"><span class="nav-icon">🟥</span> Tarjetas</div>
       <div class="nav-item" onclick="showTab('minutos',this)"><span class="nav-icon">⏱</span> Minutos</div>
       <div class="nav-item" onclick="showTab('alineacion',this)"><span class="nav-icon">📋</span> Alineación</div>
       <div class="nav-item" onclick="showTab('config',this)"><span class="nav-icon">⚙️</span> Configuración</div>
@@ -256,6 +257,39 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
             </div>
           </div>
           <button class="btn btn-primary btn-sm" onclick="addScorer()">+ Agregar goleador</button>
+        </div>
+      </div>
+
+      <!-- TARJETAS -->
+      <div class="tab-section" id="tab-tarjetas">
+        <div class="page-title">Tarjetas</div>
+        <div class="page-sub">Ingresá las tarjetas rojas (y amarillas) de cada partido</div>
+
+        <div class="match-selector" id="card-match-selector"></div>
+
+        <div class="admin-card" id="card-editor" style="display:none">
+          <div class="admin-card-title"><span>🟥</span> <span id="card-editor-title">Tarjetas del partido</span></div>
+          <div class="scorer-list" id="card-list"></div>
+          <div class="form-row cols-3" style="margin-bottom:.8rem">
+            <div class="form-group">
+              <label>Jugador</label>
+              <select id="card-player-select">
+                <option value="">Seleccionar jugador...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tipo</label>
+              <select id="card-type">
+                <option value="red">🟥 Roja</option>
+                <option value="yellow">🟨 Amarilla</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Minuto</label>
+              <input type="number" id="card-min" min="1" max="120" placeholder="min">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addCard()">+ Agregar tarjeta</button>
         </div>
       </div>
 
@@ -552,6 +586,7 @@ const MATCHES_BASE = [
 
 let currentResultMatch = null;
 let currentScorerMatch = null;
+let currentCardMatch = null;
 let currentMinutesMatch = null;
 
 // =====================
@@ -601,11 +636,14 @@ function initPanel() {
 
 function buildMatchSelectors() {
   const matches = getAllMatches();
-  ['result', 'scorer', 'minutes', 'lineup'].forEach(type => {
+  ['result', 'scorer', 'card', 'minutes', 'lineup'].forEach(type => {
     const el = document.getElementById(`${type}-match-selector`);
+    if (!el) return;
     el.innerHTML = matches.map(m => {
       const hasData = type === 'scorer'
         ? (DATA.scorersByMatch[m.id] || []).length > 0
+        : type === 'card'
+        ? ((DATA.cardsByMatch && DATA.cardsByMatch[m.id]) || []).length > 0
         : type === 'minutes'
         ? Object.keys(DATA.playerMinutes[m.id] || {}).length > 0
         : type === 'lineup'
@@ -629,9 +667,12 @@ function getAllMatches() {
 }
 
 function buildPlayerSelect() {
-  const sel = document.getElementById('scorer-player-select');
-  sel.innerHTML = '<option value="">Seleccionar jugador...</option>' +
+  const opts = '<option value="">Seleccionar jugador...</option>' +
     PLAYERS.map(p => `<option value="${p.name}">${p.number ? '#'+p.number+' ' : ''}${p.fullName || p.name}</option>`).join('');
+  const sel = document.getElementById('scorer-player-select');
+  if (sel) sel.innerHTML = opts;
+  const cardSel = document.getElementById('card-player-select');
+  if (cardSel) cardSel.innerHTML = opts;
 }
 
 // =====================
@@ -658,6 +699,9 @@ function selectMatch(type, matchId, pillEl) {
   } else if (type === 'scorer') {
     currentScorerMatch = matchId;
     showScorerEditor(matchId);
+  } else if (type === 'card') {
+    currentCardMatch = matchId;
+    showCardEditor(matchId);
   } else if (type === 'minutes') {
     currentMinutesMatch = matchId;
     showMinutesEditor(matchId);
@@ -786,6 +830,59 @@ function addScorer() {
 function removeScorer(matchId, idx) {
   DATA.scorersByMatch[matchId].splice(idx, 1);
   renderScorerList(matchId);
+}
+
+// =====================
+// TARJETAS
+// =====================
+function showCardEditor(matchId) {
+  const match = getAllMatches().find(m => m.id === matchId);
+  if (!match) return;
+  document.getElementById('card-editor').style.display = 'block';
+  document.getElementById('card-editor-title').textContent = `Tarjetas — ${match.label}`;
+  renderCardList(matchId);
+}
+
+function renderCardList(matchId) {
+  const list = document.getElementById('card-list');
+  const cards = (DATA.cardsByMatch && DATA.cardsByMatch[matchId]) || [];
+  if (cards.length === 0) {
+    list.innerHTML = '<div style="color:var(--gray);font-size:.82rem;padding:.3rem 0">Sin tarjetas cargadas</div>';
+    return;
+  }
+  list.innerHTML = cards.map((c, i) => {
+    const pl = PLAYERS.find(p => p.name === c.name);
+    const dn = (pl && pl.fullName) || c.name;
+    const ic = c.type === 'yellow' ? '🟨' : '🟥';
+    return `
+      <div class="scorer-item">
+        <span>${ic} ${dn}${c.min != null ? ' · min ' + c.min : ''}</span>
+        <button class="scorer-remove" onclick="removeCard('${matchId}',${i})">✕</button>
+      </div>`;
+  }).join('');
+}
+
+function addCard() {
+  const matchId = currentCardMatch;
+  if (!matchId) return toast('Seleccioná un partido primero', 'err');
+  const name = document.getElementById('card-player-select').value;
+  const type = document.getElementById('card-type').value || 'red';
+  const minV = document.getElementById('card-min').value;
+  const min = minV === '' ? null : parseInt(minV);
+  if (!name) return toast('Seleccioná un jugador', 'err');
+  if (!DATA.cardsByMatch) DATA.cardsByMatch = {};
+  if (!DATA.cardsByMatch[matchId]) DATA.cardsByMatch[matchId] = [];
+  DATA.cardsByMatch[matchId].push({ name, type, min });
+  renderCardList(matchId);
+  buildMatchSelectors();
+  document.getElementById('card-player-select').value = '';
+  document.getElementById('card-min').value = '';
+  setStatus('Tarjeta agregada', 'ok');
+}
+
+function removeCard(matchId, idx) {
+  DATA.cardsByMatch[matchId].splice(idx, 1);
+  renderCardList(matchId);
 }
 
 // =====================
