@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-06-20T23:06:44.021Z",
+  "lastUpdated": "2026-06-21T00:30:03.406Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -1606,6 +1606,13 @@ const ADMIN_DATA = {
         "name": "Pata",
         "type": "red",
         "min": 70
+      }
+    ],
+    "Fecha 11": [
+      {
+        "name": "Mati",
+        "type": "red",
+        "min": 90
       }
     ]
   }
