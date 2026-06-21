@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Inter FC — La Banda del Interior | Libertad, San José</title>
+<title>El Inter FC — Liga MVD Serie 1 Div. B | La Banda del Interior</title>
 <meta name="description" content="El Inter FC, el equipo del interior que juega en la capital. Liga MVD Serie 1 División B. Seguinos en Instagram @inter_fc_2023.">
 <link rel="canonical" href="https://inter2026-web.github.io/labandadelinterior/">
 
@@ -33,6 +33,12 @@
   "location": {
     "@type": "Place",
     "name": "Libertad, San José, Uruguay"
+  },
+  "memberOf": {
+    "@type": "SportsOrganization",
+    "name": "Liga MVD",
+    "sport": "Soccer",
+    "url": "https://www.ligamvd.com/"
   },
   "url": "https://inter2026-web.github.io/labandadelinterior/",
   "sameAs": ["https://www.instagram.com/inter_fc_2023/"]
@@ -417,6 +423,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .goals-name{font-size:.63rem;color:var(--white);font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .goals-count{font-size:.65rem;color:#f1c40f;font-weight:800;flex-shrink:0}
 .lineup-right{flex:1;overflow-y:auto;overscroll-behavior:contain;border-left:1px solid var(--border);padding:.5rem 1.25rem 1.25rem}
+.lineup-right-close-btn{display:none}
 .lineup-section{padding:.25rem 0}
 .lineup-section+.lineup-section{margin-top:.85rem;padding-top:.85rem;border-top:1px solid rgba(255,255,255,.08)}
 .lineup-section-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
@@ -1027,6 +1034,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="lineup-right">
         <div class="lineup-right-close">
           <span class="lineup-right-close-title">Jugadores</span>
+          <button class="lineup-right-close-btn" onclick="toggleMinutos()">✕</button>
         </div>
         <div class="lineup-section">
           <div class="lineup-section-title">Titulares</div>
@@ -1104,11 +1112,13 @@ const TEAM_LOGOS = {
 // Busca el escudo de un equipo tolerando variaciones de nombre (puntos, acentos, "FC"/"F.C.")
 function teamLogo(name) {
   if (!name) return null;
-  if (TEAM_LOGOS[name]) return TEAM_LOGOS[name];
+  const maps = [TEAM_LOGOS, (typeof RIVAL_LOGOS !== 'undefined' ? RIVAL_LOGOS : {})];
+  const isLogo = v => typeof v === 'string' && v.indexOf('logos/') >= 0; // evita fotos de jugadores en RIVAL_LOGOS
+  for (const M of maps) { if (M[name] && isLogo(M[name])) return M[name]; }
   const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
   const strip = s => norm(s).replace(/(fc|sc|cf)$/, '');
   const key = norm(name), skey = strip(name);
-  for (const k in TEAM_LOGOS) { if (norm(k) === key || strip(k) === skey) return TEAM_LOGOS[k]; }
+  for (const M of maps) { for (const k in M) { if (isLogo(M[k]) && (norm(k) === key || strip(k) === skey)) return M[k]; } }
   return null;
 }
 
