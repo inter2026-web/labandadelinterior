@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-07-27T14:53:37.326Z
+// Última actualización: 2026-07-28T14:26:49.039Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-07-27T14:53:37.326Z",
+  "lastUpdated": "2026-07-28T14:26:49.039Z",
   "standings": [
     {
       "pos": 1,
@@ -114,14 +114,14 @@ const LIGA_DATA = {
     }
   ],
   "nextMatch": {
-    "fechaNum": 11,
-    "home": "La Favela FC",
+    "fechaNum": 1,
+    "home": "00:00",
     "away": "El Inter",
     "isHomeForUs": false,
-    "dateStr": "2026-06-20",
-    "time": "11:00",
-    "field": 2,
-    "dateDisplay": "Sáb 20 jun",
+    "dateStr": "2026-06-13",
+    "time": "09:00",
+    "field": 13,
+    "dateDisplay": "Sáb 13 jun",
     "dayName": "Sáb",
     "homeScore": null,
     "awayScore": null
