@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-08-13T13:26:58.208Z
+// Última actualización: 2026-08-14T13:21:40.162Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-08-13T13:26:58.208Z",
+  "lastUpdated": "2026-08-14T13:21:40.162Z",
   "standings": [
     {
       "pos": 1,
@@ -118,10 +118,10 @@ const LIGA_DATA = {
     "home": "El Inter",
     "away": "La Rotonda",
     "isHomeForUs": true,
-    "dateStr": "2026-06-13",
-    "time": "09:00",
-    "field": 13,
-    "dateDisplay": "Sáb 13 jun",
+    "dateStr": "2026-08-15",
+    "time": "11:00",
+    "field": 20,
+    "dateDisplay": "Sáb 15 ago",
     "dayName": "Sáb",
     "homeScore": null,
     "awayScore": null
