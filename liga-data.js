@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-08-17T23:18:02.476Z
+// Última actualización: 2026-08-17T23:55:28.445Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-08-17T23:18:02.476Z",
+  "lastUpdated": "2026-08-17T23:55:28.445Z",
   "standingsApertura": [
     {
       "pos": 1,
@@ -224,18 +224,5 @@ const LIGA_DATA = {
       "pts": 0
     }
   ],
-  "nextMatch": {
-    "fechaNum": 2,
-    "home": "00:00",
-    "away": "El Inter",
-    "isHomeForUs": false,
-    "dateStr": "2026-06-13",
-    "time": "09:00",
-    "field": 13,
-    "dateDisplay": "Sáb 13 jun",
-    "dayName": "Sáb",
-    "homeScore": null,
-    "awayScore": null
-  },
   "latestResults": []
 };

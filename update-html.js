@@ -84,121 +84,19 @@ function updateTablaBlock(varName, standings) {
 updateTablaBlock('TABLA_APERTURA', LIGA_DATA.standingsApertura);
 updateTablaBlock('TABLA_CLAUSURA', LIGA_DATA.standingsClausura);
 
-// -----------------------------------------------------------------------
-// 2. ACTUALIZAR HERO-NEXT (próximo partido en el hero)
-// -----------------------------------------------------------------------
-const nm = LIGA_DATA.nextMatch;
-const _today = new Date().toISOString().slice(0, 10);
-// Solo auto-actualizar el próximo partido si es a futuro (evita pisar un override manual durante el parate entre torneos)
-const nmFuture = !!(nm && nm.dateStr && nm.dateStr >= _today);
-if (nm && nm.home && nm.away && nmFuture) {
-  const isHomeForUs = nm.home === 'El Inter';
-  const local = isHomeForUs ? 'El Inter' : nm.home;
-  const visit = isHomeForUs ? nm.away : nm.away;
-  const localLogo = isHomeForUs ? 'el-inter.png' : logoFile(nm.home);
-  const visitLogo = isHomeForUs ? logoFile(nm.away) : 'el-inter.png';
-
-  let dateInfo = '';
-  if (nm.homeScore !== null && nm.awayScore !== null) {
-    // Match already played — show result
-    const gf = isHomeForUs ? nm.homeScore : nm.awayScore;
-    const gc = isHomeForUs ? nm.awayScore : nm.homeScore;
-    dateInfo = `Resultado: ${gf}-${gc} · Fecha ${nm.fechaNum} · Liga MVD`;
-  } else {
-    const fieldStr = nm.field ? ` · Cancha ${nm.field}` : '';
-    dateInfo = `${nm.dateDisplay} · ${nm.time}${fieldStr}`;
-  }
-
-  const heroNext = `<div class="hero-next-label">Próximo partido · Fecha ${nm.fechaNum} · Liga MVD</div>
-        <div class="hero-next-match" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-          <img src="assets/logos/${localLogo}" style="width:24px;height:24px;object-fit:contain;${localLogo === 'el-inter.png' ? 'position:relative;z-index:2' : 'border-radius:50%'}" alt="${local}">
-          <span>${local}</span>
-          <span style="color:var(--gray);font-size:.85rem">vs</span>
-          <img src="assets/logos/${visitLogo}" style="width:24px;height:24px;object-fit:contain;${visitLogo === 'el-inter.png' ? 'position:relative;z-index:2' : 'border-radius:50%'}" alt="${visit}">
-          <span>${visit}</span>
-        </div>
-        <div class="hero-next-date">${dateInfo}</div>`;
-
-  const heroNextRe = /<div class="hero-next-label">[\s\S]*?<div class="hero-next-date">[^<]*<\/div>/;
-  const updatedHtml = html.replace(heroNextRe, heroNext);
-  if (updatedHtml !== html) {
-    html = updatedHtml;
-    changed = true;
-    console.log('✓ Hero-next actualizado —', local, 'vs', visit, `Fecha ${nm.fechaNum}`);
-  } else {
-    console.log('  Hero-next sin cambios');
-  }
-}
+// NOTA: el "próximo partido" (hero + sección "Próxima fecha") ya no se parchea acá.
+// index.html lo calcula solo en el cliente a partir de FIXTURE_ORDER (el Clausura repite
+// el orden de rivales del Apertura) + la cantidad de partidos de Clausura ya cargados en
+// MATCHES/admin-data.js. Fecha/hora/cancha se toman de ADMIN_DATA.nextMatch si están cargadas
+// en el panel admin; si no, el sitio muestra "A confirmar".
 
 // -----------------------------------------------------------------------
-// 3. ACTUALIZAR SECCIÓN PRÓXIMA FECHA
+// 2. AVISAR SI HAY RESULTADOS NUEVOS SIN CARGAR (detectados en los titulares de la home)
 // -----------------------------------------------------------------------
-if (nm && nm.home && nm.away && nmFuture) {
-  const isHomeForUs = nm.home === 'El Inter';
-  const local = nm.home;
-  const visit = nm.away;
-  const localLogo = logoFile(local);
-  const visitLogo = logoFile(visit);
-  const localIsUs = local === 'El Inter';
-  const visitIsUs = visit === 'El Inter';
-
-  // Get current (Clausura) standings for subtitle
-  const localStanding = LIGA_DATA.standingsClausura.find(s => s.name === local);
-  const visitStanding = LIGA_DATA.standingsClausura.find(s => s.name === visit);
-  const localSub = localStanding ? `${localStanding.pos}° en tabla · ${localStanding.pts} pts` : (localIsUs ? 'Liga MVD' : '');
-  const visitSub = visitStanding ? `${visitStanding.pos}° en tabla · ${visitStanding.pts} pts` : (visitIsUs ? 'Liga MVD' : '');
-
-  const fieldLabel = nm.field ? ` · Cancha ${nm.field}` : '';
-  const [, , d] = (nm.dateStr || '2026-06-13').split('-');
-  const [, mo] = (nm.dateStr || '2026-06-13').split('-');
-  const months = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const monthStr = months[parseInt(mo)] || '';
-
-  const proximaFecha = `<div class="next-label">FECHA ${nm.fechaNum} · Liga MVD Div. B${fieldLabel}</div>
-        <div class="next-team">
-          <div class="next-team-logo">
-            <img src="assets/logos/${localLogo}" alt="${local}" ${localIsUs ? 'style="position:relative;z-index:2"' : 'style="border-radius:50%"'}>
-          </div>
-          <div class="next-team-name" ${localIsUs ? 'style="color:var(--blue-light)"' : ''}>${local}</div>
-          <div class="next-team-sub">${localSub}</div>
-        </div>
-        <div class="next-vs">VS</div>
-        <div class="next-team">
-          <div class="next-team-logo">
-            <img src="assets/logos/${visitLogo}" alt="${visit}" ${visitIsUs ? 'style="position:relative;z-index:2"' : 'style="border-radius:50%"'}>
-          </div>
-          <div class="next-team-name" ${visitIsUs ? 'style="color:var(--blue-light)"' : ''}>${visit}</div>
-          <div class="next-team-sub">${visitSub}</div>
-        </div>
-        <div class="next-date-box">
-          <div class="next-date-day">${parseInt(d)}</div>
-          <div class="next-date-month">${monthStr} ${(nm.dateStr || '').slice(0,4)}</div>
-          <div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">${nm.time || '09:00'}</div>
-        </div>`;
-
-  const proximaRe = /<!-- NEXT-MATCH-START -->[\s\S]*?<!-- NEXT-MATCH-END -->/;
-  const newBlock = `<!-- NEXT-MATCH-START -->
-      <div class="next-match-banner fade-in">
-        ${proximaFecha}
-      </div>
-      <!-- NEXT-MATCH-END -->`;
-  const updatedHtml = html.replace(proximaRe, newBlock);
-  if (updatedHtml !== html) {
-    html = updatedHtml;
-    changed = true;
-    console.log('✓ Próxima Fecha actualizada —', local, 'vs', visit, fieldLabel);
-  } else {
-    console.log('  Próxima Fecha sin cambios (regex no coincidió, revisar estructura HTML)');
-  }
-}
-
-// -----------------------------------------------------------------------
-// 4. AGREGAR NUEVOS RESULTADOS A MATCHES si los hay
-// -----------------------------------------------------------------------
-// This section checks latestResults from news headlines and adds any new match
-// that isn't already present in MATCHES.
+// Esto es solo un aviso en el log del bot — cargar el partido en admin-data.js
+// (matchResults) sigue siendo manual, porque Liga MVD no publica goleadores ni
+// alineación y esa parte del panel admin ya la maneja Agustín directamente.
 if (LIGA_DATA.latestResults && LIGA_DATA.latestResults.length > 0) {
-  // Parse existing MATCHES array to check what's already there
   const matchesMatch = html.match(/const MATCHES = \[[\s\S]*?\];/);
   let existingMatches = [];
   if (matchesMatch) {
@@ -210,26 +108,12 @@ if (LIGA_DATA.latestResults && LIGA_DATA.latestResults.length > 0) {
 
   for (const r of LIGA_DATA.latestResults) {
     if (!r.rival || existingRivals.has(r.rival.toLowerCase())) continue;
-    const gf = r.homeIsInter ? r.gf : r.gf;
-    const gc = r.homeIsInter ? r.gc : r.gc;
-    const type = gf > gc ? 'W' : gf < gc ? 'L' : 'D';
-    const fechaNum = LIGA_DATA.nextMatch?.fechaNum ? LIGA_DATA.nextMatch.fechaNum - 1 : existingMatches.filter(m => m.id !== 'amistoso').length + 1;
-    const newMatch = {
-      id: `f${fechaNum}`,
-      label: `F${fechaNum} vs ${r.rival}`,
-      result: `${gf}-${gc}`,
-      gf,
-      gc,
-      type,
-      rival: r.rival,
-    };
-    console.log('✓ Nuevo resultado detectado —', JSON.stringify(newMatch));
-    // TODO: insertar en MATCHES array. Por ahora solo notifica.
+    console.log('⚠ Resultado nuevo detectado en Liga MVD, falta cargarlo a mano:', JSON.stringify(r));
   }
 }
 
 // -----------------------------------------------------------------------
-// 5. ACTUALIZAR TIMESTAMP "Última actualización"
+// 3. ACTUALIZAR TIMESTAMP "Última actualización"
 // -----------------------------------------------------------------------
 const dateStr = new Date(LIGA_DATA.lastUpdated).toLocaleDateString('es-UY', {
   day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
@@ -251,26 +135,3 @@ if (changed) {
 }
 
 console.log('\n=== UPDATE-HTML COMPLETO ===');
-
-// -----------------------------------------------------------------------
-// Helper: mapa de logos
-// -----------------------------------------------------------------------
-function logoFile(teamName) {
-  const MAP = {
-    'El Inter': 'el-inter.png',
-    'Capitol F.C.': 'capitol-fc.png',
-    'Dep. Comandiyú': 'dep-comandiyu.png',
-    'La Rotonda': 'la-rotonda.png',
-    'Blue Label FC': 'blue-label.png',
-    'C.A Tigre Uruguay': 'ca-tigre.png',
-    'C.A. Tigre Uruguay': 'ca-tigre.png',
-    'Club Montero': 'club-montero.png',
-    'Revolución Futbolística': 'revolucion.png',
-    'La Favela FC': 'la-favela.png',
-    'Malasia F.C.': 'malasia.png',
-    'Palestino': 'palestino.png',
-    'Defensor United': 'defensor-united.png',
-    'Cristal F.C.': 'cristal-fc.png',
-  };
-  return MAP[teamName] || 'el-inter.png';
-}

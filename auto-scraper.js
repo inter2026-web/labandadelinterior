@@ -43,10 +43,6 @@ function normName(n) {
   return (TEAM_ALIASES[n?.trim()] || n?.trim() || '');
 }
 
-function monthName(n) {
-  return ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][n-1] || '';
-}
-
 // Apertura 2026 terminó el 20/6 (11 fechas) — tabla final congelada, ya no se scrapea.
 const APERTURA_FINAL_STANDINGS = [
   { pos: 1, name: 'La Rotonda', pj: 11, g: 8, e: 3, p: 0, pts: 27 },
@@ -197,79 +193,15 @@ const APERTURA_FINAL_STANDINGS = [
     console.log('  Fallback standings:', standings.length);
   }
 
-  // ----------------------------------------------------------------
-  // 4. Cargar fixture page para obtener próxima fecha
-  // ----------------------------------------------------------------
-  console.log('\n4. Cargando fixture page...');
-  await page.goto('https://www.ligamvd.com/home/1/1/', { waitUntil: 'networkidle', timeout: 35000 }).catch(() => {});
-  await page.waitForTimeout(3000);
-  const fixLink2 = await page.$('a[href="/torneos/fixtures/"]').catch(() => null);
-  if (fixLink2) { await page.evaluate(el => el.click(), fixLink2); await page.waitForTimeout(4500); }
-
-  // Extract next match data by parsing tr innerText (reliable method)
-  const nextMatchData = await page.evaluate(() => {
-    const result = { fechaNum: null, home: null, away: null, dateStr: null, time: null, field: null };
-
-    // Find "PROXIMA ETAPA" / "ETAPA N" heading
-    document.querySelectorAll('h5, h4, h3').forEach(h => {
-      const m = h.innerText.match(/ETAPA\s+(\d+)|FECHA\s+(\d+)/i);
-      if (m) result.fechaNum = parseInt(m[1] || m[2]);
-    });
-
-    // Find all tr rows with El Inter using text parsing (same technique that worked before)
-    document.querySelectorAll('tr').forEach(tr => {
-      const raw = (tr.innerText || '').trim();
-      if (!/El Inter|EL INTER/i.test(raw)) return;
-
-      // Split by newlines → parts: [date+time, score_separator, home, field, away]
-      const parts = raw.split('\n').map(s => s.trim()).filter(s => s.length > 0);
-      // Expected format: ["DD-MM-YYYY HH:MM", "-" or "X - Y", "Home Team", "N", "Away Team"]
-      // Field number is a standalone digit(s) between team names
-      if (parts.length >= 4) {
-        const dateTimePart = parts.find(p => /\d{2}-\d{2}-\d{4}/.test(p));
-        const fieldPart = parts.find(p => /^\d{1,2}$/.test(p));
-        // Home is the first team-name part (before field), away is after field
-        const teamParts = parts.filter(p =>
-          !/^\d+$/.test(p) && !/\d{2}-\d{2}-\d{4}/.test(p) &&
-          p !== '-' && !/^\d+\s*[-–]\s*\d+$/.test(p) &&
-          p.length > 2
-        );
-
-        if (dateTimePart) {
-          const dm = dateTimePart.match(/(\d{2})-(\d{2})-(\d{4})\s+(\d{2}:\d{2})/);
-          if (dm) {
-            result.dateStr = `${dm[3]}-${dm[2]}-${dm[1]}`;
-            result.time = dm[4];
-          }
-        }
-        if (fieldPart) result.field = parseInt(fieldPart);
-        if (teamParts.length >= 2) {
-          result.home = teamParts[0].trim();
-          result.away = teamParts[1].trim();
-        }
-
-        // Check if score is present (already played)
-        const scorePart = parts.find(p => /^\d+\s*[-–]\s*\d+$/.test(p));
-        if (scorePart) {
-          const sm = scorePart.match(/(\d+)\s*[-–]\s*(\d+)/);
-          if (sm) { result.homeScore = parseInt(sm[1]); result.awayScore = parseInt(sm[2]); }
-        }
-      }
-    });
-
-    return result;
-  });
-  console.log('  Próxima fecha raw:', JSON.stringify(nextMatchData));
-
-  // Normalize team names
-  if (nextMatchData.home) nextMatchData.home = normName(nextMatchData.home);
-  if (nextMatchData.away) nextMatchData.away = normName(nextMatchData.away);
-  const isHomeForUs = nextMatchData.home === 'El Inter';
+  // NOTA: ya no se scrapea la página de fixtures de Liga MVD para el "próximo partido" —
+  // el Clausura repite el mismo orden de rivales del Apertura, así que index.html lo calcula
+  // solo en el cliente (FIXTURE_ORDER + cantidad de partidos de Clausura ya cargados en MATCHES).
+  // Esa página además venía devolviendo datos rotos (home:"00:00", dateStr:null) hacía tiempo.
 
   // ----------------------------------------------------------------
-  // 5. Construir objeto de datos
+  // 4. Construir objeto de datos
   // ----------------------------------------------------------------
-  console.log('\n5. Construyendo liga-data.js...');
+  console.log('\n4. Construyendo liga-data.js...');
 
   // Process standings: keep only Divisional B teams (12 known teams)
   const DIV_B = new Set([
@@ -286,39 +218,15 @@ const APERTURA_FINAL_STANDINGS = [
       return { pos: i + 1, name, ...full, pts: s.pts, ...(name === 'El Inter' ? { isUs: true } : {}) };
     });
 
-  // Build date display
-  let dateDisplay = '';
-  let dayName = '';
-  if (nextMatchData.dateStr) {
-    const [y, mo, d] = nextMatchData.dateStr.split('-').map(Number);
-    const weekdays = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-    const date = new Date(y, mo - 1, d);
-    dayName = weekdays[date.getDay()];
-    dateDisplay = `${dayName} ${d} ${monthName(mo)}`;
-  }
-
   const data = {
     lastUpdated: new Date().toISOString(),
     standingsApertura: APERTURA_FINAL_STANDINGS,
     standingsClausura: filteredStandingsClausura,
-    nextMatch: {
-      fechaNum: nextMatchData.fechaNum,
-      home: nextMatchData.home || 'Capitol F.C.',
-      away: nextMatchData.away || 'El Inter',
-      isHomeForUs,
-      dateStr: nextMatchData.dateStr || '2026-06-13',
-      time: nextMatchData.time || '09:00',
-      field: nextMatchData.field || 13,
-      dateDisplay: dateDisplay || 'Sáb 13 jun',
-      dayName: dayName || 'Sáb',
-      homeScore: nextMatchData.homeScore ?? null,
-      awayScore: nextMatchData.awayScore ?? null,
-    },
     latestResults: parsedResults,
   };
 
   // ----------------------------------------------------------------
-  // 6. Escribir liga-data.js
+  // 5. Escribir liga-data.js
   // ----------------------------------------------------------------
   const js = `// AUTO-GENERADO — no editar manualmente
 // Última actualización: ${data.lastUpdated}
@@ -327,7 +235,6 @@ const LIGA_DATA = ${JSON.stringify(data, null, 2)};
   fs.writeFileSync(OUTPUT, js, 'utf8');
   console.log('\n✓ liga-data.js generado');
   console.log('  Standings Clausura:', data.standingsClausura.length, 'equipos');
-  console.log('  Próxima fecha:', data.nextMatch);
   console.log('  Últimos resultados encontrados:', data.latestResults.length);
 
   await browser.close();

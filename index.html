@@ -214,6 +214,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 /* STATS BAR */
 .stats-bar{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.25rem 2rem 2rem}
 .stats-bar-label{max-width:1100px;margin:0 auto .75rem;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light)}
+.stats-tabs{max-width:1100px;margin:0 auto 1rem;display:flex;gap:.5rem;flex-wrap:wrap}
+.stats-tab{background:var(--bg2);border:1px solid var(--border);color:var(--gray-light);padding:.4rem .9rem;border-radius:20px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.stats-tab:hover{border-color:var(--blue-light);color:var(--blue-light)}
+.stats-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
 .stats-bar-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border)}
 .stat-item{background:var(--card);padding:1.5rem 1rem;text-align:center;position:relative;overflow:visible;transition:background .2s;cursor:default}
 .stat-item:hover{background:var(--card2)}
@@ -742,7 +746,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
           26 jugadores en el plantel
         </div>
       </div>
-      <div class="hero-next">
+      <div class="hero-next" id="hero-next">
         <div class="hero-next-label">Próximo partido · Fecha 2 · Liga MVD</div>
         <div class="hero-next-match" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
           <img src="assets/logos/el-inter.png" style="width:24px;height:24px;object-fit:contain;position:relative;z-index:2" alt="El Inter">
@@ -768,6 +772,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stats-bar-label">Liga MVD · Serie 1 División B</div>
+  <div class="stats-tabs">
+    <button type="button" class="stats-tab" data-stats="apertura">Apertura</button>
+    <button type="button" class="stats-tab active" data-stats="clausura">Clausura</button>
+    <button type="button" class="stats-tab" data-stats="anual">Anual</button>
+  </div>
   <div class="stats-bar-inner">
     <div class="stat-item fade-in stagger-2"><span class="val" id="sb-w" data-count="7" style="color:var(--win)">7</span><span class="lbl">Victorias</span><div class="stat-tooltip" id="tt-w">✅</div></div>
     <div class="stat-item fade-in stagger-3"><span class="val" id="sb-d" data-count="1" style="color:var(--draw)">1</span><span class="lbl">Empates</span><div class="stat-tooltip" id="tt-d">🤝</div></div>
@@ -1592,39 +1601,154 @@ const SCORERS_DATA = PLAYERS
   .map(p => ({ name: p.name, fullName: p.fullName, nickname: p.nickname, position: p.positions.join(' / '), goals: p.goals, number: p.number }));
 
 // =====================
-// STATS DINÁMICAS (IG card + barra) — se calculan de la tabla (auto) y los resultados
+// PRÓXIMO PARTIDO — calculado local, sin scrapear Liga MVD: el Clausura repite el mismo
+// orden de rivales del Apertura, así que el próximo rival = FIXTURE_ORDER[cantidad de
+// partidos de Clausura ya cargados]. Fecha/hora/cancha salen de ADMIN_DATA.nextMatch si
+// ya se cargaron en el panel admin; si no, se muestra "A confirmar".
 // =====================
-function computeStats() {
-  const us = (typeof TABLA_CLAUSURA !== 'undefined' && TABLA_CLAUSURA) ? TABLA_CLAUSURA.find(t => t.isUs || t.name === 'El Inter') : null;
-  const liga = (typeof MATCHES !== 'undefined' ? MATCHES : []).filter(m => m.type && m.type !== 'friendly' && m.gf != null && m.gc != null);
+const FIXTURE_ORDER = ['La Rotonda', 'C.A Tigre Uruguay', 'Palestino', 'Dep. Comandiyú', 'Defensor United', 'Blue Label FC', 'Revolución Futbolística', 'Malasia F.C.', 'Club Montero', 'Capitol F.C.', 'La Favela FC'];
+
+function computeNextMatch() {
+  const clausuraCount = MATCHES.filter(m => /clausura/i.test(m.id)).length;
+  if (clausuraCount >= FIXTURE_ORDER.length) return null;
+  const rival = FIXTURE_ORDER[clausuraCount];
+  const usRow = TABLA_CLAUSURA.find(t => t.isUs || t.name === 'El Inter');
+  const rivalRow = TABLA_CLAUSURA.find(t => t.name === rival);
+  const nm = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.nextMatch) || {};
+  return {
+    fechaNum: clausuraCount + 1,
+    rival,
+    usPos: usRow ? usRow.pos : null, usPts: usRow ? usRow.pts : null,
+    rivalPos: rivalRow ? rivalRow.pos : null, rivalPts: rivalRow ? rivalRow.pts : null,
+    dateISO: nm.date || '', time: nm.time || '', field: nm.cancha || '',
+  };
+}
+
+const MESES_CORTOS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+function renderNextMatch() {
+  const nm = computeNextMatch();
+  if (!nm) return;
+  const rivalLogo = teamLogo(nm.rival);
+  let day = '', month = '';
+  if (nm.dateISO) {
+    const [y, mo, d] = nm.dateISO.split('-').map(Number);
+    day = String(d);
+    month = `${MESES_CORTOS[mo - 1] || ''} ${y}`;
+  }
+  const scheduleTxt = day
+    ? `${day} ${month}${nm.time ? ' · ' + nm.time : ''}${nm.field ? ' · ' + nm.field : ''}`
+    : 'Fecha y cancha a confirmar';
+
+  const heroNext = document.getElementById('hero-next');
+  if (heroNext) {
+    heroNext.innerHTML = `<div class="hero-next-label">Próximo partido · Fecha ${nm.fechaNum} · Liga MVD</div>
+      <div class="hero-next-match" style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+        <img src="assets/logos/el-inter.png" style="width:24px;height:24px;object-fit:contain;position:relative;z-index:2" alt="El Inter">
+        <span>El Inter</span>
+        <span style="color:var(--gray);font-size:.85rem">vs</span>
+        ${rivalLogo ? `<img src="${rivalLogo}" style="width:24px;height:24px;object-fit:contain;border-radius:50%" alt="${nm.rival}">` : ''}
+        <span>${nm.rival}</span>
+      </div>
+      <div class="hero-next-date">${scheduleTxt}</div>`;
+  }
+
+  const banner = document.querySelector('.next-match-banner');
+  if (banner) {
+    const usSub = nm.usPos != null ? `${nm.usPos}° en tabla · ${nm.usPts} pts` : 'Liga MVD';
+    const rivalSub = nm.rivalPos != null ? `${nm.rivalPos}° en tabla · ${nm.rivalPts} pts` : '';
+    const fieldLabel = nm.field ? ` · Cancha ${nm.field}` : ' · Cancha a confirmar';
+    banner.innerHTML = `<div class="next-label">FECHA ${nm.fechaNum} · Liga MVD Div. B${fieldLabel}</div>
+      <div class="next-team">
+        <div class="next-team-logo"><img src="assets/logos/el-inter.png" alt="El Inter" style="position:relative;z-index:2"></div>
+        <div class="next-team-name" style="color:var(--blue-light)">El Inter</div>
+        <div class="next-team-sub">${usSub}</div>
+      </div>
+      <div class="next-vs">VS</div>
+      <div class="next-team">
+        <div class="next-team-logo">${rivalLogo ? `<img src="${rivalLogo}" alt="${nm.rival}" style="border-radius:50%">` : ''}</div>
+        <div class="next-team-name">${nm.rival}</div>
+        <div class="next-team-sub">${rivalSub}</div>
+      </div>
+      <div class="next-date-box">
+        ${day
+          ? `<div class="next-date-day">${day}</div><div class="next-date-month">${month}</div>${nm.time ? `<div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">${nm.time}</div>` : ''}`
+          : `<div class="next-date-day" style="font-size:1.3rem">A confirmar</div>`}
+      </div>`;
+  }
+}
+renderNextMatch();
+
+// =====================
+// STATS DINÁMICAS (IG card + barra) — se calculan de la tabla y los resultados,
+// separadas por torneo (Apertura / Clausura / Anual) igual que la tabla de posiciones.
+// =====================
+const TABLAS_STATS = { apertura: () => TABLA_APERTURA, clausura: () => TABLA_CLAUSURA, anual: () => TABLA_ANUAL };
+function computeStats(scope) {
+  const tabla = (TABLAS_STATS[scope] || TABLAS_STATS.clausura)();
+  const us = tabla ? tabla.find(t => t.isUs || t.name === 'El Inter') : null;
+  const ligaAll = (typeof MATCHES !== 'undefined' ? MATCHES : []).filter(m => m.type && m.type !== 'friendly' && m.result);
+  const liga = scope === 'anual' ? ligaAll : ligaAll.filter(m => /clausura/i.test(m.id) === (scope === 'clausura'));
   let gf = 0, gc = 0;
-  liga.forEach(m => { gf += m.gf; gc += m.gc; });
+  liga.forEach(m => { if (m.gf != null && m.gc != null) { gf += m.gf; gc += m.gc; } });
   const w = us ? us.g : liga.filter(m => m.type === 'W').length;
   const d = us ? us.e : liga.filter(m => m.type === 'D').length;
   const l = us ? us.p : liga.filter(m => m.type === 'L').length;
   const pj = us ? us.pj : liga.length;
   const pts = us ? us.pts : (3 * w + d);
   const pos = us ? us.pos : null;
-  const leaderPts = (typeof TABLA_CLAUSURA !== 'undefined' && TABLA_CLAUSURA && TABLA_CLAUSURA[0]) ? TABLA_CLAUSURA[0].pts : null;
-  return { gf, gc, w, d, l, pj, pts, pos, leaderPts };
+  const leaderPts = (tabla && tabla[0]) ? tabla[0].pts : null;
+  return { gf, gc, w, d, l, pj, pts, pos, leaderPts, liga };
 }
-(function renderStats() {
-  const s = computeStats();
-  const liga = (typeof MATCHES !== 'undefined' ? MATCHES : []).filter(m => m.type && m.type !== 'friendly' && m.result);
+function fillTopScorerTooltip() {
+  const el = document.getElementById('tip-goleador');
+  if (!el) return;
+  try {
+    const tally = {};
+    Object.keys(SCORERS_BY_MATCH).forEach(matchId => {
+      if (matchId === 'amistoso') return;
+      (SCORERS_BY_MATCH[matchId] || []).forEach(s => {
+        const m = s.match(/^(.+?)\s+x(\d+)$/);
+        if (m) tally[m[1]] = (tally[m[1]] || 0) + parseInt(m[2]);
+        else tally[s] = (tally[s] || 0) + 1;
+      });
+    });
+    let topName = null, topGoals = 0;
+    Object.keys(tally).forEach(n => { if (tally[n] > topGoals) { topGoals = tally[n]; topName = n; } });
+    if (topName) {
+      const full = (typeof PLAYERS !== 'undefined' && (PLAYERS.find(p => p.name === topName) || {}).fullName) || topName;
+      el.textContent = `${full} (${topGoals}${topGoals === 1 ? ' gol)' : ' goles)'}`;
+    }
+  } catch (e) {}
+}
+function renderStatsBar(scope) {
+  const s = computeStats(scope);
   const fechaLbl = m => m.id === 'amistoso' ? 'Amist.' : 'F' + String(m.id).replace(/\D/g, '');
-  const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   const setCount = (id, v) => { const el = document.getElementById(id); if (el) { el.setAttribute('data-count', v); el.textContent = v; } };
   const setHTML = (id, h) => { const el = document.getElementById(id); if (el) el.innerHTML = h; };
-  setText('igc-goles', s.gf); setText('igc-puntos', s.pts); setText('igc-pos', s.pos != null ? s.pos + '°' : '—');
   setCount('sb-w', s.w); setCount('sb-d', s.d); setCount('sb-l', s.l);
   setCount('sb-gf', s.gf); setCount('sb-gc', s.gc); setCount('sb-pts', s.pts);
-  const listOf = (type, emoji) => { const a = liga.filter(m => m.type === type).map(m => `${emoji} ${fechaLbl(m)} vs ${m.rival} (${m.result})`); return a.length ? a.join('<br>') : '—'; };
+  const listOf = (type, emoji) => { const a = s.liga.filter(m => m.type === type).map(m => `${emoji} ${fechaLbl(m)} vs ${m.rival} (${m.result})`); return a.length ? a.join('<br>') : '—'; };
   setHTML('tt-w', listOf('W', '✅')); setHTML('tt-d', listOf('D', '🤝')); setHTML('tt-l', listOf('L', '❌'));
   setHTML('tt-gf', `⚽ Goleador: <span id="tip-goleador"></span><br>Promedio: ${(s.gf / Math.max(s.pj, 1)).toFixed(1)} por partido`);
   setHTML('tt-gc', `🧤 Promedio: ${(s.gc / Math.max(s.pj, 1)).toFixed(1)} por partido`);
   const gap = (s.leaderPts != null && s.pts != null) ? (s.leaderPts - s.pts) : null;
   const gapTxt = gap == null ? '' : (gap > 0 ? `<br>A ${gap} ${gap === 1 ? 'punto' : 'puntos'} del líder` : '<br>¡Puntero! 🏆');
   setHTML('tt-pts', `🏆 ${s.pos != null ? s.pos + '° en tabla · ' : ''}Serie 1 Div. B${gapTxt}`);
+  fillTopScorerTooltip();
+}
+document.querySelectorAll('.stats-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.stats-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderStatsBar(btn.dataset.stats);
+  });
+});
+renderStatsBar(document.querySelector('.stats-tab.active')?.dataset.stats || 'clausura');
+
+(function renderIGCard() {
+  const s = computeStats('clausura');
+  const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setText('igc-goles', s.gf); setText('igc-puntos', s.pts); setText('igc-pos', s.pos != null ? s.pos + '°' : '—');
 })();
 
 // Apply Instagram stats from ADMIN_DATA
@@ -2308,29 +2432,6 @@ document.getElementById('fotosViewer').addEventListener('click', e => { if (e.ta
   window.addEventListener('resize', function(){
     if(window.innerWidth > 900) closeMobileNav();
   });
-})();
-
-// Goleador de liga (excluye el amistoso) — se calcula dinámicamente
-(function(){
-  try {
-    if (typeof SCORERS_BY_MATCH === 'undefined') return;
-    var tally = {};
-    Object.keys(SCORERS_BY_MATCH).forEach(function(matchId){
-      if (matchId === 'amistoso') return;
-      (SCORERS_BY_MATCH[matchId] || []).forEach(function(s){
-        var m = s.match(/^(.+?)\s+x(\d+)$/);
-        if (m) tally[m[1]] = (tally[m[1]] || 0) + parseInt(m[2]);
-        else tally[s] = (tally[s] || 0) + 1;
-      });
-    });
-    var topName = null, topGoals = 0;
-    Object.keys(tally).forEach(function(n){ if (tally[n] > topGoals) { topGoals = tally[n]; topName = n; } });
-    var el = document.getElementById('tip-goleador');
-    if (el && topName) {
-      var full = (typeof PLAYERS !== 'undefined' && (PLAYERS.find(function(p){return p.name===topName;})||{}).fullName) || topName;
-      el.textContent = full + ' (' + topGoals + (topGoals === 1 ? ' gol)' : ' goles)');
-    }
-  } catch(e){}
 })();
 
 // Stat tooltips: tap to toggle (mobile)
