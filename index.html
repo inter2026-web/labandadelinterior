@@ -1689,7 +1689,8 @@ MATCHES.forEach((m, i) => {
     return `<span class="scorer-tag">⚽ ${dn}${goals > 1 ? ' ×'+goals : ''}</span>`;
   }).join('');
   const fechaNum = m.id.replace(/\D/g, '');
-  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${fechaNum} · Liga MVD · Apertura`;
+  const torneoLabel = /clausura/i.test(m.id) ? 'Clausura' : 'Apertura';
+  const fechaLabel = m.id === 'amistoso' ? 'Amistoso' : `Fecha ${fechaNum} · Liga MVD · ${torneoLabel}`;
   const card = `<div class="match-card ${cardType} fade-in stagger-${(i%3)+1}" onclick="openLineup('${m.id}')" style="cursor:pointer">
     <div class="match-header">
       <span class="match-fecha">${fechaLabel}</span>

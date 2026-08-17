@@ -153,18 +153,24 @@ const ADMIN_DATA = {
       "gc": 2,
       "type": "W",
       "rival": "La Favela FC"
+    },
+    "Fecha 1 - Clausura": {
+      "gf": 1,
+      "gc": 0,
+      "type": "W",
+      "rival": "La Rotonda"
     }
   },
   "nextMatch": {
-    "fechaNum": "11",
-    "rival": "La Favela FC",
+    "fechaNum": "2",
+    "rival": "C.A Tigre Uruguay",
     "date": "",
     "time": "",
     "cancha": "",
-    "rivalPos": 9,
-    "rivalPts": 9,
-    "interPos": 3,
-    "interPts": 22
+    "rivalPos": 1,
+    "rivalPts": 3,
+    "interPos": 6,
+    "interPts": 3
   },
   "scorersByMatch": {
     "amistoso": [
