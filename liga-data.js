@@ -1,8 +1,8 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-08-17T12:57:13.988Z
+// Última actualización: 2026-08-17T23:18:02.476Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-08-17T12:57:13.988Z",
-  "standings": [
+  "lastUpdated": "2026-08-17T23:18:02.476Z",
+  "standingsApertura": [
     {
       "pos": 1,
       "name": "La Rotonda",
@@ -111,6 +111,117 @@ const LIGA_DATA = {
       "e": 3,
       "p": 8,
       "pts": 3
+    }
+  ],
+  "standingsClausura": [
+    {
+      "pos": 1,
+      "name": "C.A Tigre Uruguay",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 2,
+      "name": "La Favela FC",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 3,
+      "name": "Palestino",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 4,
+      "name": "Club Montero",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 5,
+      "name": "Malasia F.C.",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 6,
+      "name": "El Inter",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3,
+      "isUs": true
+    },
+    {
+      "pos": 7,
+      "name": "Dep. Comandiyú",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 8,
+      "name": "La Rotonda",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 9,
+      "name": "Blue Label FC",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 10,
+      "name": "Defensor United",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 11,
+      "name": "Revolución Futbolística",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 12,
+      "name": "Capitol F.C.",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
     }
   ],
   "nextMatch": {

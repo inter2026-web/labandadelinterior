@@ -228,6 +228,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 .stat-item:hover .stat-tooltip{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* TABLA DE POSICIONES */
+.tabla-tabs{display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.tabla-tab{background:var(--bg2);border:1px solid var(--border);color:var(--gray-light);padding:.5rem 1.1rem;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+.tabla-tab:hover{border-color:var(--blue-light);color:var(--blue-light)}
+.tabla-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
 .tabla{width:100%;border-collapse:collapse;font-size:.88rem}
 .tabla thead tr{background:var(--bg2)}
 .tabla th{padding:.75rem 1rem;text-align:left;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);border-bottom:1px solid var(--border)}
@@ -785,6 +789,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
       <div class="section-line"></div>
       <div class="section-count">B</div>
     </div>
+    <div class="tabla-tabs">
+      <button type="button" class="tabla-tab" data-tabla="apertura">Apertura</button>
+      <button type="button" class="tabla-tab active" data-tabla="clausura">Clausura</button>
+      <button type="button" class="tabla-tab" data-tabla="anual">Anual</button>
+    </div>
     <div style="overflow-x:auto" class="fade-in">
       <table class="tabla">
         <thead>
@@ -1264,7 +1273,8 @@ const SCORERS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.scorer
 
 const CARDS_BY_MATCH = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.cardsByMatch) ? ADMIN_DATA.cardsByMatch : {};
 
-const TABLA = [
+// Apertura 2026 — torneo finalizado (11 fechas), tabla congelada.
+const TABLA_APERTURA = [
   {
       "pos": 1,
       "name": "La Rotonda",
@@ -1376,6 +1386,135 @@ const TABLA = [
     }
 ];
 
+// Clausura 2026 — torneo en curso, se actualiza solo (bot diario de Liga MVD).
+const TABLA_CLAUSURA = [
+  {
+      "pos": 1,
+      "name": "C.A Tigre Uruguay",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 2,
+      "name": "La Favela FC",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 3,
+      "name": "Palestino",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 4,
+      "name": "Club Montero",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 5,
+      "name": "Malasia F.C.",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3
+    },
+    {
+      "pos": 6,
+      "name": "El Inter",
+      "pj": 1,
+      "g": 1,
+      "e": 0,
+      "p": 0,
+      "pts": 3,
+      "isUs": true
+    },
+    {
+      "pos": 7,
+      "name": "Dep. Comandiyú",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 8,
+      "name": "La Rotonda",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 9,
+      "name": "Blue Label FC",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 10,
+      "name": "Defensor United",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 11,
+      "name": "Revolución Futbolística",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    },
+    {
+      "pos": 12,
+      "name": "Capitol F.C.",
+      "pj": 1,
+      "g": 0,
+      "e": 0,
+      "p": 1,
+      "pts": 0
+    }
+];
+
+// Anual = suma Apertura + Clausura por equipo, re-ordenada por puntos (empate → más victorias).
+function computeTablaAnual(apertura, clausura) {
+  const map = new Map();
+  const add = arr => arr.forEach(t => {
+    const cur = map.get(t.name) || { name: t.name, pj: 0, g: 0, e: 0, p: 0, pts: 0, isUs: false };
+    cur.pj += t.pj || 0; cur.g += t.g || 0; cur.e += t.e || 0; cur.p += t.p || 0; cur.pts += t.pts || 0;
+    if (t.isUs) cur.isUs = true;
+    map.set(t.name, cur);
+  });
+  add(apertura); add(clausura);
+  return Array.from(map.values())
+    .sort((a, b) => b.pts - a.pts || b.g - a.g)
+    .map((t, i) => ({ ...t, pos: i + 1 }));
+}
+const TABLA_ANUAL = computeTablaAnual(TABLA_APERTURA, TABLA_CLAUSURA);
+
 const PLAYERS = [
   { number: 1,  name:'Jubin',         fullName:'Tomás Jubin',         nickname:null,          status:'active',   positions:['POR'],                    minutes:{amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90}, avgMins:90, goals:0 },
   { number: 2,  name:'Vicente',        fullName:'Vicente Gaitano',     nickname:'Vena',        status:'active',   positions:['DFC'],                   minutes:{f1:20,f3:45,f5:45,f6:90,f7:45,f8:30,f9:70}, avgMins:49, goals:0 },
@@ -1458,7 +1597,7 @@ const SCORERS_DATA = PLAYERS
 // STATS DINÁMICAS (IG card + barra) — se calculan de la tabla (auto) y los resultados
 // =====================
 function computeStats() {
-  const us = (typeof TABLA !== 'undefined' && TABLA) ? TABLA.find(t => t.isUs || t.name === 'El Inter') : null;
+  const us = (typeof TABLA_CLAUSURA !== 'undefined' && TABLA_CLAUSURA) ? TABLA_CLAUSURA.find(t => t.isUs || t.name === 'El Inter') : null;
   const liga = (typeof MATCHES !== 'undefined' ? MATCHES : []).filter(m => m.type && m.type !== 'friendly' && m.gf != null && m.gc != null);
   let gf = 0, gc = 0;
   liga.forEach(m => { gf += m.gf; gc += m.gc; });
@@ -1468,7 +1607,7 @@ function computeStats() {
   const pj = us ? us.pj : liga.length;
   const pts = us ? us.pts : (3 * w + d);
   const pos = us ? us.pos : null;
-  const leaderPts = (typeof TABLA !== 'undefined' && TABLA && TABLA[0]) ? TABLA[0].pts : null;
+  const leaderPts = (typeof TABLA_CLAUSURA !== 'undefined' && TABLA_CLAUSURA && TABLA_CLAUSURA[0]) ? TABLA_CLAUSURA[0].pts : null;
   return { gf, gc, w, d, l, pj, pts, pos, leaderPts };
 }
 (function renderStats() {
@@ -1504,23 +1643,35 @@ if (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.igStats) {
 }
 
 // =====================
-// RENDER TABLA
+// RENDER TABLA (con tabs Apertura / Clausura / Anual)
 // =====================
-const tablaBody = document.getElementById('tabla-body');
-TABLA.forEach(t => {
-  const posClass = t.pos <= 3 ? `pos-${t.pos}` : (t.isUs ? 'pos-4' : '');
-  const logoSrc = teamLogo(t.name);
-  const badgeHtml = logoSrc
-    ? `<div class="team-badge" style="background:var(--bg2)"><img src="${logoSrc}" alt="${t.name}" loading="lazy"></div>`
-    : `<div class="team-badge" style="${t.isUs?'background:var(--blue);color:#fff':''}">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>`;
-  const row = `<tr class="${t.isUs ? 'my-team' : ''}">
-    <td class="pos"><span class="pos-badge ${posClass}">${t.pos}</span></td>
-    <td><div class="team-name">${badgeHtml}${t.isUs?'<strong>'+t.name+' ⚽</strong>':t.name}</div></td>
-    <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
-    <td class="pts">${t.pts}</td>
-  </tr>`;
-  tablaBody.innerHTML += row;
+const TABLAS_POR_TAB = { apertura: TABLA_APERTURA, clausura: TABLA_CLAUSURA, anual: TABLA_ANUAL };
+function renderTabla(data) {
+  const tablaBody = document.getElementById('tabla-body');
+  tablaBody.innerHTML = '';
+  data.forEach(t => {
+    const posClass = t.pos <= 3 ? `pos-${t.pos}` : (t.isUs ? 'pos-4' : '');
+    const logoSrc = teamLogo(t.name);
+    const badgeHtml = logoSrc
+      ? `<div class="team-badge" style="background:var(--bg2)"><img src="${logoSrc}" alt="${t.name}" loading="lazy"></div>`
+      : `<div class="team-badge" style="${t.isUs?'background:var(--blue);color:#fff':''}">${t.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>`;
+    const row = `<tr class="${t.isUs ? 'my-team' : ''}">
+      <td class="pos"><span class="pos-badge ${posClass}">${t.pos}</span></td>
+      <td><div class="team-name">${badgeHtml}${t.isUs?'<strong>'+t.name+' ⚽</strong>':t.name}</div></td>
+      <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+      <td class="pts">${t.pts}</td>
+    </tr>`;
+    tablaBody.innerHTML += row;
+  });
+}
+document.querySelectorAll('.tabla-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabla-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTabla(TABLAS_POR_TAB[btn.dataset.tabla]);
+  });
 });
+renderTabla(TABLAS_POR_TAB[document.querySelector('.tabla-tab.active')?.dataset.tabla || 'clausura']);
 
 // =====================
 // RENDER RESULTS

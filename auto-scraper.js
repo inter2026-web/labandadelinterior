@@ -47,6 +47,22 @@ function monthName(n) {
   return ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][n-1] || '';
 }
 
+// Apertura 2026 terminó el 20/6 (11 fechas) — tabla final congelada, ya no se scrapea.
+const APERTURA_FINAL_STANDINGS = [
+  { pos: 1, name: 'La Rotonda', pj: 11, g: 8, e: 3, p: 0, pts: 27 },
+  { pos: 2, name: 'Dep. Comandiyú', pj: 11, g: 8, e: 2, p: 1, pts: 26 },
+  { pos: 3, name: 'El Inter', pj: 11, g: 8, e: 1, p: 2, pts: 25, isUs: true },
+  { pos: 4, name: 'Capitol F.C.', pj: 11, g: 7, e: 3, p: 1, pts: 24 },
+  { pos: 5, name: 'Revolución Futbolística', pj: 11, g: 5, e: 1, p: 5, pts: 16 },
+  { pos: 6, name: 'C.A Tigre Uruguay', pj: 11, g: 4, e: 2, p: 5, pts: 14 },
+  { pos: 7, name: 'Blue Label FC', pj: 11, g: 4, e: 1, p: 6, pts: 13 },
+  { pos: 8, name: 'Club Montero', pj: 11, g: 3, e: 3, p: 5, pts: 12 },
+  { pos: 9, name: 'Malasia F.C.', pj: 11, g: 3, e: 2, p: 6, pts: 11 },
+  { pos: 10, name: 'La Favela FC', pj: 11, g: 3, e: 0, p: 8, pts: 9 },
+  { pos: 11, name: 'Palestino', pj: 11, g: 0, e: 5, p: 6, pts: 5 },
+  { pos: 12, name: 'Defensor United', pj: 11, g: 0, e: 3, p: 8, pts: 3 },
+];
+
 (async () => {
   console.log('=== SCRAPER INTER FC — Liga MVD ===');
   const browser = await chromium.launch({ headless: true });
@@ -102,11 +118,12 @@ function monthName(n) {
   // ----------------------------------------------------------------
   // 3. Abrir el modal de Torneos/Posiciones para standings completas
   // ----------------------------------------------------------------
-  console.log('\n3. Cargando tabla de posiciones COMPLETA (Divisional B)...');
+  console.log('\n3. Cargando tabla de posiciones COMPLETA (Divisional B, Clausura)...');
   let standings = [];
 
-  // Tabla completa con PJ/PG/PE/PP/GF/GC/PTS (cambia el slug/id por torneo: apertura/clausura).
-  const STANDINGS_URL = 'https://www.ligamvd.com/posiciones/divisional_b_apertura/810/1/';
+  // Tabla completa con PJ/PG/PE/PP/GF/GC/PTS del Clausura (torneo en curso).
+  // El Apertura ya terminó y su tabla final quedó congelada en APERTURA_FINAL_STANDINGS.
+  const STANDINGS_URL = 'https://www.ligamvd.com/posiciones/divisional_b_clausura/834/1/';
   await page.goto(STANDINGS_URL, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
   await page.waitForTimeout(5000);
 
@@ -260,7 +277,7 @@ function monthName(n) {
     'C.A Tigre Uruguay','Club Montero','Revolución Futbolística','La Favela FC',
     'Malasia F.C.','Palestino','Defensor United',
   ]);
-  const filteredStandings = standings
+  const filteredStandingsClausura = standings
     .filter(s => DIV_B.has(normName(s.name)) || DIV_B.has(s.name.trim()))
     .sort((a, b) => b.pts - a.pts)
     .map((s, i) => {
@@ -282,7 +299,8 @@ function monthName(n) {
 
   const data = {
     lastUpdated: new Date().toISOString(),
-    standings: filteredStandings,
+    standingsApertura: APERTURA_FINAL_STANDINGS,
+    standingsClausura: filteredStandingsClausura,
     nextMatch: {
       fechaNum: nextMatchData.fechaNum,
       home: nextMatchData.home || 'Capitol F.C.',
@@ -308,7 +326,7 @@ const LIGA_DATA = ${JSON.stringify(data, null, 2)};
 `;
   fs.writeFileSync(OUTPUT, js, 'utf8');
   console.log('\n✓ liga-data.js generado');
-  console.log('  Standings:', data.standings.length, 'equipos');
+  console.log('  Standings Clausura:', data.standingsClausura.length, 'equipos');
   console.log('  Próxima fecha:', data.nextMatch);
   console.log('  Últimos resultados encontrados:', data.latestResults.length);
 

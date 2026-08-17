@@ -32,25 +32,26 @@ let html = fs.readFileSync(HTML_FILE, 'utf8');
 let changed = false;
 
 // -----------------------------------------------------------------------
-// 1. ACTUALIZAR TABLA DE POSICIONES
+// 1. ACTUALIZAR TABLAS DE POSICIONES (Apertura congelada + Clausura en vivo)
 // -----------------------------------------------------------------------
-if (LIGA_DATA.standings && LIGA_DATA.standings.length > 0) {
-  // Build TABLA from scraped pts + existing G/E/P (calculated from match history)
-  // Extract existing TABLA to preserve G/E/P where not updated
-  const existingTablaMatch = html.match(/const TABLA = \[[\s\S]*?\];/);
+const norm = n => (n || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+
+function updateTablaBlock(varName, standings) {
+  if (!standings || standings.length === 0) return;
+
+  const re = new RegExp(`const ${varName} = \\[[\\s\\S]*?\\];`);
+  const existingMatch = html.match(re);
   let existingTabla = [];
-  if (existingTablaMatch) {
+  if (existingMatch) {
     try {
-      const tablaCode = existingTablaMatch[0].replace('const TABLA = ', '').replace(/;$/, '');
+      const tablaCode = existingMatch[0].replace(`const ${varName} = `, '').replace(/;$/, '');
       eval(`existingTabla = ${tablaCode}`);
     } catch (e) {
-      console.warn('No se pudo parsear TABLA existente:', e.message);
+      console.warn(`No se pudo parsear ${varName} existente:`, e.message);
     }
   }
 
-  // Build new TABLA merging scraped pts+pos with existing G/E/P
-  const norm = n => (n || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
-  const newTabla = LIGA_DATA.standings.map((s, i) => {
+  const newTabla = standings.map((s, i) => {
     const existing = existingTabla.find(t => norm(t.name) === norm(s.name));
     const hasFull = s.pj != null && s.g != null && s.e != null && s.p != null;
     return {
@@ -65,21 +66,23 @@ if (LIGA_DATA.standings && LIGA_DATA.standings.length > 0) {
     };
   });
 
-  if (newTabla.length > 0) {
-    const tablaJson = JSON.stringify(newTabla, null, 2)
-      .split('\n').map(l => `  ${l}`).join('\n').trim();
-    const newTablaStr = `const TABLA = [\n  ${tablaJson.slice(2, -2).trim()}\n];`;
-    const updatedHtml = html.replace(/const TABLA = \[[\s\S]*?\];/, newTablaStr);
-    if (updatedHtml !== html) {
-      html = updatedHtml;
-      changed = true;
-      console.log('✓ TABLA actualizada —', newTabla.length, 'equipos');
-      console.log('  1°', newTabla[0]?.name, newTabla[0]?.pts, 'pts');
-    } else {
-      console.log('  TABLA sin cambios');
-    }
+  if (newTabla.length === 0) return;
+  const tablaJson = JSON.stringify(newTabla, null, 2)
+    .split('\n').map(l => `  ${l}`).join('\n').trim();
+  const newTablaStr = `const ${varName} = [\n  ${tablaJson.slice(2, -2).trim()}\n];`;
+  const updatedHtml = html.replace(re, newTablaStr);
+  if (updatedHtml !== html) {
+    html = updatedHtml;
+    changed = true;
+    console.log(`✓ ${varName} actualizada —`, newTabla.length, 'equipos');
+    console.log('  1°', newTabla[0]?.name, newTabla[0]?.pts, 'pts');
+  } else {
+    console.log(`  ${varName} sin cambios`);
   }
 }
+
+updateTablaBlock('TABLA_APERTURA', LIGA_DATA.standingsApertura);
+updateTablaBlock('TABLA_CLAUSURA', LIGA_DATA.standingsClausura);
 
 // -----------------------------------------------------------------------
 // 2. ACTUALIZAR HERO-NEXT (próximo partido en el hero)
@@ -139,9 +142,9 @@ if (nm && nm.home && nm.away && nmFuture) {
   const localIsUs = local === 'El Inter';
   const visitIsUs = visit === 'El Inter';
 
-  // Get current standings for subtitle
-  const localStanding = LIGA_DATA.standings.find(s => s.name === local);
-  const visitStanding = LIGA_DATA.standings.find(s => s.name === visit);
+  // Get current (Clausura) standings for subtitle
+  const localStanding = LIGA_DATA.standingsClausura.find(s => s.name === local);
+  const visitStanding = LIGA_DATA.standingsClausura.find(s => s.name === visit);
   const localSub = localStanding ? `${localStanding.pos}° en tabla · ${localStanding.pts} pts` : (localIsUs ? 'Liga MVD' : '');
   const visitSub = visitStanding ? `${visitStanding.pos}° en tabla · ${visitStanding.pts} pts` : (visitIsUs ? 'Liga MVD' : '');
 
