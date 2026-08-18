@@ -1699,13 +1699,15 @@ function computeStats(scope) {
   const leaderPts = (tabla && tabla[0]) ? tabla[0].pts : null;
   return { gf, gc, w, d, l, pj, pts, pos, leaderPts, liga };
 }
-function fillTopScorerTooltip() {
+function fillTopScorerTooltip(scope) {
   const el = document.getElementById('tip-goleador');
   if (!el) return;
   try {
     const tally = {};
     Object.keys(SCORERS_BY_MATCH).forEach(matchId => {
       if (matchId === 'amistoso') return;
+      const isClausura = /clausura/i.test(matchId);
+      if (scope !== 'anual' && isClausura !== (scope === 'clausura')) return;
       (SCORERS_BY_MATCH[matchId] || []).forEach(s => {
         const m = s.match(/^(.+?)\s+x(\d+)$/);
         if (m) tally[m[1]] = (tally[m[1]] || 0) + parseInt(m[2]);
@@ -1717,6 +1719,8 @@ function fillTopScorerTooltip() {
     if (topName) {
       const full = (typeof PLAYERS !== 'undefined' && (PLAYERS.find(p => p.name === topName) || {}).fullName) || topName;
       el.textContent = `${full} (${topGoals}${topGoals === 1 ? ' gol)' : ' goles)'}`;
+    } else {
+      el.textContent = 'Sin datos';
     }
   } catch (e) {}
 }
@@ -1734,7 +1738,7 @@ function renderStatsBar(scope) {
   const gap = (s.leaderPts != null && s.pts != null) ? (s.leaderPts - s.pts) : null;
   const gapTxt = gap == null ? '' : (gap > 0 ? `<br>A ${gap} ${gap === 1 ? 'punto' : 'puntos'} del líder` : '<br>¡Puntero! 🏆');
   setHTML('tt-pts', `🏆 ${s.pos != null ? s.pos + '° en tabla · ' : ''}Serie 1 Div. B${gapTxt}`);
-  fillTopScorerTooltip();
+  fillTopScorerTooltip(scope);
 }
 document.querySelectorAll('.stats-tab').forEach(btn => {
   btn.addEventListener('click', () => {
