@@ -1908,7 +1908,8 @@ function _avatarFallback(img, number) {
 // RENDER PLAYERS
 // =====================
 const playersGrid = document.getElementById('players-grid');
-PLAYERS.forEach((p, i) => {
+const PLAYERS_SORTED = [...PLAYERS].sort((a, b) => (a.number ?? 9999) - (b.number ?? 9999));
+PLAYERS_SORTED.forEach((p, i) => {
   const partsPlayed = Object.values(p.minutes).filter(m => m > 0).length;
   const totalMins = Object.values(p.minutes).reduce((a,b) => a+b, 0);
   const photoSrc = PLAYER_PHOTOS[p.name];
