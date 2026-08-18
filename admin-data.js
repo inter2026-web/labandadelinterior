@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-08-18T00:16:57.546Z",
+  "lastUpdated": "2026-08-18T00:19:42.696Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -131,6 +131,76 @@ const ADMIN_DATA = {
         },
         {
           "name": "Franco Irri",
+          "pos": ""
+        }
+      ]
+    },
+    "Fecha 1 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Seba B",
+          "pos": "DFD"
+        },
+        {
+          "name": "Sena",
+          "pos": "DFC"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MC"
+        },
+        {
+          "name": "Pato",
+          "pos": "MC"
+        },
+        {
+          "name": "Curbelo",
+          "pos": "MI"
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": "MD"
+        },
+        {
+          "name": "Pata",
+          "pos": "DC"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Vicente",
+          "pos": ""
+        },
+        {
+          "name": "Diego",
+          "pos": ""
+        },
+        {
+          "name": "Negrin",
+          "pos": ""
+        },
+        {
+          "name": "Seba T",
+          "pos": ""
+        },
+        {
+          "name": "Andres Guerra",
           "pos": ""
         }
       ]
