@@ -291,7 +291,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;
 /* PROXIMO PARTIDO */
 .next-match-banner{background:linear-gradient(135deg,#000520,#001540,#000520);border:1px solid rgba(0,87,183,.4);border-radius:24px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;position:relative;overflow:hidden}
 .next-match-banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(0,87,183,.03) 30px,rgba(0,87,183,.03) 32px)}
-.next-label{position:absolute;top:1.25rem;left:50%;transform:translateX(-50%);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-light);background:rgba(0,87,183,.15);padding:.3rem .8rem;border-radius:20px;border:1px solid rgba(0,87,183,.3);white-space:nowrap}
+.next-teams{position:relative;flex:1;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.next-label{position:absolute;top:-1.25rem;left:50%;transform:translateX(-50%);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-light);background:rgba(0,87,183,.15);padding:.3rem .8rem;border-radius:20px;border:1px solid rgba(0,87,183,.3);white-space:nowrap}
 .next-team{text-align:center;flex:1}
 .next-team-name{font-family:'Anton',sans-serif;font-size:clamp(1.5rem,3vw,2rem);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.3rem}
 .next-team-sub{font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em}
@@ -580,6 +581,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text
   .nav-links,.nav-cta{display:none}
   .nav-mobile{display:block}
   .next-match-banner{flex-direction:column;text-align:center}
+  .next-teams{flex-direction:column;width:100%}
   .next-label{position:static;transform:none;margin-bottom:.5rem}
 }
 @media(max-width:600px){
@@ -1182,6 +1184,7 @@ const PLAYER_PHOTOS = {
   'Ignacio Luy':    'assets/players/ignacio_matias_luy_suarez.jpg',
   'Andres Guerra':  'assets/players/andres_eduardo_guerra.jpg',
   'Lucas Godoy':    'assets/players/lucas_godoy.jpg',
+  'Curbelo':        'assets/players/leandro_curbelo.jpg',
 };
 
 // =====================
@@ -1541,7 +1544,7 @@ const PLAYERS = [
   { number: 20, name:'Seba B',         fullName:'Sebastián Barisone',  nickname:null,          status:'active',   positions:['DFD','MD','ED','POR'],       minutes:{amistoso:50,f2:40,f3:45,f4:90,f5:45,f8:45}, avgMins:53, goals:0 },
   { number: 21, name:'Enzo',           fullName:'Enzo Gaione',         nickname:null,          status:'active',   positions:['DFC','DFD','LD'],                    minutes:{f2:60,f4:30,f5:90,f6:90,f7:90,f8:45}, avgMins:68, goals:0 },
   { number: 22, name:'Pato',           fullName:'Mauro Cabrera',       nickname:'Pato',        status:'active',   positions:['MC','MCD'],                      minutes:{amistoso:90,f1:70,f2:90,f3:90,f4:90,f5:90,f6:80,f7:90,f8:45}, avgMins:82, goals:1 },
-  { number: 23, name:'Seba T',         fullName:'Sebastián Torena',    nickname:null,          status:'inactive', positions:['MD','ED','MI','EI','DC'],    minutes:{f1:90,f2:65,f3:35}, avgMins:63, goals:2 },
+  { number: 23, name:'Seba T',         fullName:'Sebastián Torena',    nickname:null,          status:'active',   positions:['MD','ED','MI','EI','DC'],    minutes:{f1:90,f2:65,f3:35}, avgMins:63, goals:2 },
   { number: 24, name:'Mati',           fullName:'Matias González',     nickname:null,          status:'active',   positions:['DFC','MCD','MC'],            minutes:{f1:70,f2:90,f3:90,f4:65,f5:90,f6:70,f8:60,f9:90}, avgMins:78, goals:0 },
   { number: 27, name:'Mandinga',       fullName:'Ezequiel Muñoz',      nickname:'Mandinga',    status:'active',   positions:['DC','ED','EI','MD','MI','POR'],    minutes:{amistoso:45,f2:30,f3:50,f4:25,f5:65,f6:60,f7:65,f8:75,f9:90}, avgMins:56, goals:4 },
   { number: 28, name:'Mariano',        fullName:'Mariano Perdomo',     nickname:null,          status:'ex',       positions:['DFC','DFD','DFI','LI','LD'],      minutes:{f3:10,f5:0}, avgMins:5, goals:0 },
@@ -1550,7 +1553,7 @@ const PLAYERS = [
   { number: 32, name:'Lucas Godoy',    fullName:'Lucas Godoy',         nickname:null,          status:'active',   positions:['ED','MD','EI','MI','DC'],                  minutes:{f6:30,f7:45,f8:45,f9:65}, avgMins:46, goals:2 },
   { number: 33, name:'Andres Guerra',  fullName:'Andrés Guerra',       nickname:'Cabeza',      status:'active',   positions:['DC','MCO'],                  minutes:{f6:30,f7:30}, avgMins:30, goals:3 },
   { number: 72, name:'Sena',           fullName:'Martín Sena',         nickname:null,          status:'active',   positions:['DFI','LI','MCD','MC','DFC'],      minutes:{amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90}, avgMins:74, goals:4 },
-  { number: 99, name:'Ignacio Luy',    fullName:'Ignacio Luy',         nickname:null,          status:'ex',       positions:['EI','ED','MI','MD'],  minutes:{f3:30,f4:30,f5:45,f6:60,f8:30}, avgMins:39, goals:0 },
+  { number: 99, name:'Ignacio Luy',    fullName:'Ignacio Luy',         nickname:null,          status:'active',   positions:['EI','ED','MI','MD'],  minutes:{f3:30,f4:30,f5:45,f6:60,f8:30}, avgMins:39, goals:0 },
   { number: 14, name:'Curbelo',        fullName:'Leandro Curbelo',     nickname:null,          status:'active',   positions:['MC','MCD','MD','MI','DFD'], minutes:{}, avgMins:0, goals:0 },
 ];
 
@@ -1661,17 +1664,19 @@ function renderNextMatch() {
     const usSub = nm.usPos != null ? `${nm.usPos}° en tabla · ${nm.usPts} pts` : 'Liga MVD';
     const rivalSub = nm.rivalPos != null ? `${nm.rivalPos}° en tabla · ${nm.rivalPts} pts` : '';
     const fieldLabel = nm.field ? ` · Cancha ${nm.field}` : ' · Cancha a confirmar';
-    banner.innerHTML = `<div class="next-label">FECHA ${nm.fechaNum} · Liga MVD Div. B${fieldLabel}</div>
-      <div class="next-team">
-        <div class="next-team-logo"><img src="assets/logos/el-inter.png" alt="El Inter" style="position:relative;z-index:2"></div>
-        <div class="next-team-name" style="color:var(--blue-light)">El Inter</div>
-        <div class="next-team-sub">${usSub}</div>
-      </div>
-      <div class="next-vs">VS</div>
-      <div class="next-team">
-        <div class="next-team-logo">${rivalLogo ? `<img src="${rivalLogo}" alt="${nm.rival}" style="border-radius:50%">` : ''}</div>
-        <div class="next-team-name">${nm.rival}</div>
-        <div class="next-team-sub">${rivalSub}</div>
+    banner.innerHTML = `<div class="next-teams">
+        <div class="next-label">FECHA ${nm.fechaNum} · Liga MVD Div. B${fieldLabel}</div>
+        <div class="next-team">
+          <div class="next-team-logo"><img src="assets/logos/el-inter.png" alt="El Inter" style="position:relative;z-index:2"></div>
+          <div class="next-team-name" style="color:var(--blue-light)">El Inter</div>
+          <div class="next-team-sub">${usSub}</div>
+        </div>
+        <div class="next-vs">VS</div>
+        <div class="next-team">
+          <div class="next-team-logo">${rivalLogo ? `<img src="${rivalLogo}" alt="${nm.rival}" style="border-radius:50%">` : ''}</div>
+          <div class="next-team-name">${nm.rival}</div>
+          <div class="next-team-sub">${rivalSub}</div>
+        </div>
       </div>
       <div class="next-date-box">
         ${day

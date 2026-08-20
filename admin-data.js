@@ -234,7 +234,7 @@ const ADMIN_DATA = {
   "nextMatch": {
     "fechaNum": "2",
     "rival": "C.A Tigre Uruguay",
-    "date": "",
+    "date": "2026-08-22",
     "time": "09:00",
     "cancha": "13",
     "rivalPos": 1,
