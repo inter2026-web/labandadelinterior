@@ -1639,7 +1639,9 @@ function renderNextMatch() {
   }
   const scheduleTxt = day
     ? `${day} ${month}${nm.time ? ' · ' + nm.time : ''}${nm.field ? ' · ' + nm.field : ''}`
-    : 'Fecha y cancha a confirmar';
+    : nm.time
+      ? `Fecha a confirmar · ${nm.time}${nm.field ? ' · Cancha ' + nm.field : ''}`
+      : 'Fecha y cancha a confirmar';
 
   const heroNext = document.getElementById('hero-next');
   if (heroNext) {
@@ -1674,7 +1676,7 @@ function renderNextMatch() {
       <div class="next-date-box">
         ${day
           ? `<div class="next-date-day">${day}</div><div class="next-date-month">${month}</div>${nm.time ? `<div style="font-size:.65rem;color:var(--gray);margin-top:.15rem">${nm.time}</div>` : ''}`
-          : `<div class="next-date-day" style="font-size:1.3rem">A confirmar</div>`}
+          : `<div class="next-date-day" style="font-size:1.3rem">${nm.time || 'A confirmar'}</div>${nm.time ? `<div class="next-date-month" style="font-size:.65rem">Fecha a confirmar</div>` : ''}`}
       </div>`;
   }
 }
