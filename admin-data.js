@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-08-18T00:19:42.696Z",
+  "lastUpdated": "2026-08-20T01:57:11.105Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -321,7 +321,8 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Andres Guerra, Lucas Godoy y Vicente Gaitano.jpg",
       "assets/fotos/f10/Andres Guerra.jpg",
       "assets/fotos/f10/Ignacio Zapata, Andres Guerra y Lorenzo Camara.jpg",
-      "assets/fotos/f10/Mauro Cabrera y Andres Guerra.jpg"
+      "assets/fotos/f10/Mauro Cabrera y Andres Guerra.jpg",
+      "assets/fotos/c1/Diego Friedrich, Martin Negrin, Andres Guerra, Vicente Gaitano y Facundo Munchs.jpg"
     ],
     "Brandon": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -378,7 +379,10 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Brandon Almenarez, Mauro Cabrera, Franco Friedrich y Lucas Godoy.jpg",
       "assets/fotos/f11/Brandon Almenarez.jpg",
       "assets/fotos/f11/Franco Friedrich, Mauro Cabrera y Brandon Almenarez.jpg",
-      "assets/fotos/f11/Vicente Gaitano, Lucas Godoy y Brandon Almenarez.jpg"
+      "assets/fotos/f11/Vicente Gaitano, Lucas Godoy y Brandon Almenarez.jpg",
+      "assets/fotos/c1/Brandon Almenarez y Leandro Curbelo.jpg",
+      "assets/fotos/c1/Brandon Almenarez y Martin Sena.jpg",
+      "assets/fotos/c1/Brandon Almenarez.jpg"
     ],
     "Diego": [
       "assets/fotos/f1/Diego Friedrich y Fabian Couto.jpg",
@@ -394,7 +398,8 @@ const ADMIN_DATA = {
       "assets/fotos/f7/Matias Gonzalez, Andres Guerra, Lucas Vidal, Lorenzo Camara, Elias Pastorino y Diego Friedrich.jpg",
       "assets/fotos/f9/Elias Pastorino y Diego Friedrich.jpg",
       "assets/fotos/f11/Enzo Gaione, Martin Sena, Franco Irisarri y Diego Friedrich.jpg",
-      "assets/fotos/f11/Mauro Cabrera y Diego Friedrich.jpg"
+      "assets/fotos/f11/Mauro Cabrera y Diego Friedrich.jpg",
+      "assets/fotos/c1/Diego Friedrich, Martin Negrin, Andres Guerra, Vicente Gaitano y Facundo Munchs.jpg"
     ],
     "Elias": [
       "assets/fotos/f3/Grupo f3.jpg",
@@ -536,7 +541,9 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Enzo Gaione.jpg",
       "assets/fotos/f10/Martin Sena y Enzo Gaione.jpg",
       "assets/fotos/f11/Enzo Gaione, Martin Sena, Franco Irisarri y Diego Friedrich.jpg",
-      "assets/fotos/f11/Ezequiel Muñoz, Enzo Gaione y Ezequiel Arrizabalaga.jpg"
+      "assets/fotos/f11/Ezequiel Muñoz, Enzo Gaione y Ezequiel Arrizabalaga.jpg",
+      "assets/fotos/c1/Enzo Gaione y Martin Sena.jpg",
+      "assets/fotos/c1/Fabian Couto, Lucas Godoy, Enzo Gaione y Franco Friedrich.jpg"
     ],
     "Fabian Couto": [
       "assets/fotos/f3/Grupo f3.jpg",
@@ -551,7 +558,19 @@ const ADMIN_DATA = {
       "assets/fotos/f7/Fabian Couto.jpg",
       "assets/fotos/f8/Fabian Couto y Martin Sena.jpg",
       "assets/fotos/f8/Fabian Couto, Sebastian Barisone, Mauro Cabrera, Ezequiel Arrizabalaga, Ignacio Zapata y Franco Irisarri.jpg",
-      "assets/fotos/f8/Mauro Cabrera y Fabian Couto.jpg"
+      "assets/fotos/f8/Mauro Cabrera y Fabian Couto.jpg",
+      "assets/fotos/c1/Fabian Couto 2.jpg",
+      "assets/fotos/c1/Fabian Couto 3.jpg",
+      "assets/fotos/c1/Fabian Couto 4.jpg",
+      "assets/fotos/c1/Fabian Couto 5.jpg",
+      "assets/fotos/c1/Fabian Couto 6.jpg",
+      "assets/fotos/c1/Fabian Couto 7.jpg",
+      "assets/fotos/c1/Fabian Couto y Franco Friedrich.jpg",
+      "assets/fotos/c1/Fabian Couto, Lucas Godoy, Enzo Gaione y Franco Friedrich.jpg",
+      "assets/fotos/c1/Fabian Couto, Martin Sena y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Fabian Couto, Mauro Cabrera y Lucas Godoy.jpg",
+      "assets/fotos/c1/Fabian Couto.jpg",
+      "assets/fotos/c1/Franco Friedrich, Fabian Couto y Sebastian Barisone.jpg"
     ],
     "Facu Munchs": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -584,7 +603,8 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Andres Guerra, Facundo Munchs, Ignacio Zapata, Tomas Jubin, Martin Sena y Mauro Cabrera.jpg",
       "assets/fotos/f10/Andres Guerra, Lorenzo Camara, Facundo Munchs y Ignacio Zapata.jpg",
       "assets/fotos/f10/Ezequiel Arrizabalaga, Facundo Munchs, Ignacio Zapata, Agustin Rebollo y Vicente Gaitano.jpg",
-      "assets/fotos/f10/Facundo Munchs y Vicente Gaitano.jpg"
+      "assets/fotos/f10/Facundo Munchs y Vicente Gaitano.jpg",
+      "assets/fotos/c1/Diego Friedrich, Martin Negrin, Andres Guerra, Vicente Gaitano y Facundo Munchs.jpg"
     ],
     "Franco F": [
       "assets/fotos/f1/Franco Friedrich 2.jpg",
@@ -666,7 +686,14 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Franco Friedrich y Mauro Cabrera.jpg",
       "assets/fotos/f11/Franco Friedrich, Mauro Cabrera y Brandon Almenarez.jpg",
       "assets/fotos/f11/Franco Friedrich, Tomas Jubin, Franco Irisarri y Matias Gonzalez.jpg",
-      "assets/fotos/f11/Tomas Jubin y Franco Friedrich.jpg"
+      "assets/fotos/f11/Tomas Jubin y Franco Friedrich.jpg",
+      "assets/fotos/c1/Fabian Couto y Franco Friedrich.jpg",
+      "assets/fotos/c1/Fabian Couto, Lucas Godoy, Enzo Gaione y Franco Friedrich.jpg",
+      "assets/fotos/c1/Franco Friedrich 2.jpg",
+      "assets/fotos/c1/Franco Friedrich, Fabian Couto y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Franco Friedrich, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Franco Friedrich.jpg",
+      "assets/fotos/c1/Tomas Jubin y Franco Friedrich.jpg"
     ],
     "Franco Irri": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -802,7 +829,14 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Tomas Jubin 5.jpg",
       "assets/fotos/f11/Tomas Jubin 6.jpg",
       "assets/fotos/f11/Tomas Jubin y Franco Friedrich.jpg",
-      "assets/fotos/f11/Tomas Jubin.jpg"
+      "assets/fotos/f11/Tomas Jubin.jpg",
+      "assets/fotos/c1/Martin Sena y Tomas Jubin 2.jpg",
+      "assets/fotos/c1/Martin Sena y Tomas Jubin 3.jpg",
+      "assets/fotos/c1/Martin Sena y Tomas Jubin.jpg",
+      "assets/fotos/c1/Mauro Cabrera y Tomas Jubin.jpg",
+      "assets/fotos/c1/Tomas Jubin 2.jpg",
+      "assets/fotos/c1/Tomas Jubin y Franco Friedrich.jpg",
+      "assets/fotos/c1/Tomas Jubin.jpg"
     ],
     "Juli Rios": [
       "assets/fotos/f1/Fernando Garcia, Facundo Munchs, Julian Rios y Diego Friedrich.jpg",
@@ -896,7 +930,18 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Ezequiel Muñoz, Lucas Godoy y Elias Pastorino.jpg",
       "assets/fotos/f11/Lucas Godoy.jpg",
       "assets/fotos/f11/Martin Negrin y Lucas Godoy.jpg",
-      "assets/fotos/f11/Vicente Gaitano, Lucas Godoy y Brandon Almenarez.jpg"
+      "assets/fotos/f11/Vicente Gaitano, Lucas Godoy y Brandon Almenarez.jpg",
+      "assets/fotos/c1/Fabian Couto, Lucas Godoy, Enzo Gaione y Franco Friedrich.jpg",
+      "assets/fotos/c1/Fabian Couto, Mauro Cabrera y Lucas Godoy.jpg",
+      "assets/fotos/c1/Franco Friedrich, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Ignacio Zapata, Martin Sena, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Lucas Godoy 2.jpg",
+      "assets/fotos/c1/Lucas Godoy 3.jpg",
+      "assets/fotos/c1/Lucas Godoy 4.jpg",
+      "assets/fotos/c1/Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Lucas Godoy y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Lucas Godoy.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Barisone y Lucas Godoy.jpg"
     ],
     "Mandinga": [
       "assets/fotos/f3/Grupo f3.jpg",
@@ -1081,7 +1126,11 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Martin Negrin 3.jpg",
       "assets/fotos/f11/Martin Negrin 4.jpg",
       "assets/fotos/f11/Martin Negrin y Lucas Godoy.jpg",
-      "assets/fotos/f11/Martin Negrin.jpg"
+      "assets/fotos/f11/Martin Negrin.jpg",
+      "assets/fotos/c1/Diego Friedrich, Martin Negrin, Andres Guerra, Vicente Gaitano y Facundo Munchs.jpg",
+      "assets/fotos/c1/Martin Negrin y Sebastian Torena.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Barisone y Lucas Godoy.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Torena, Martin Sena y Sebastian Barisone.jpg"
     ],
     "Pata": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -1129,7 +1178,12 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Andres Guerra, Lorenzo Camara, Facundo Munchs y Ignacio Zapata.jpg",
       "assets/fotos/f10/Ezequiel Arrizabalaga, Facundo Munchs, Ignacio Zapata, Agustin Rebollo y Vicente Gaitano.jpg",
       "assets/fotos/f10/Ignacio Zapata, Andres Guerra y Lorenzo Camara.jpg",
-      "assets/fotos/f10/Tomas Jubin, Agustin Rebollo y Ignacio Zapata.jpg"
+      "assets/fotos/f10/Tomas Jubin, Agustin Rebollo y Ignacio Zapata.jpg",
+      "assets/fotos/c1/Ignacio Zapata 2.jpg",
+      "assets/fotos/c1/Ignacio Zapata 3.jpg",
+      "assets/fotos/c1/Ignacio Zapata 4.jpg",
+      "assets/fotos/c1/Ignacio Zapata, Martin Sena, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Ignacio Zapata.jpg"
     ],
     "Pato": [
       "assets/fotos/f1/Fabian Couto y Mauro Cabrera.jpg",
@@ -1204,7 +1258,15 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Franco Friedrich, Mauro Cabrera y Brandon Almenarez.jpg",
       "assets/fotos/f11/Lorenzo Camara y Mauro Cabrera.jpg",
       "assets/fotos/f11/Mauro Cabrera y Diego Friedrich.jpg",
-      "assets/fotos/f11/Mauro Cabrera y Lorenzo Camara.jpg"
+      "assets/fotos/f11/Mauro Cabrera y Lorenzo Camara.jpg",
+      "assets/fotos/c1/Fabian Couto, Martin Sena y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Fabian Couto, Mauro Cabrera y Lucas Godoy.jpg",
+      "assets/fotos/c1/Franco Friedrich, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Ignacio Zapata, Martin Sena, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Martin Sena, Mauro Cabrera y Vicente Gaitano.jpg",
+      "assets/fotos/c1/Mauro Cabrera y Tomas Jubin.jpg",
+      "assets/fotos/c1/Mauro Cabrera.jpg"
     ],
     "Renzo": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -1236,7 +1298,16 @@ const ADMIN_DATA = {
       "assets/fotos/f8/Sebastian Barisone 2.jpg",
       "assets/fotos/f8/Sebastian Barisone y Ignacio Zapata.jpg",
       "assets/fotos/f8/Sebastián Barisone, Lucas Godoy y Ignacio Luy.jpg",
-      "assets/fotos/f8/Sebastian Barisone.jpg"
+      "assets/fotos/f8/Sebastian Barisone.jpg",
+      "assets/fotos/c1/Franco Friedrich, Fabian Couto y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Lucas Godoy y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Barisone y Lucas Godoy.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Torena, Martin Sena y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Sebastian Barisone 2.jpg",
+      "assets/fotos/c1/Sebastian Barisone 3.jpg",
+      "assets/fotos/c1/Sebastian Barisone 4.jpg",
+      "assets/fotos/c1/Sebastian Barisone, Ezequiel Arrizabalaga y Agustin Rebollo.jpg",
+      "assets/fotos/c1/Sebastian Barisone.jpg"
     ],
     "Seba T": [
       "assets/fotos/f3/Grupo f3.jpg",
@@ -1264,7 +1335,10 @@ const ADMIN_DATA = {
       "assets/fotos/f2/Sebastian Torena.jpg",
       "assets/fotos/f3/Diego Friedrich y Sebastian Torena.jpg",
       "assets/fotos/f3/Ezequiel Muñoz, Lucas Vidal y Sebastian Torena.jpg",
-      "assets/fotos/f3/Sebastian Barisone, Lorenzo Camara, Ezequiel Muñoz, Ezequiel Arrizabalaga, Fabian Couto, Lucas Vidal y Sebastian Torena.jpg"
+      "assets/fotos/f3/Sebastian Barisone, Lorenzo Camara, Ezequiel Muñoz, Ezequiel Arrizabalaga, Fabian Couto, Lucas Vidal y Sebastian Torena.jpg",
+      "assets/fotos/c1/Martin Negrin y Sebastian Torena.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Torena, Martin Sena y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Sebastian Torena.jpg"
     ],
     "Sena": [
       "assets/fotos/f3/Grupo f3.jpg",
@@ -1343,7 +1417,18 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Matias Gonzalez, Martin Sena y Feanco Friedrich.jpg",
       "assets/fotos/f10/Matias Gonzalez, Martin Sena, Franco Friedrich, Julian Rios y Lucas Vidal.jpg",
       "assets/fotos/f10/Mauro Cabrera, Martin Sena y Matias Gonzalez.jpg",
-      "assets/fotos/f11/Enzo Gaione, Martin Sena, Franco Irisarri y Diego Friedrich.jpg"
+      "assets/fotos/f11/Enzo Gaione, Martin Sena, Franco Irisarri y Diego Friedrich.jpg",
+      "assets/fotos/c1/Brandon Almenarez y Martin Sena.jpg",
+      "assets/fotos/c1/Enzo Gaione y Martin Sena.jpg",
+      "assets/fotos/c1/Fabian Couto, Martin Sena y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Ignacio Zapata, Martin Sena, Lucas Godoy y Mauro Cabrera.jpg",
+      "assets/fotos/c1/Martin Negrin, Sebastian Torena, Martin Sena y Sebastian Barisone.jpg",
+      "assets/fotos/c1/Martin Sena y Tomas Jubin 2.jpg",
+      "assets/fotos/c1/Martin Sena y Tomas Jubin 3.jpg",
+      "assets/fotos/c1/Martin Sena y Tomas Jubin.jpg",
+      "assets/fotos/c1/Martin Sena y Vicente Gaitano.jpg",
+      "assets/fotos/c1/Martin Sena, Mauro Cabrera y Vicente Gaitano.jpg",
+      "assets/fotos/c1/Vicente Gaitano y Martin Sena.jpg"
     ],
     "staff-at": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -1365,7 +1450,9 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Ezequiel Arrizabalaga, Facundo Munchs, Ignacio Zapata, Agustin Rebollo y Vicente Gaitano.jpg",
       "assets/fotos/f10/Tomas Jubin, Agustin Rebollo y Ignacio Zapata.jpg",
       "assets/fotos/f11/Elias Pastorino y Agustin Rebollo.jpg",
-      "assets/fotos/f11/Ezequiel Muñoz y Agustin Rebollo.jpg"
+      "assets/fotos/f11/Ezequiel Muñoz y Agustin Rebollo.jpg",
+      "assets/fotos/c1/Agustin Rebollo y Ezequiel Arrizabalaga.jpg",
+      "assets/fotos/c1/Sebastian Barisone, Ezequiel Arrizabalaga y Agustin Rebollo.jpg"
     ],
     "staff-dt": [
       "assets/fotos/f2/Grupo f2.jpg",
@@ -1395,7 +1482,9 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Ezequiel Arrizabalaga, Facundo Munchs, Ignacio Zapata, Agustin Rebollo y Vicente Gaitano.jpg",
       "assets/fotos/f10/Ezequiel Muñoz, Ezequiel Arrizabalaga y Elias Pastorino.jpg",
       "assets/fotos/f11/Ezequiel Arrizabalaga, Vicente Gaitano y Matias Gonzalez.jpg",
-      "assets/fotos/f11/Ezequiel Muñoz, Enzo Gaione y Ezequiel Arrizabalaga.jpg"
+      "assets/fotos/f11/Ezequiel Muñoz, Enzo Gaione y Ezequiel Arrizabalaga.jpg",
+      "assets/fotos/c1/Agustin Rebollo y Ezequiel Arrizabalaga.jpg",
+      "assets/fotos/c1/Sebastian Barisone, Ezequiel Arrizabalaga y Agustin Rebollo.jpg"
     ],
     "Vicente": [
       "assets/fotos/f1/Sebastian Torena y Vicente Gaitano.jpg",
@@ -1436,7 +1525,12 @@ const ADMIN_DATA = {
       "assets/fotos/f11/Ezequiel Arrizabalaga, Vicente Gaitano y Matias Gonzalez.jpg",
       "assets/fotos/f11/Vicente Gaitano 2.jpg",
       "assets/fotos/f11/Vicente Gaitano, Lucas Godoy y Brandon Almenarez.jpg",
-      "assets/fotos/f11/Vicente Gaitano.jpg"
+      "assets/fotos/f11/Vicente Gaitano.jpg",
+      "assets/fotos/c1/Diego Friedrich, Martin Negrin, Andres Guerra, Vicente Gaitano y Facundo Munchs.jpg",
+      "assets/fotos/c1/Martin Sena y Vicente Gaitano.jpg",
+      "assets/fotos/c1/Martin Sena, Mauro Cabrera y Vicente Gaitano.jpg",
+      "assets/fotos/c1/Vicente Gaitano y Martin Sena.jpg",
+      "assets/fotos/c1/Vicente Gaitano.jpg"
     ],
     "Vidal": [
       "assets/fotos/f3/Grupo f3.jpg",
@@ -1504,6 +1598,10 @@ const ADMIN_DATA = {
       "assets/fotos/f10/Matias Gonzalez, Julian Rios y Lucas Vidal.jpg",
       "assets/fotos/f10/Matias Gonzalez, Martin Sena, Franco Friedrich, Julian Rios y Lucas Vidal.jpg",
       "assets/fotos/f10/Mauro Cabera, Lucas Vidal y Ezequiel Muñoz.jpg"
+    ],
+    "Curbelo": [
+      "assets/fotos/c1/Brandon Almenarez y Leandro Curbelo.jpg",
+      "assets/fotos/c1/Leandro Curbelo.jpg"
     ]
   },
   "playerMinutes": {
