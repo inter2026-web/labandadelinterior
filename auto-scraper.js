@@ -112,59 +112,17 @@ const APERTURA_FINAL_STANDINGS = [
   console.log('  Resultados parseados:', JSON.stringify(parsedResults));
 
   // ----------------------------------------------------------------
-  // 3. Abrir el modal de Torneos/Posiciones para standings completas
+  // 3. Tabla de posiciones COMPLETA del Clausura + Tabla Anual oficial
   // ----------------------------------------------------------------
-  console.log('\n3. Cargando tabla de posiciones COMPLETA (Divisional B, Clausura)...');
-  let standings = [];
-
-  // Tabla completa con PJ/PG/PE/PP/GF/GC/PTS del Clausura (torneo en curso).
-  // El Apertura ya terminó y su tabla final quedó congelada en APERTURA_FINAL_STANDINGS.
-  const STANDINGS_URL = 'https://www.ligamvd.com/posiciones/divisional_b_clausura/834/1/';
-  await page.goto(STANDINGS_URL, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
-  await page.waitForTimeout(5000);
-
-  // Extract standings: preferir la tabla COMPLETA (con PJ/G/E/P) que contenga a El Inter
-  const _res = await page.evaluate(() => {
-    const tables = Array.from(document.querySelectorAll('table'));
-    const candidates = [];
-    for (const table of tables) {
-      const rows = [];
-      table.querySelectorAll('tr').forEach(tr => {
-        const link = tr.querySelector('a[href*="/equipos/"]');
-        if (!link) return;
-        const cells = Array.from(tr.querySelectorAll('td'));
-        let pts = null;
-        const ptsCell = cells.find(c => /\d+\s*PTS/i.test(c.innerText || ''));
-        if (ptsCell) pts = parseInt(ptsCell.innerText.replace(/[^\d]/g, ''), 10);
-        const nums = cells.map(c => (c.innerText || '').trim()).filter(t => /^-?\d+$/.test(t)).map(Number);
-        if (pts == null && nums.length) pts = nums[nums.length - 1];
-        if (pts == null || isNaN(pts) || pts < 0) return;
-        const name = link.innerText.replace(/\s+/g, ' ').trim();
-        let pj = null, g = null, e = null, p = null;
-        if (nums.length >= 8) {
-          const L = nums.slice(-8); // PJ, PG, PE, PP, GF, GC, DIF, PTS (ignora el ranking inicial)
-          if (L[1] + L[2] + L[3] === L[0] && (3 * L[1] + L[2]) === L[7]) { pj = L[0]; g = L[1]; e = L[2]; p = L[3]; pts = L[7]; }
-        }
-        if (name) rows.push({ name, pj, g, e, p, pts });
-      });
-      const hasElInter = rows.some(r => r.name === 'El Inter') || table.innerHTML.includes('/1046/');
-      if (hasElInter && rows.length >= 6) candidates.push(rows);
-    }
-    const full = candidates.find(rows => rows.some(r => r.pj != null));
-    return full || candidates[0] || [];
-  });
-  standings = _res;
-  console.log('  Standings encontrados:', standings.length, standings.slice(0,3));
-
-  // If no standings yet from posiciones modal, fall back to fixture page sidebar
-  if (standings.length === 0) {
-    console.log('  Fallback: buscando en fixture page...');
-    await page.goto('https://www.ligamvd.com/home/1/1/', { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
-    await page.waitForTimeout(3000);
-    const fixLink = await page.$('a[href="/torneos/fixtures/"]').catch(() => null);
-    if (fixLink) { await page.evaluate(el => el.click(), fixLink); await page.waitForTimeout(4000); }
-    standings = await page.evaluate(() => {
+  // Extrae standings (PJ/PG/PE/PP/GF/GC/PTS) de una página de posiciones de Liga MVD.
+  // Reutilizable para cualquier URL /posiciones/... o /tabla_anual/... (misma estructura de tabla).
+  async function scrapeStandingsAt(url, label) {
+    console.log(`\n3. Cargando ${label}...`);
+    await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
+    await page.waitForTimeout(5000);
+    const rows = await page.evaluate(() => {
       const tables = Array.from(document.querySelectorAll('table'));
+      const candidates = [];
       for (const table of tables) {
         const rows = [];
         table.querySelectorAll('tr').forEach(tr => {
@@ -180,18 +138,26 @@ const APERTURA_FINAL_STANDINGS = [
           const name = link.innerText.replace(/\s+/g, ' ').trim();
           let pj = null, g = null, e = null, p = null;
           if (nums.length >= 8) {
-            const L = nums.slice(-8);
+            const L = nums.slice(-8); // PJ, PG, PE, PP, GF, GC, DIF, PTS (ignora el ranking inicial)
             if (L[1] + L[2] + L[3] === L[0] && (3 * L[1] + L[2]) === L[7]) { pj = L[0]; g = L[1]; e = L[2]; p = L[3]; pts = L[7]; }
           }
           if (name) rows.push({ name, pj, g, e, p, pts });
         });
-        if (rows.some(r => r.name === 'El Inter' || table.innerHTML.includes('/1046/')) && rows.length >= 6)
-          return rows;
+        const hasElInter = rows.some(r => r.name === 'El Inter') || table.innerHTML.includes('/1046/');
+        if (hasElInter && rows.length >= 6) candidates.push(rows);
       }
-      return [];
+      const full = candidates.find(rows => rows.some(r => r.pj != null));
+      return full || candidates[0] || [];
     });
-    console.log('  Fallback standings:', standings.length);
+    console.log(`  Standings encontrados (${label}):`, rows.length, rows.slice(0, 3));
+    return rows;
   }
+
+  // Clausura (torneo en curso). El Apertura ya terminó y su tabla final quedó
+  // congelada en APERTURA_FINAL_STANDINGS. La Anual es la que publica Liga MVD
+  // con el desempate oficial (dif. de gol) — se scrapea en vez de calcularla.
+  const standings = await scrapeStandingsAt('https://www.ligamvd.com/posiciones/divisional_b_clausura/834/1/', 'Clausura');
+  const anualStandings = await scrapeStandingsAt('https://www.ligamvd.com/tabla_anual/divisional_b/2026/332/', 'Tabla Anual');
 
   // NOTA: ya no se scrapea la página de fixtures de Liga MVD para el "próximo partido" —
   // el Clausura repite el mismo orden de rivales del Apertura, así que index.html lo calcula
@@ -209,19 +175,24 @@ const APERTURA_FINAL_STANDINGS = [
     'C.A Tigre Uruguay','Club Montero','Revolución Futbolística','La Favela FC',
     'Malasia F.C.','Palestino','Defensor United',
   ]);
-  const filteredStandingsClausura = standings
-    .filter(s => DIV_B.has(normName(s.name)) || DIV_B.has(s.name.trim()))
-    .sort((a, b) => b.pts - a.pts)
-    .map((s, i) => {
-      const name = normName(s.name) || s.name.trim();
-      const full = (s.pj != null && s.g != null && s.e != null && s.p != null) ? { pj: s.pj, g: s.g, e: s.e, p: s.p } : {};
-      return { pos: i + 1, name, ...full, pts: s.pts, ...(name === 'El Inter' ? { isUs: true } : {}) };
-    });
+  function formatStandings(rows) {
+    return rows
+      .filter(s => DIV_B.has(normName(s.name)) || DIV_B.has(s.name.trim()))
+      .sort((a, b) => b.pts - a.pts) // sort estable: preserva el desempate oficial de la página
+      .map((s, i) => {
+        const name = normName(s.name) || s.name.trim();
+        const full = (s.pj != null && s.g != null && s.e != null && s.p != null) ? { pj: s.pj, g: s.g, e: s.e, p: s.p } : {};
+        return { pos: i + 1, name, ...full, pts: s.pts, ...(name === 'El Inter' ? { isUs: true } : {}) };
+      });
+  }
+  const filteredStandingsClausura = formatStandings(standings);
+  const filteredStandingsAnual = formatStandings(anualStandings);
 
   const data = {
     lastUpdated: new Date().toISOString(),
     standingsApertura: APERTURA_FINAL_STANDINGS,
     standingsClausura: filteredStandingsClausura,
+    standingsAnual: filteredStandingsAnual,
     latestResults: parsedResults,
   };
 
@@ -235,6 +206,7 @@ const LIGA_DATA = ${JSON.stringify(data, null, 2)};
   fs.writeFileSync(OUTPUT, js, 'utf8');
   console.log('\n✓ liga-data.js generado');
   console.log('  Standings Clausura:', data.standingsClausura.length, 'equipos');
+  console.log('  Standings Anual:', data.standingsAnual.length, 'equipos');
   console.log('  Últimos resultados encontrados:', data.latestResults.length);
 
   await browser.close();

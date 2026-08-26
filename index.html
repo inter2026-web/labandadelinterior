@@ -1509,21 +1509,119 @@ const TABLA_CLAUSURA = [
     }
 ];
 
-// Anual = suma Apertura + Clausura por equipo, re-ordenada por puntos (empate → más victorias).
-function computeTablaAnual(apertura, clausura) {
-  const map = new Map();
-  const add = arr => arr.forEach(t => {
-    const cur = map.get(t.name) || { name: t.name, pj: 0, g: 0, e: 0, p: 0, pts: 0, isUs: false };
-    cur.pj += t.pj || 0; cur.g += t.g || 0; cur.e += t.e || 0; cur.p += t.p || 0; cur.pts += t.pts || 0;
-    if (t.isUs) cur.isUs = true;
-    map.set(t.name, cur);
-  });
-  add(apertura); add(clausura);
-  return Array.from(map.values())
-    .sort((a, b) => b.pts - a.pts || b.g - a.g)
-    .map((t, i) => ({ ...t, pos: i + 1 }));
-}
-const TABLA_ANUAL = computeTablaAnual(TABLA_APERTURA, TABLA_CLAUSURA);
+// Anual — tabla oficial de Liga MVD (tabla_anual/divisional_b), no calculada acá: el
+// desempate por diferencia de gol lo aplica la Liga y no lo tenemos en TABLA_APERTURA/CLAUSURA.
+const TABLA_ANUAL = [
+  {
+      "pos": 1,
+      "name": "El Inter",
+      "pj": 13,
+      "g": 9,
+      "e": 2,
+      "p": 2,
+      "pts": 29,
+      "isUs": true
+    },
+    {
+      "pos": 2,
+      "name": "Capitol F.C.",
+      "pj": 13,
+      "g": 8,
+      "e": 3,
+      "p": 2,
+      "pts": 27
+    },
+    {
+      "pos": 3,
+      "name": "La Rotonda",
+      "pj": 13,
+      "g": 8,
+      "e": 3,
+      "p": 2,
+      "pts": 27
+    },
+    {
+      "pos": 4,
+      "name": "Dep. Comandiyú",
+      "pj": 13,
+      "g": 8,
+      "e": 2,
+      "p": 3,
+      "pts": 26
+    },
+    {
+      "pos": 5,
+      "name": "C.A Tigre Uruguay",
+      "pj": 13,
+      "g": 5,
+      "e": 3,
+      "p": 5,
+      "pts": 18
+    },
+    {
+      "pos": 6,
+      "name": "Club Montero",
+      "pj": 13,
+      "g": 5,
+      "e": 3,
+      "p": 5,
+      "pts": 18
+    },
+    {
+      "pos": 7,
+      "name": "Revolución Futbolística",
+      "pj": 13,
+      "g": 5,
+      "e": 2,
+      "p": 6,
+      "pts": 17
+    },
+    {
+      "pos": 8,
+      "name": "Malasia F.C.",
+      "pj": 13,
+      "g": 4,
+      "e": 3,
+      "p": 6,
+      "pts": 15
+    },
+    {
+      "pos": 9,
+      "name": "La Favela FC",
+      "pj": 13,
+      "g": 5,
+      "e": 0,
+      "p": 8,
+      "pts": 15
+    },
+    {
+      "pos": 10,
+      "name": "Blue Label FC",
+      "pj": 13,
+      "g": 4,
+      "e": 1,
+      "p": 8,
+      "pts": 13
+    },
+    {
+      "pos": 11,
+      "name": "Palestino",
+      "pj": 13,
+      "g": 2,
+      "e": 5,
+      "p": 6,
+      "pts": 11
+    },
+    {
+      "pos": 12,
+      "name": "Defensor United",
+      "pj": 13,
+      "g": 0,
+      "e": 3,
+      "p": 10,
+      "pts": 3
+    }
+];
 
 const PLAYERS = [
   { number: 1,  name:'Jubin',         fullName:'Tomás Jubin',         nickname:null,          status:'active',   positions:['POR'],                    minutes:{amistoso:90,f1:90,f2:90,f3:90,f4:90,f5:90,f6:90,f7:90,f8:90,f9:90}, avgMins:90, goals:0 },

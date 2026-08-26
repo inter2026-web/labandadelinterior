@@ -229,18 +229,24 @@ const ADMIN_DATA = {
       "gc": 0,
       "type": "W",
       "rival": "La Rotonda"
+    },
+    "Fecha 2 - Clausura": {
+      "gf": 2,
+      "gc": 2,
+      "type": "D",
+      "rival": "C.A Tigre Uruguay"
     }
   },
   "nextMatch": {
-    "fechaNum": "2",
-    "rival": "C.A Tigre Uruguay",
-    "date": "2026-08-22",
-    "time": "09:00",
-    "cancha": "13",
-    "rivalPos": 1,
-    "rivalPts": 3,
+    "fechaNum": "3",
+    "rival": "Palestino",
+    "date": "",
+    "time": "",
+    "cancha": "",
+    "rivalPos": 3,
+    "rivalPts": 6,
     "interPos": 6,
-    "interPts": 3
+    "interPts": 4
   },
   "scorersByMatch": {
     "amistoso": [

@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-08-26T13:05:15.245Z
+// Última actualización: 2026-08-26T20:36:03.504Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-08-26T13:05:15.245Z",
+  "lastUpdated": "2026-08-26T20:36:03.504Z",
   "standingsApertura": [
     {
       "pos": 1,
@@ -222,6 +222,117 @@ const LIGA_DATA = {
       "e": 0,
       "p": 2,
       "pts": 0
+    }
+  ],
+  "standingsAnual": [
+    {
+      "pos": 1,
+      "name": "El Inter",
+      "pj": 13,
+      "g": 9,
+      "e": 2,
+      "p": 2,
+      "pts": 29,
+      "isUs": true
+    },
+    {
+      "pos": 2,
+      "name": "Capitol F.C.",
+      "pj": 13,
+      "g": 8,
+      "e": 3,
+      "p": 2,
+      "pts": 27
+    },
+    {
+      "pos": 3,
+      "name": "La Rotonda",
+      "pj": 13,
+      "g": 8,
+      "e": 3,
+      "p": 2,
+      "pts": 27
+    },
+    {
+      "pos": 4,
+      "name": "Dep. Comandiyú",
+      "pj": 13,
+      "g": 8,
+      "e": 2,
+      "p": 3,
+      "pts": 26
+    },
+    {
+      "pos": 5,
+      "name": "C.A Tigre Uruguay",
+      "pj": 13,
+      "g": 5,
+      "e": 3,
+      "p": 5,
+      "pts": 18
+    },
+    {
+      "pos": 6,
+      "name": "Club Montero",
+      "pj": 13,
+      "g": 5,
+      "e": 3,
+      "p": 5,
+      "pts": 18
+    },
+    {
+      "pos": 7,
+      "name": "Revolución Futbolística",
+      "pj": 13,
+      "g": 5,
+      "e": 2,
+      "p": 6,
+      "pts": 17
+    },
+    {
+      "pos": 8,
+      "name": "Malasia F.C.",
+      "pj": 13,
+      "g": 4,
+      "e": 3,
+      "p": 6,
+      "pts": 15
+    },
+    {
+      "pos": 9,
+      "name": "La Favela FC",
+      "pj": 13,
+      "g": 5,
+      "e": 0,
+      "p": 8,
+      "pts": 15
+    },
+    {
+      "pos": 10,
+      "name": "Blue Label FC",
+      "pj": 13,
+      "g": 4,
+      "e": 1,
+      "p": 8,
+      "pts": 13
+    },
+    {
+      "pos": 11,
+      "name": "Palestino",
+      "pj": 13,
+      "g": 2,
+      "e": 5,
+      "p": 6,
+      "pts": 11
+    },
+    {
+      "pos": 12,
+      "name": "Defensor United",
+      "pj": 13,
+      "g": 0,
+      "e": 3,
+      "p": 10,
+      "pts": 3
     }
   ],
   "latestResults": []

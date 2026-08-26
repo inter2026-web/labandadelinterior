@@ -83,6 +83,7 @@ function updateTablaBlock(varName, standings) {
 
 updateTablaBlock('TABLA_APERTURA', LIGA_DATA.standingsApertura);
 updateTablaBlock('TABLA_CLAUSURA', LIGA_DATA.standingsClausura);
+updateTablaBlock('TABLA_ANUAL', LIGA_DATA.standingsAnual);
 
 // NOTA: el "próximo partido" (hero + sección "Próxima fecha") ya no se parchea acá.
 // index.html lo calcula solo en el cliente a partir de FIXTURE_ORDER (el Clausura repite
