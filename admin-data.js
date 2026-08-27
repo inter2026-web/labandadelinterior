@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-08-20T01:57:11.105Z",
+  "lastUpdated": "2026-08-27T02:13:03.378Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -201,6 +201,92 @@ const ADMIN_DATA = {
         },
         {
           "name": "Andres Guerra",
+          "pos": ""
+        }
+      ]
+    },
+    "Fecha 2 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFD"
+        },
+        {
+          "name": "Sena",
+          "pos": "DFC"
+        },
+        {
+          "name": "Mati",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Pato",
+          "pos": "MC"
+        },
+        {
+          "name": "Nando",
+          "pos": "MC"
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": "MD"
+        },
+        {
+          "name": "Curbelo",
+          "pos": "MI"
+        },
+        {
+          "name": "Juli Rios",
+          "pos": "MCO"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Vicente",
+          "pos": ""
+        },
+        {
+          "name": "Vidal",
+          "pos": ""
+        },
+        {
+          "name": "Negrin",
+          "pos": ""
+        },
+        {
+          "name": "Lolo",
+          "pos": ""
+        },
+        {
+          "name": "Franco Irri",
+          "pos": ""
+        },
+        {
+          "name": "Facu Munchs",
+          "pos": ""
+        },
+        {
+          "name": "Seba B",
+          "pos": ""
+        },
+        {
+          "name": "Andres Guerra",
+          "pos": ""
+        },
+        {
+          "name": "Ignacio Luy",
           "pos": ""
         }
       ]
