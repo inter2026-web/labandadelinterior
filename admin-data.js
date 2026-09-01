@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-08-27T02:15:52.246Z",
+  "lastUpdated": "2026-09-01T20:26:16.417Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -287,6 +287,72 @@ const ADMIN_DATA = {
         },
         {
           "name": "Ignacio Luy",
+          "pos": ""
+        }
+      ]
+    },
+    "Fecha 3 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Seba B",
+          "pos": "DFD"
+        },
+        {
+          "name": "Nando",
+          "pos": "DFC"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": "MD"
+        },
+        {
+          "name": "Curbelo",
+          "pos": "MC"
+        },
+        {
+          "name": "Pato",
+          "pos": "MC"
+        },
+        {
+          "name": "Franco Irri",
+          "pos": "MI"
+        },
+        {
+          "name": "Pata",
+          "pos": "DC"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Ignacio Luy",
+          "pos": ""
+        },
+        {
+          "name": "Seba T",
+          "pos": ""
+        },
+        {
+          "name": "Sena",
+          "pos": ""
+        },
+        {
+          "name": "Vicente",
           "pos": ""
         }
       ]
