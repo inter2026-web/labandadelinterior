@@ -321,16 +321,22 @@ const ADMIN_DATA = {
       "gc": 2,
       "type": "D",
       "rival": "C.A Tigre Uruguay"
+    },
+    "Fecha 3 - Clausura": {
+      "gf": 0,
+      "gc": 2,
+      "type": "L",
+      "rival": "Palestino"
     }
   },
   "nextMatch": {
-    "fechaNum": "3",
-    "rival": "Palestino",
+    "fechaNum": "4",
+    "rival": "Dep. Comandiyú",
     "date": "",
     "time": "",
     "cancha": "",
-    "rivalPos": 3,
-    "rivalPts": 6,
+    "rivalPos": 9,
+    "rivalPts": 3,
     "interPos": 6,
     "interPts": 4
   },
