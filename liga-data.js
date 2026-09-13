@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-09-12T15:24:18.093Z
+// Última actualización: 2026-09-13T16:02:50.335Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-09-12T15:24:18.093Z",
+  "lastUpdated": "2026-09-13T16:02:50.335Z",
   "standingsApertura": [
     {
       "pos": 1,
@@ -117,222 +117,222 @@ const LIGA_DATA = {
     {
       "pos": 1,
       "name": "C.A Tigre Uruguay",
-      "pj": 4,
-      "g": 3,
+      "pj": 5,
+      "g": 4,
       "e": 1,
       "p": 0,
-      "pts": 10
+      "pts": 13
     },
     {
       "pos": 2,
-      "name": "La Favela FC",
-      "pj": 4,
-      "g": 3,
+      "name": "Palestino",
+      "pj": 5,
+      "g": 4,
       "e": 0,
       "p": 1,
-      "pts": 9
+      "pts": 12
     },
     {
       "pos": 3,
-      "name": "Capitol F.C.",
-      "pj": 4,
+      "name": "La Favela FC",
+      "pj": 5,
       "g": 3,
-      "e": 0,
+      "e": 1,
       "p": 1,
-      "pts": 9
+      "pts": 10
     },
     {
       "pos": 4,
-      "name": "Palestino",
-      "pj": 4,
+      "name": "Capitol F.C.",
+      "pj": 5,
       "g": 3,
-      "e": 0,
+      "e": 1,
       "p": 1,
-      "pts": 9
+      "pts": 10
     },
     {
       "pos": 5,
-      "name": "Club Montero",
-      "pj": 4,
-      "g": 2,
+      "name": "Dep. Comandiyú",
+      "pj": 5,
+      "g": 3,
       "e": 0,
       "p": 2,
-      "pts": 6
+      "pts": 9
     },
     {
       "pos": 6,
-      "name": "La Rotonda",
-      "pj": 4,
+      "name": "Club Montero",
+      "pj": 5,
       "g": 2,
-      "e": 0,
+      "e": 1,
       "p": 2,
-      "pts": 6
+      "pts": 7
     },
     {
       "pos": 7,
-      "name": "Dep. Comandiyú",
-      "pj": 4,
+      "name": "La Rotonda",
+      "pj": 5,
       "g": 2,
-      "e": 0,
+      "e": 1,
       "p": 2,
-      "pts": 6
+      "pts": 7
     },
     {
       "pos": 8,
-      "name": "Revolución Futbolística",
-      "pj": 4,
+      "name": "El Inter",
+      "pj": 5,
       "g": 1,
-      "e": 1,
+      "e": 2,
       "p": 2,
-      "pts": 4
+      "pts": 5,
+      "isUs": true
     },
     {
       "pos": 9,
-      "name": "Malasia F.C.",
-      "pj": 4,
+      "name": "Revolución Futbolística",
+      "pj": 5,
       "g": 1,
       "e": 1,
-      "p": 2,
+      "p": 3,
       "pts": 4
     },
     {
       "pos": 10,
-      "name": "El Inter",
-      "pj": 4,
+      "name": "Malasia F.C.",
+      "pj": 5,
       "g": 1,
       "e": 1,
-      "p": 2,
-      "pts": 4,
-      "isUs": true
+      "p": 3,
+      "pts": 4
     },
     {
       "pos": 11,
       "name": "Defensor United",
-      "pj": 4,
+      "pj": 5,
       "g": 1,
-      "e": 0,
+      "e": 1,
       "p": 3,
-      "pts": 3
+      "pts": 4
     },
     {
       "pos": 12,
       "name": "Blue Label FC",
-      "pj": 4,
+      "pj": 5,
       "g": 0,
       "e": 0,
-      "p": 4,
+      "p": 5,
       "pts": 0
     }
   ],
   "standingsAnual": [
     {
       "pos": 1,
-      "name": "Capitol F.C.",
-      "pj": 15,
-      "g": 10,
-      "e": 3,
-      "p": 2,
-      "pts": 33
+      "name": "Dep. Comandiyú",
+      "pj": 16,
+      "g": 11,
+      "e": 2,
+      "p": 3,
+      "pts": 35
     },
     {
       "pos": 2,
-      "name": "La Rotonda",
-      "pj": 15,
+      "name": "Capitol F.C.",
+      "pj": 16,
       "g": 10,
-      "e": 3,
+      "e": 4,
       "p": 2,
-      "pts": 33
+      "pts": 34
     },
     {
       "pos": 3,
-      "name": "Dep. Comandiyú",
-      "pj": 15,
+      "name": "La Rotonda",
+      "pj": 16,
       "g": 10,
-      "e": 2,
-      "p": 3,
-      "pts": 32
+      "e": 4,
+      "p": 2,
+      "pts": 34
     },
     {
       "pos": 4,
       "name": "El Inter",
-      "pj": 15,
+      "pj": 16,
       "g": 9,
-      "e": 2,
+      "e": 3,
       "p": 4,
-      "pts": 29,
+      "pts": 30,
       "isUs": true
     },
     {
       "pos": 5,
       "name": "C.A Tigre Uruguay",
-      "pj": 15,
-      "g": 7,
+      "pj": 16,
+      "g": 8,
       "e": 3,
       "p": 5,
-      "pts": 24
+      "pts": 27
     },
     {
       "pos": 6,
       "name": "Revolución Futbolística",
-      "pj": 15,
+      "pj": 16,
       "g": 6,
       "e": 2,
-      "p": 7,
+      "p": 8,
       "pts": 20
     },
     {
       "pos": 7,
       "name": "La Favela FC",
-      "pj": 15,
+      "pj": 16,
       "g": 6,
-      "e": 0,
+      "e": 1,
       "p": 9,
-      "pts": 18
+      "pts": 19
     },
     {
       "pos": 8,
       "name": "Club Montero",
-      "pj": 15,
+      "pj": 16,
       "g": 5,
-      "e": 3,
+      "e": 4,
       "p": 7,
-      "pts": 18
+      "pts": 19
     },
     {
       "pos": 9,
-      "name": "Malasia F.C.",
-      "pj": 15,
+      "name": "Palestino",
+      "pj": 16,
       "g": 4,
-      "e": 3,
-      "p": 8,
-      "pts": 15
+      "e": 5,
+      "p": 7,
+      "pts": 17
     },
     {
       "pos": 10,
-      "name": "Palestino",
-      "pj": 15,
-      "g": 3,
-      "e": 5,
-      "p": 7,
-      "pts": 14
+      "name": "Malasia F.C.",
+      "pj": 16,
+      "g": 4,
+      "e": 3,
+      "p": 9,
+      "pts": 15
     },
     {
       "pos": 11,
       "name": "Blue Label FC",
-      "pj": 15,
+      "pj": 16,
       "g": 4,
       "e": 1,
-      "p": 10,
+      "p": 11,
       "pts": 13
     },
     {
       "pos": 12,
       "name": "Defensor United",
-      "pj": 15,
+      "pj": 16,
       "g": 1,
-      "e": 3,
+      "e": 4,
       "p": 11,
-      "pts": 6
+      "pts": 7
     }
   ],
   "latestResults": []
