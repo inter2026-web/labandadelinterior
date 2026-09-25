@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-25T01:56:02.143Z",
+  "lastUpdated": "2026-09-25T20:07:36.980Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -497,6 +497,68 @@ const ADMIN_DATA = {
           "pos": ""
         }
       ]
+    },
+    "Fecha 6 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFD"
+        },
+        {
+          "name": "Sena",
+          "pos": "DFC"
+        },
+        {
+          "name": "Mati",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Curbelo",
+          "pos": "MCD"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MC"
+        },
+        {
+          "name": "Pato",
+          "pos": "MC"
+        },
+        {
+          "name": "Franco Irri",
+          "pos": "MCO"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        },
+        {
+          "name": "Facu Munchs",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Diego",
+          "pos": ""
+        },
+        {
+          "name": "Pata",
+          "pos": ""
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": ""
+        }
+      ]
     }
   },
   "igStats": {
@@ -536,16 +598,22 @@ const ADMIN_DATA = {
       "rival": "Palestino"
     },
     "Fecha 4 - Clausura": {
-      "gf": 2,
-      "gc": 2,
-      "type": "D",
+      "gf": 1,
+      "gc": 3,
+      "type": "L",
       "rival": "Dep. Comandiyú"
     },
     "Fecha 5 - Clausura": {
-      "gf": null,
-      "gc": null,
-      "type": null,
+      "gf": 2,
+      "gc": 2,
+      "type": "D",
       "rival": "Defensor United"
+    },
+    "Fecha 6 - Clausura": {
+      "gf": 0,
+      "gc": 0,
+      "type": "D",
+      "rival": "Blue Label"
     }
   },
   "nextMatch": {
