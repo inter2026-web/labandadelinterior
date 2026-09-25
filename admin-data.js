@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-25T01:53:40.447Z",
+  "lastUpdated": "2026-09-25T01:55:58.797Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -415,6 +415,84 @@ const ADMIN_DATA = {
         },
         {
           "name": "Facu Munchs",
+          "pos": ""
+        }
+      ]
+    },
+    "Fecha 5 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFD"
+        },
+        {
+          "name": "Sena",
+          "pos": "DFC"
+        },
+        {
+          "name": "Mati",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Nando",
+          "pos": "MCD"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MC"
+        },
+        {
+          "name": "Curbelo",
+          "pos": "MC"
+        },
+        {
+          "name": "Franco Irri",
+          "pos": "MCO"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        },
+        {
+          "name": "Facu Munchs",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Diego",
+          "pos": ""
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": ""
+        },
+        {
+          "name": "Vicente",
+          "pos": ""
+        },
+        {
+          "name": "Elias",
+          "pos": ""
+        },
+        {
+          "name": "Negrin",
+          "pos": ""
+        },
+        {
+          "name": "Vidal",
+          "pos": ""
+        },
+        {
+          "name": "Juli Rios",
           "pos": ""
         }
       ]
