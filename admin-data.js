@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-01T20:26:16.417Z",
+  "lastUpdated": "2026-09-25T00:50:06.496Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -2033,6 +2033,24 @@ const ADMIN_DATA = {
       "Sena": 55,
       "Ignacio Luy": 45,
       "Curbelo": 45
+    },
+    "Fecha 3 - Clausura": {
+      "Jubin": 90,
+      "Vicente": 10,
+      "Brandon": 90,
+      "Nando": 90,
+      "Pata": 55,
+      "Franco Irri": 60,
+      "Seba B": 90,
+      "Enzo": 80,
+      "Pato": 80,
+      "Seba T": 35,
+      "Fabian Couto": 45,
+      "Lucas Godoy": 90,
+      "Andres Guerra": 20,
+      "Sena": 30,
+      "Ignacio Luy": 45,
+      "Curbelo": 70
     }
   },
   "cardsByMatch": {
