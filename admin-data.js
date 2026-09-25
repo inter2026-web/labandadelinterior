@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-25T01:23:30.918Z",
+  "lastUpdated": "2026-09-25T01:53:40.447Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -461,6 +461,12 @@ const ADMIN_DATA = {
       "gc": 2,
       "type": "D",
       "rival": "Dep. Comandiyú"
+    },
+    "Fecha 5 - Clausura": {
+      "gf": null,
+      "gc": null,
+      "type": null,
+      "rival": "Defensor United"
     }
   },
   "nextMatch": {
@@ -536,7 +542,13 @@ const ADMIN_DATA = {
       "Lucas Godoy x1",
       "Facu Munchs x1"
     ],
-    "Fecha 4 - Clausura": []
+    "Fecha 4 - Clausura": [
+      "Sena x1"
+    ],
+    "Fecha 3 - Clausura": [],
+    "Fecha 5 - Clausura": [
+      "Facu Munchs x2"
+    ]
   },
   "playerPhotos": {
     "Andres Guerra": [
@@ -2136,6 +2148,26 @@ const ADMIN_DATA = {
       "Lucas Godoy": 80,
       "Sena": 90,
       "Curbelo": 90
+    },
+    "Fecha 5 - Clausura": {
+      "Jubin": 90,
+      "Vicente": 45,
+      "Brandon": 90,
+      "Juli Rios": 40,
+      "Vidal": 30,
+      "Franco F": 90,
+      "Diego": 0,
+      "Elias": 30,
+      "Negrin": 10,
+      "Nando": 90,
+      "Franco Irri": 60,
+      "Facu Munchs": 60,
+      "Enzo": 45,
+      "Mati": 90,
+      "Fabian Couto": 45,
+      "Lucas Godoy": 80,
+      "Sena": 50,
+      "Curbelo": 45
     }
   },
   "cardsByMatch": {
