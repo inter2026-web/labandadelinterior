@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-25T00:50:39.676Z",
+  "lastUpdated": "2026-09-25T01:05:13.789Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -356,6 +356,68 @@ const ADMIN_DATA = {
           "pos": ""
         }
       ]
+    },
+    "Fecha 4 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Seba B",
+          "pos": "DFD"
+        },
+        {
+          "name": "Mati",
+          "pos": "DFC"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Franco Irri",
+          "pos": "MD"
+        },
+        {
+          "name": "Sena",
+          "pos": "MC"
+        },
+        {
+          "name": "Curbelo",
+          "pos": "MC"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MI"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        },
+        {
+          "name": "Mandinga",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Negrin",
+          "pos": ""
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": ""
+        },
+        {
+          "name": "Facu Munchs",
+          "pos": ""
+        }
+      ]
     }
   },
   "igStats": {
@@ -393,6 +455,12 @@ const ADMIN_DATA = {
       "gc": 2,
       "type": "L",
       "rival": "Palestino"
+    },
+    "Fecha 4 - Clausura": {
+      "gf": 1,
+      "gc": 3,
+      "type": "L",
+      "rival": "Dep. Comandiyú"
     }
   },
   "nextMatch": {
@@ -467,6 +535,9 @@ const ADMIN_DATA = {
     "Fecha 2 - Clausura": [
       "Lucas Godoy x1",
       "Facu Munchs x1"
+    ],
+    "Fecha 4 - Clausura": [
+      "Sena x1"
     ]
   },
   "playerPhotos": {
