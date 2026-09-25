@@ -512,7 +512,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-
   </div>
 </div>
 
-<script src="admin-data.js"></script>
+<script>document.write('<script src="admin-data.js?v='+Date.now()+'"><\/script>');</script>
 <script>
 // =====================
 // CONFIG
@@ -538,6 +538,9 @@ function sha1(str) {
 // =====================
 // Deep clone ADMIN_DATA to work with
 const DATA = JSON.parse(JSON.stringify(ADMIN_DATA));
+// Foto de lo que se cargó al abrir el panel: al guardar se compara con lo que hay en
+// GitHub para no pisar cambios hechos desde otro lado (otra pestaña, otro dispositivo, Claude).
+let LOADED_SNAPSHOT = JSON.stringify(ADMIN_DATA);
 
 const PLAYERS = [
   { number:1,  name:'Jubin',          fullName:'Tomás Jubin',         pos:'Golero' },
@@ -1127,12 +1130,26 @@ async function saveToGitHub() {
     const headers = { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' };
 
     // Get current file SHA
-    const getRes = await fetch(api, { headers });
+    const getRes = await fetch(api, { headers, cache: 'no-store' });
     if (getRes.status === 401) throw new Error('Token inválido o expirado. Generá uno nuevo en github.com/settings/tokens');
     if (getRes.status === 404) throw new Error(`Repositorio "${repo}" no encontrado. Verificá el repo en Configuración.`);
     if (!getRes.ok) throw new Error(`Error obteniendo SHA: HTTP ${getRes.status}`);
     const fileData = await getRes.json();
     const sha = fileData.sha;
+
+    // Si lo que hay en GitHub cambió desde que se abrió el panel, no pisarlo:
+    // guardar reemplaza el archivo entero con lo que esta pestaña tiene en memoria.
+    if (fileData.content) {
+      let remoteSnapshot = null;
+      try {
+        const remoteText = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+        const m = remoteText.match(/const ADMIN_DATA = (\{[\s\S]*\});?\s*$/);
+        if (m) remoteSnapshot = JSON.stringify(JSON.parse(m[1]));
+      } catch (e) { /* remoteSnapshot queda null → se trata como cambiado */ }
+      if (remoteSnapshot !== LOADED_SNAPSHOT) {
+        throw new Error('Los datos en GitHub cambiaron desde que abriste el panel (otra pestaña, otro dispositivo o una actualización de Claude). Para no pisar esos cambios, recargá la página (F5) y volvé a guardar. Ojo: lo que cargaste en esta pestaña sin guardar se pierde al recargar.');
+      }
+    }
 
     // Commit
     const body = {
@@ -1147,6 +1164,7 @@ async function saveToGitHub() {
       throw new Error(err.message || `HTTP ${putRes.status}`);
     }
 
+    LOADED_SNAPSHOT = JSON.stringify(DATA);
     setStatus('✓ Guardado. La web se actualiza en ~1 min.', 'ok');
     toast('✓ Publicado en GitHub! La web se actualiza en ~1 minuto.', 'ok');
   } catch(e) {

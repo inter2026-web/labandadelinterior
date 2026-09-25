@@ -1723,7 +1723,7 @@ function computeNextMatch() {
     rival,
     usPos: usRow ? usRow.pos : null, usPts: usRow ? usRow.pts : null,
     rivalPos: rivalRow ? rivalRow.pos : null, rivalPts: rivalRow ? rivalRow.pts : null,
-    dateISO: nm.date || '', time: nm.time || '', field: nm.cancha || '',
+    dateISO: nm.date || '', time: nm.time || '', field: String(nm.cancha || '').replace(/^\s*cancha\s*/i, ''),
   };
 }
 
@@ -1739,7 +1739,7 @@ function renderNextMatch() {
     month = `${MESES_CORTOS[mo - 1] || ''} ${y}`;
   }
   const scheduleTxt = day
-    ? `${day} ${month}${nm.time ? ' · ' + nm.time : ''}${nm.field ? ' · ' + nm.field : ''}`
+    ? `${day} ${month}${nm.time ? ' · ' + nm.time : ''}${nm.field ? ' · Cancha ' + nm.field : ''}`
     : nm.time
       ? `Fecha a confirmar · ${nm.time}${nm.field ? ' · Cancha ' + nm.field : ''}`
       : 'Fecha y cancha a confirmar';
@@ -2291,7 +2291,9 @@ function openLineup(matchId) {
   const pm = (typeof ADMIN_DATA !== 'undefined' && ADMIN_DATA.playerMinutes && ADMIN_DATA.playerMinutes[matchId]) || {};
   const resultClass = {W:'w',D:'d',L:'l',friendly:'f'}[m.type] || 'f';
   const resultLabel = {W:'Victoria',D:'Empate',L:'Derrota',friendly:'Amistoso'}[m.type];
-  const fechaLabel = matchId === 'amistoso' ? 'Amistoso · Pretemporada' : `Fecha ${matchId.replace('f','')} · Liga MVD`;
+  const fechaLabel = matchId === 'amistoso'
+    ? 'Amistoso · Pretemporada'
+    : `Fecha ${String(matchId).replace(/\D/g, '')} · Liga MVD · ${/clausura/i.test(matchId) ? 'Clausura' : 'Apertura'}`;
   function posCls(pos) {
     if (!pos) return '';
     if (pos === 'POR') return 'pos-por';

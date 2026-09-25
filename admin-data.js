@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-25T20:11:27.755Z",
+  "lastUpdated": "2026-09-25T21:30:00.000Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -613,19 +613,19 @@ const ADMIN_DATA = {
       "gf": 0,
       "gc": 0,
       "type": "D",
-      "rival": "Blue Label"
+      "rival": "Blue Label FC"
     }
   },
   "nextMatch": {
-    "fechaNum": "4",
-    "rival": "Dep. Comandiyú",
-    "date": "",
-    "time": "",
-    "cancha": "",
-    "rivalPos": 9,
-    "rivalPts": 3,
-    "interPos": 6,
-    "interPts": 4
+    "fechaNum": "7",
+    "rival": "Revolución Futbolística",
+    "date": "2026-09-26",
+    "time": "11:00",
+    "cancha": "13",
+    "rivalPos": 7,
+    "rivalPts": 7,
+    "interPos": 9,
+    "interPts": 6
   },
   "scorersByMatch": {
     "amistoso": [
