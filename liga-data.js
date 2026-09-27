@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-09-26T16:13:23.249Z
+// Última actualización: 2026-09-27T16:48:51.241Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-09-26T16:13:23.249Z",
+  "lastUpdated": "2026-09-27T16:48:51.241Z",
   "standingsApertura": [
     {
       "pos": 1,
@@ -228,111 +228,111 @@ const LIGA_DATA = {
     {
       "pos": 1,
       "name": "Dep. Comandiyú",
-      "pj": 17,
-      "g": 12,
+      "pj": 18,
+      "g": 13,
       "e": 2,
       "p": 3,
-      "pts": 38
+      "pts": 41
     },
     {
       "pos": 2,
       "name": "Capitol F.C.",
-      "pj": 17,
-      "g": 11,
+      "pj": 18,
+      "g": 12,
       "e": 4,
       "p": 2,
-      "pts": 37
+      "pts": 40
     },
     {
       "pos": 3,
       "name": "La Rotonda",
-      "pj": 17,
+      "pj": 18,
       "g": 11,
       "e": 4,
-      "p": 2,
+      "p": 3,
       "pts": 37
     },
     {
       "pos": 4,
       "name": "El Inter",
-      "pj": 17,
+      "pj": 18,
       "g": 9,
       "e": 4,
-      "p": 4,
+      "p": 5,
       "pts": 31,
       "isUs": true
     },
     {
       "pos": 5,
       "name": "C.A Tigre Uruguay",
-      "pj": 17,
-      "g": 8,
+      "pj": 18,
+      "g": 9,
       "e": 3,
       "p": 6,
-      "pts": 27
+      "pts": 30
     },
     {
       "pos": 6,
       "name": "Revolución Futbolística",
-      "pj": 17,
-      "g": 7,
+      "pj": 18,
+      "g": 8,
       "e": 2,
       "p": 8,
-      "pts": 23
+      "pts": 26
     },
     {
       "pos": 7,
       "name": "La Favela FC",
-      "pj": 17,
+      "pj": 18,
       "g": 7,
       "e": 1,
-      "p": 9,
+      "p": 10,
       "pts": 22
     },
     {
       "pos": 8,
       "name": "Club Montero",
-      "pj": 17,
-      "g": 5,
+      "pj": 18,
+      "g": 6,
       "e": 4,
       "p": 8,
-      "pts": 19
+      "pts": 22
     },
     {
       "pos": 9,
       "name": "Palestino",
-      "pj": 17,
+      "pj": 18,
       "g": 4,
       "e": 5,
-      "p": 8,
+      "p": 9,
       "pts": 17
     },
     {
       "pos": 10,
       "name": "Malasia F.C.",
-      "pj": 17,
+      "pj": 18,
       "g": 4,
       "e": 3,
-      "p": 10,
+      "p": 11,
       "pts": 15
     },
     {
       "pos": 11,
       "name": "Blue Label FC",
-      "pj": 17,
+      "pj": 18,
       "g": 4,
       "e": 2,
-      "p": 11,
+      "p": 12,
       "pts": 14
     },
     {
       "pos": 12,
       "name": "Defensor United",
-      "pj": 17,
-      "g": 1,
+      "pj": 18,
+      "g": 2,
       "e": 4,
       "p": 12,
-      "pts": 7
+      "pts": 10
     }
   ],
   "latestResults": []
