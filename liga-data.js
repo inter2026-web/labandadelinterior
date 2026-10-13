@@ -1,7 +1,7 @@
 // AUTO-GENERADO — no editar manualmente
-// Última actualización: 2026-10-12T21:11:03.943Z
+// Última actualización: 2026-10-13T19:10:47.054Z
 const LIGA_DATA = {
-  "lastUpdated": "2026-10-12T21:11:03.943Z",
+  "lastUpdated": "2026-10-13T19:10:47.054Z",
   "standingsApertura": [
     {
       "pos": 1,
