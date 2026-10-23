@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-09-25T21:30:00.000Z",
+  "lastUpdated": "2026-10-23T21:05:40.183Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -614,6 +614,12 @@ const ADMIN_DATA = {
       "gc": 0,
       "type": "D",
       "rival": "Blue Label FC"
+    },
+    "Fecha 7": {
+      "gf": null,
+      "gc": null,
+      "type": null,
+      "rival": "Revolución"
     }
   },
   "nextMatch": {
@@ -2331,6 +2337,22 @@ const ADMIN_DATA = {
       "Lucas Godoy": 90,
       "Sena": 90,
       "Curbelo": 60
+    },
+    "Fecha 7": {
+      "Jubin": 90,
+      "Vicente": 15,
+      "Brandon": 75,
+      "Franco F": 90,
+      "Negrin": 55,
+      "Nando": 90,
+      "Franco Irri": 90,
+      "Seba B": 35,
+      "Enzo": 90,
+      "Mati": 55,
+      "Fabian Couto": 55,
+      "Lucas Godoy": 90,
+      "Sena": 90,
+      "Curbelo": 35
     }
   },
   "cardsByMatch": {
