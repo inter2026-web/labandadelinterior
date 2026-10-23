@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-10-23T21:37:05.621Z",
+  "lastUpdated": "2026-10-23T21:38:53.888Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -623,6 +623,82 @@ const ADMIN_DATA = {
         {
           "name": "Rivera",
           "pos": ""
+        }
+      ]
+    },
+    "Fecha 8 - Clausura": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFD"
+        },
+        {
+          "name": "Sena",
+          "pos": "DFC"
+        },
+        {
+          "name": "Juli Rios",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Vidal",
+          "pos": "MD"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MC"
+        },
+        {
+          "name": "Nando",
+          "pos": "MC"
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": "MI"
+        },
+        {
+          "name": "Rivera",
+          "pos": "DC"
+        },
+        {
+          "name": "Mandinga",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Vicente",
+          "pos": ""
+        },
+        {
+          "name": "Facu Munchs",
+          "pos": ""
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": ""
+        },
+        {
+          "name": "Franco Irri",
+          "pos": ""
+        },
+        {
+          "name": "Negrin",
+          "pos": "",
+          "noEnter": true
+        },
+        {
+          "name": "Diego",
+          "pos": "",
+          "noEnter": true
         }
       ]
     }
