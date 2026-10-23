@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-10-23T21:48:16.456Z",
+  "lastUpdated": "2026-10-23T21:49:21.339Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -843,15 +843,15 @@ const ADMIN_DATA = {
     }
   },
   "nextMatch": {
-    "fechaNum": "8",
-    "rival": "Malasia F.C.",
-    "date": "",
+    "fechaNum": "10",
+    "rival": "Capitol F.C.",
+    "date": "2026-10-24",
     "time": "",
     "cancha": "",
-    "rivalPos": 7,
-    "rivalPts": 7,
-    "interPos": 9,
-    "interPts": 6
+    "rivalPos": 3,
+    "rivalPts": 19,
+    "interPos": 11,
+    "interPts": 7
   },
   "scorersByMatch": {
     "amistoso": [
