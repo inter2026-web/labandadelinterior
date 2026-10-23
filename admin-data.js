@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-10-23T21:16:49.558Z",
+  "lastUpdated": "2026-10-23T21:18:06.465Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -686,6 +686,12 @@ const ADMIN_DATA = {
       "gc": 2,
       "type": "L",
       "rival": "Revolución Futbolística"
+    },
+    "Fecha 8 - Clausura": {
+      "gf": 2,
+      "gc": 2,
+      "type": "D",
+      "rival": "Malasia F.C."
     }
   },
   "nextMatch": {
@@ -767,6 +773,10 @@ const ADMIN_DATA = {
     "Fecha 3 - Clausura": [],
     "Fecha 5 - Clausura": [
       "Facu Munchs x2"
+    ],
+    "Fecha 8 - Clausura": [
+      "Franco F x1",
+      "Fabian Couto x1"
     ]
   },
   "playerPhotos": {
