@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-10-23T21:05:40.183Z",
+  "lastUpdated": "2026-10-23T21:07:55.896Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -559,6 +559,72 @@ const ADMIN_DATA = {
           "pos": ""
         }
       ]
+    },
+    "Fecha 7": {
+      "titulares": [
+        {
+          "name": "Jubin",
+          "pos": "POR"
+        },
+        {
+          "name": "Seba B",
+          "pos": "DFD"
+        },
+        {
+          "name": "Sena",
+          "pos": "DFC"
+        },
+        {
+          "name": "Enzo",
+          "pos": "DFC"
+        },
+        {
+          "name": "Brandon",
+          "pos": "DFI"
+        },
+        {
+          "name": "Franco F",
+          "pos": "MC"
+        },
+        {
+          "name": "Nando",
+          "pos": "MC"
+        },
+        {
+          "name": "Franco Irri",
+          "pos": "MD"
+        },
+        {
+          "name": "Fabian Couto",
+          "pos": "MI"
+        },
+        {
+          "name": "Lucas Godoy",
+          "pos": "DC"
+        },
+        {
+          "name": "Negrin",
+          "pos": "DC"
+        }
+      ],
+      "suplentes": [
+        {
+          "name": "Curbelo",
+          "pos": ""
+        },
+        {
+          "name": "Vicente",
+          "pos": ""
+        },
+        {
+          "name": "Mati",
+          "pos": ""
+        },
+        {
+          "name": "",
+          "pos": ""
+        }
+      ]
     }
   },
   "igStats": {
@@ -616,9 +682,9 @@ const ADMIN_DATA = {
       "rival": "Blue Label FC"
     },
     "Fecha 7": {
-      "gf": null,
-      "gc": null,
-      "type": null,
+      "gf": 0,
+      "gc": 2,
+      "type": "L",
       "rival": "Revolución"
     }
   },
