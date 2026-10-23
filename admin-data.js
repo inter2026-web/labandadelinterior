@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-10-23T21:38:53.888Z",
+  "lastUpdated": "2026-10-23T21:46:28.369Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -768,6 +768,12 @@ const ADMIN_DATA = {
       "gc": 2,
       "type": "D",
       "rival": "Malasia F.C."
+    },
+    "Fecha 9 - Clausura": {
+      "gf": 2,
+      "gc": 6,
+      "type": "L",
+      "rival": "Club Montero"
     }
   },
   "nextMatch": {
@@ -853,6 +859,9 @@ const ADMIN_DATA = {
     "Fecha 8 - Clausura": [
       "Franco F x1",
       "Fabian Couto x1"
+    ],
+    "Fecha 9 - Clausura": [
+      "Rivera x2"
     ]
   },
   "playerPhotos": {
@@ -2524,6 +2533,23 @@ const ADMIN_DATA = {
       "Fabian Couto": 45,
       "Lucas Godoy": 45,
       "Sena": 60,
+      "Rivera": 90
+    },
+    "Fecha 9 - Clausura": {
+      "Jubin": 90,
+      "Vicente": 45,
+      "Brandon": 90,
+      "Franco F": 90,
+      "Diego": 30,
+      "Negrin": 20,
+      "Nando": 90,
+      "Franco Irri": 45,
+      "Enzo": 90,
+      "Seba T": 45,
+      "Mandinga": 70,
+      "Fabian Couto": 60,
+      "Lucas Godoy": 45,
+      "Curbelo": 90,
       "Rivera": 90
     }
   },
