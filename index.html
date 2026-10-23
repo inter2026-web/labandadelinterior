@@ -1653,6 +1653,7 @@ const PLAYERS = [
   { number: 72, name:'Sena',           fullName:'Martín Sena',         nickname:null,          status:'active',   positions:['DFI','LI','MCD','MC','DFC'],      minutes:{amistoso:90,f1:75,f2:55,f3:80,f4:70,f5:45,f6:90,f7:55,f8:90,f9:90}, avgMins:74, goals:4 },
   { number: 99, name:'Ignacio Luy',    fullName:'Ignacio Luy',         nickname:null,          status:'active',   positions:['EI','ED','MI','MD'],  minutes:{f3:30,f4:30,f5:45,f6:60,f8:30}, avgMins:39, goals:0 },
   { number: 14, name:'Curbelo',        fullName:'Leandro Curbelo',     nickname:null,          status:'active',   positions:['MC','MCD','MD','MI','DFD'], minutes:{}, avgMins:0, goals:0 },
+  { number: null, name:'Rivera',       fullName:'Damián Rivera',       nickname:null,          status:'active',   positions:['DC'],                  minutes:{}, avgMins:0, goals:0 },
 ];
 
 // Apply admin data overrides if available
@@ -1712,7 +1713,7 @@ const SCORERS_DATA = PLAYERS
 const FIXTURE_ORDER = ['La Rotonda', 'C.A Tigre Uruguay', 'Palestino', 'Dep. Comandiyú', 'Defensor United', 'Blue Label FC', 'Revolución Futbolística', 'Malasia F.C.', 'Club Montero', 'Capitol F.C.', 'La Favela FC'];
 
 function computeNextMatch() {
-  const clausuraCount = MATCHES.filter(m => /clausura/i.test(m.id)).length;
+  const clausuraCount = MATCHES.filter(m => /clausura/i.test(m.id) && m.result).length;
   if (clausuraCount >= FIXTURE_ORDER.length) return null;
   const rival = FIXTURE_ORDER[clausuraCount];
   const usRow = TABLA_CLAUSURA.find(t => t.isUs || t.name === 'El Inter');

@@ -1,7 +1,7 @@
 // ADMIN-DATA — gestionado desde el panel /admin.html
 // No editar manualmente si usás el panel de administración
 const ADMIN_DATA = {
-  "lastUpdated": "2026-10-23T21:07:55.896Z",
+  "lastUpdated": "2026-10-23T21:11:41.666Z",
   "lineups": {
     "Fecha 10": {
       "titulares": [
@@ -560,7 +560,7 @@ const ADMIN_DATA = {
         }
       ]
     },
-    "Fecha 7": {
+    "Fecha 7 - Clausura": {
       "titulares": [
         {
           "name": "Jubin",
@@ -681,19 +681,19 @@ const ADMIN_DATA = {
       "type": "D",
       "rival": "Blue Label FC"
     },
-    "Fecha 7": {
+    "Fecha 7 - Clausura": {
       "gf": 0,
       "gc": 2,
       "type": "L",
-      "rival": "Revolución"
+      "rival": "Revolución Futbolística"
     }
   },
   "nextMatch": {
-    "fechaNum": "7",
-    "rival": "Revolución Futbolística",
-    "date": "2026-09-26",
-    "time": "11:00",
-    "cancha": "13",
+    "fechaNum": "8",
+    "rival": "Malasia F.C.",
+    "date": "",
+    "time": "",
+    "cancha": "",
     "rivalPos": 7,
     "rivalPts": 7,
     "interPos": 9,
@@ -2404,7 +2404,7 @@ const ADMIN_DATA = {
       "Sena": 90,
       "Curbelo": 60
     },
-    "Fecha 7": {
+    "Fecha 7 - Clausura": {
       "Jubin": 90,
       "Vicente": 15,
       "Brandon": 75,
